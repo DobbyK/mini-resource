@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='styles.css'>
 </head>
 <body>
+    <h1>Incremental Universe</h1>
     <p>Food: <span id="food">0</span></p>
     <p>Wood: <span id="wood">0</span></p>
     <p>Stone: <span id="stone">0</span></p>
@@ -16,9 +17,10 @@
     <p>Farm: <span id="farm">0</span></p>
     <p>Lumbermill: <span id="lumbermill">0</span></p>
     <p>Quarry: <span id="quarry">0</span></p>
-    <button onclick="buildFarm();">Build Farm - 10 Food</button>
-    <button onclick="buildMill();">Build Lumbermill - 10 Wood</button>
-    <button onclick="buildQuarry();">Build Quarry - 10 Stone</button>
+    <button onclick="buildFarm();">Build Farm - <span id="farmprice">10</span> Food</button>
+    <button onclick="buildMill();">Build Lumbermill - <span id="millprice">10</span> Wood</button>
+    <button onclick="buildQuarry();">Build Quarry - <span id="quarryprice">10</span> Stone</button>
+    <hr>
 </body>
 <script src='script.js'></script>
 </html>
