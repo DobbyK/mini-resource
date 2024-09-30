@@ -3,7 +3,7 @@ var buildings = { farm: 0, lumbermill: 0, quarry: 0 };
 var prices = { farm: 10, lumbermill: 10, quarry: 10 };
 var level = { farm: 1, lumbermill: 1, quarry: 1 };
 var levelprices = { farm: 20, lumbermill: 20, quarry: 20 };
-var gains = { food: 0, wood: 0, stone: 0 }
+var gains = { food: 0, wood: 0, stone: 0 };
 
 function collect(resource) {
     resources[resource] += 1;
@@ -38,7 +38,6 @@ function updateScreen() {
     for (let i in resources) {
         document.getElementById(i).innerHTML = resources[i];
         document.getElementById(i + "ps").innerHTML = gains[i];
-
     }
     for (let i in buildings) {
         document.getElementById(i).innerHTML = buildings[i];
