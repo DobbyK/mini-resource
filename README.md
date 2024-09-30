@@ -1,2 +1,2 @@
-# incremental-universe
- incremental game about everything
+# mini-resource
+ incremental game about resources
