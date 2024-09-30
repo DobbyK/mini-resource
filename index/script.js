@@ -1,60 +1,51 @@
 var resources = { food: 0, wood: 0, stone: 0 };
 var buildings = { farm: 0, lumbermill: 0, quarry: 0 };
-var prices = { farm: 10, lumbermill: 10, quarry: 10};
+var prices = { farm: 10, lumbermill: 10, quarry: 10 };
+var level = { farm: 1, lumbermill: 1, quarry: 1 };
+var levelprices = { farm: 20, lumbermill: 20, quarry: 20 };
 
 function collect(resource) {
     resources[resource] += 1;
     updateScreen();
 }
 
-function buildFarm() {
-    if (resources.food >= prices.farm) {
-        resources.food -= prices.farm;
-        buildings.farm += 1;
-        prices.farm = Math.floor(1.25*prices.farm);
+function build(building, resource) {
+    if (resources[resource] >= prices[building]) {
+        resources[resource] -= prices[building];
+        buildings[building] += 1;
+        prices[building] = Math.floor(1.25 * prices[building]);
         updateScreen();
     } else {
-        alert("Not enough food to build a farm.");
+        alert(`Not enough ${resource} to build a ${building}.`);
     }
 }
 
-function buildMill() {
-    if (resources.wood >= prices.lumbermill) {
-        resources.wood -= prices.lumbermill;
-        buildings.lumbermill += 1;
-        prices.lumbermill = Math.floor(1.25*prices.lumbermill);
+function levelUp(building, resource) {
+    if (resources[resource] >= levelprices[building]) {
+        resources[resource] -= levelprices[building];
+        level[building] += 1;
+        levelprices[building] = Math.floor(1.5 * levelprices[building]);
         updateScreen();
     } else {
-        alert("Not enough wood to build a lumbermill.");
-    }
-}
-
-function buildQuarry() {
-    if (resources.stone >= prices.quarry) {
-        resources.stone -= prices.quarry;
-        buildings.quarry += 1;
-        prices.quarry = Math.floor(1.25*prices.quarry);
-        updateScreen();
-    } else {
-        alert("Not enough stone to build a quarry.");
+        alert(`Not enough ${resource} to upgrade ${building}.`);
     }
 }
 
 function updateScreen() {
-    document.getElementById("food").innerHTML = resources.food;
-    document.getElementById("wood").innerHTML = resources.wood;
-    document.getElementById("stone").innerHTML = resources.stone;
-    document.getElementById("lumbermill").innerHTML = buildings.lumbermill;
-    document.getElementById("farm").innerHTML = buildings.farm;
-    document.getElementById("quarry").innerHTML = buildings.quarry;
-    document.getElementById("farmprice").innerHTML = prices.farm;
-    document.getElementById("millprice").innerHTML = prices.lumbermill;
-    document.getElementById("quarryprice").innerHTML = prices.quarry;
+    for (let key in resources) {
+        document.getElementById(key).innerHTML = resources[key];
+    }
+    for (let key in buildings) {
+        document.getElementById(key).innerHTML = buildings[key];
+        document.getElementById(key + "price").innerHTML = prices[key];
+        document.getElementById(key + "_lvl").innerHTML = level[key];
+        document.getElementById(key + "Up").innerHTML = levelprices[key];
+    }
 }
 
 setInterval(() => {
-    resources.food += buildings.farm;
-    resources.wood += buildings.lumbermill;
-    resources.stone += buildings.quarry;
+    resources.food += buildings.farm * level.farm;
+    resources.wood += buildings.lumbermill * level.lumbermill;
+    resources.stone += buildings.quarry * level.quarry;
     updateScreen();
 }, 1000);
