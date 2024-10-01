@@ -4,7 +4,20 @@ var prices = { farm: 10, lumbermill: 10, quarry: 10 };
 var level = { farm: 1, lumbermill: 1, quarry: 1 };
 var levelprices = { farm: 20, lumbermill: 20, quarry: 20 };
 var gains = { food: 0, wood: 0, stone: 0 };
+const unlockPrice = { wood: 25, stone: 100};
 var money = 0;
+
+function unlock(resource) {
+    if (money >= unlockPrice[resource]) {
+        const hiddenStuff = document.querySelectorAll("." + resource);
+        hiddenStuff.forEach(element => {
+            element.classList.remove("hidden");
+        });
+        document.getElementById("unlock" + resource).classList.add("hidden");
+    } else {
+        alert(`Not enough money`);
+    }
+}
 function collect(resource) {
     resources[resource] += 1;
     updateScreen();
