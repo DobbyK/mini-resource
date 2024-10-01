@@ -4,12 +4,20 @@ var prices = { farm: 10, lumbermill: 10, quarry: 10 };
 var level = { farm: 1, lumbermill: 1, quarry: 1 };
 var levelprices = { farm: 20, lumbermill: 20, quarry: 20 };
 var gains = { food: 0, wood: 0, stone: 0 };
-
+var money = 0;
 function collect(resource) {
     resources[resource] += 1;
     updateScreen();
 }
-
+function sell(resource) {
+    if (resources[resource] > 0) {
+        resources[resource] -= 1;
+        money += 1;
+        updateScreen();
+    } else {
+        alert(`You have no ${resource}`);
+    }
+}
 function build(building, resource) {
     if (resources[resource] >= prices[building]) {
         resources[resource] -= prices[building];
@@ -45,6 +53,7 @@ function updateScreen() {
         document.getElementById(i + "_lvl").innerHTML = level[i];
         document.getElementById(i + "Up").innerHTML = levelprices[i];
     }
+    document.getElementById("money").innerHTML = money;
 }
 
 setInterval(() => {
