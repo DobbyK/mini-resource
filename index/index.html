@@ -7,30 +7,40 @@
 </head>
 <body>
     <h1>Mini Resources</h1>
+    <h2>$<span id="money">0</span></h2>
+    <hr>
+    <h3>Research</h3>
+    <button id = "unlockwood" onclick="unlock('wood');">Unlock Wood - $25</button>
+    <button id = "unlockstone" class="wood hidden" onclick="unlock('stone');">Unlock Stone - $100 </button>
     <hr>
     <h3>Resources</h3>
     <p>Food: <span id="food">0</span> (<span id="foodps">0</span>/s)</p>
-    <p>Wood: <span id="wood">0</span> (<span id="woodps">0</span>/s)</p>
-    <p>Stone: <span id="stone">0</span> (<span id="stoneps">0</span>/s)</p>
+    <p class="wood hidden">Wood: <span id="wood">0</span> (<span id="woodps">0</span>/s)</p>
+    <p class="stone hidden">Stone: <span id="stone">0</span> (<span id="stoneps">0</span>/s)</p>
     <button onclick="collect('food');">Collect Food</button>
-    <button onclick="collect('wood');">Collect Wood</button>
-    <button onclick="collect('stone');">Collect Stone</button>
+    <button class="wood hidden" onclick="collect('wood');">Collect Wood</button>
+    <button class="stone hidden" onclick="collect('stone');">Collect Stone</button>
+    <div>
+        <button onclick="sell('food');">Sell Food - $1</button>
+        <button class="wood hidden" onclick="sell('wood');">Sell Wood - $2</button>
+        <button class="stone hidden" onclick="sell('stone');">Sell Stone - $5</button>
+    </div>
     <hr>
     <h3>Buildings</h3>
     <p>Farm: <span id="farm">0</span></p>
-    <p>Lumbermill: <span id="lumbermill">0</span></p>
-    <p>Quarry: <span id="quarry">0</span></p>
+    <p class="wood hidden">Lumbermill: <span id="lumbermill">0</span></p>
+    <p class="stone hidden">Quarry: <span id="quarry">0</span></p>
     <button onclick="build('farm', 'food');">Build Farm - <span id="farmprice">10</span> Food</button>
-    <button onclick="build('lumbermill', 'wood');">Build Lumbermill - <span id="lumbermillprice">10</span> Wood</button>
-    <button onclick="build('quarry', 'stone');">Build Quarry - <span id="quarryprice">10</span> Stone</button>
+    <button class="wood hidden" onclick="build('lumbermill', 'wood');">Build Lumbermill - <span id="lumbermillprice">10</span> Wood</button>
+    <button class="stone hidden" onclick="build('quarry', 'stone');">Build Quarry - <span id="quarryprice">10</span> Stone</button>
     <hr>
     <h3>Upgrades</h3>
     <p>Farm Level: <span id="farm_lvl">1</span></p>
-    <p>Lumbermill Level: <span id="lumbermill_lvl">1</span></p>
-    <p>Quarry Level: <span id="quarry_lvl">1</span></p>
+    <p class="wood hidden">Lumbermill Level: <span id="lumbermill_lvl">1</span></p>
+    <p class="stone hidden">Quarry Level: <span id="quarry_lvl">1</span></p>
     <button onclick="levelUp('farm', 'food');">Upgrade Farm - <span id="farmUp">20</span> Food</button>
-    <button onclick="levelUp('lumbermill', 'wood');">Upgrade Lumbermill - <span id="lumbermillUp">20</span> Wood</button>
-    <button onclick="levelUp('quarry', 'stone');">Upgrade Quarry - <span id="quarryUp">20</span> Stone</button>
+    <button class="wood hidden" onclick="levelUp('lumbermill', 'wood');">Upgrade Lumbermill - <span id="lumbermillUp">20</span> Wood</button>
+    <button class="stone hidden" onclick="levelUp('quarry', 'stone');">Upgrade Quarry - <span id="quarryUp">20</span> Stone</button>
 </body>
 <script src='script.js'></script>
 </html>
