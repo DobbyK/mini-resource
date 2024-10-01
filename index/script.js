@@ -6,6 +6,7 @@ var levelprices = { farm: 20, lumbermill: 20, quarry: 20 };
 var gains = { food: 0, wood: 0, stone: 0 };
 var worth = { food: 1, wood: 2, stone: 5 };
 const unlockPrice = { wood: 25, stone: 100};
+var collecting = null;
 var money = 0;
 
 function unlock(resource) {
@@ -20,7 +21,12 @@ function unlock(resource) {
     }
 }
 function collect(resource) {
-    resources[resource] += 1;
+    let prevCollect = collecting;
+    collecting = resource;
+    gains[resource] += 1;
+    if (prevCollect !== null) {
+        gains[prevCollect] -= 1;
+    }
     updateScreen();
 }
 function sell(resource) {
@@ -38,6 +44,7 @@ function build(building, resource) {
         buildings[building] += 1;
         prices[building] = Math.floor(1.25 * prices[building]);
         gains[resource] = buildings[building] * level[building];
+        if (collecting === resource) { gains[resource] += 1;}
         updateScreen();
     } else {
         alert(`Not enough ${resource} to build a ${building}.`);
@@ -50,6 +57,7 @@ function levelUp(building, resource) {
         level[building] += 1;
         levelprices[building] = Math.floor(1.5 * levelprices[building]);
         gains[resource] = buildings[building] * level[building];
+        if (collecting === resource) { gains[resource] += 1;}
         updateScreen();
     } else {
         alert(`Not enough ${resource} to upgrade ${building}.`);
