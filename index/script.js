@@ -4,6 +4,7 @@ var prices = { farm: 10, lumbermill: 10, quarry: 10 };
 var level = { farm: 1, lumbermill: 1, quarry: 1 };
 var levelprices = { farm: 20, lumbermill: 20, quarry: 20 };
 var gains = { food: 0, wood: 0, stone: 0 };
+var worth = { food: 1, wood: 2, stone: 5 };
 const unlockPrice = { wood: 25, stone: 100};
 var money = 0;
 
@@ -25,7 +26,7 @@ function collect(resource) {
 function sell(resource) {
     if (resources[resource] > 0) {
         resources[resource] -= 1;
-        money += 1;
+        money += worth[resource];
         updateScreen();
     } else {
         alert(`You have no ${resource}`);
