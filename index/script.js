@@ -25,7 +25,7 @@ const gameData = {
             type: "metal", count: 0, level: 1,
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20, upgradeable: true
         },
-        wheat_market: {
+        market: {
             type: "money", count: 0, level: 1,
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
         }
@@ -104,12 +104,10 @@ function formatCost(costObj) {
 }
 
 function getCostText(building) {
-    if (!building.resourcePrice) return '';
-    const parts = [];
-    for (const [resource, cost] of Object.entries(building.resourcePrice)) {
-        parts.push(`${cost} ${resource}/s`);
-    }
-    return ` | Cost: ${parts.join(', ')}`;
+    if (!building.resourcePrice || Object.keys(building.resourcePrice).length === 0) return '';
+    const parts = Object.entries(building.resourcePrice)
+        .map(([resource, cost]) => `${cost} ${resource}/s`);
+    return parts.length > 0 ? ` | Cost: ${parts.join(', ')}` : '';
 }
 
 function getLevelPrice(building) {
