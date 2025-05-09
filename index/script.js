@@ -1,9 +1,9 @@
 // Game Configuration
 const gameData = {
-    money: 0,
     collecting: null,
     resources: {
-        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true},
+        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true },
+        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true },
         wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false },
         stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false },
         metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false }
@@ -12,7 +12,7 @@ const gameData = {
         farm: { type: "food", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
         lumbermill: { type: "wood", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
         quarry: { type: "stone", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
-        mine: { type: "metal", count: 0, level: 1, basePrice: 10, resourcePrice: {"wood": 1}, baseUpgrade: 20}
+        mine: { type: "metal", count: 0, level: 1, basePrice: 10, resourcePrice: { wood: 1 }, baseUpgrade: 20 }
     },
     unlockPrices: {
         wood: 25,
@@ -25,7 +25,6 @@ const gameData = {
 function initGame() {
     const container = document.getElementById("game");
     container.innerHTML = `
-        <div><strong>Money:</strong> $<span id="money">0</span></div>
         <div id="resources"></div>
         <div id="buildings"></div>
     `;
@@ -44,8 +43,10 @@ function updateUI() {
                 <div>
                     <strong>${name}</strong>: <span id="${name}_amount">${res.amount}</span> 
                     (+<span id="${name}_gain">${res.gain}</span>/s)
-                    <button onclick="collect('${name}')">Collect</button>
-                    <button onclick="sell('${name}')">Sell $${res.worth}</button>
+                    ${name !== 'money' ? `
+                        <button onclick="collect('${name}')">Collect</button>
+                        <button onclick="sell('${name}')">Sell $${res.worth}</button>
+                    ` : ''}
                     ${gameData.unlockPrices[name] !== undefined 
                         ? `<button id="unlock_${name}" onclick="unlock('${name}')">
                             Unlock for $${gameData.unlockPrices[name]}
@@ -56,13 +57,13 @@ function updateUI() {
             `;
         } else {
             rDiv.innerHTML += `
-            <div>
-                <strong>${name}</strong> (locked)
-                <button id="unlock_${name}" onclick="unlock('${name}')">
-                    Unlock for $${gameData.unlockPrices[name]}
-                </button>
-            </div>
-        `;
+                <div>
+                    <strong>${name}</strong> (locked)
+                    <button id="unlock_${name}" onclick="unlock('${name}')">
+                        Unlock for $${gameData.unlockPrices[name]}
+                    </button>
+                </div>
+            `;
         }
     }
 
@@ -73,21 +74,17 @@ function updateUI() {
             bDiv.innerHTML += `
                 <div>
                     <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${getPrice(building)} ${resType} ${getCostText(building)}) 
-                    </button>
+                    <button onclick="build('${bName}')">Build (${getPrice(building)} ${resType} ${getCostText(building)})</button>
                     <button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${resType})</button>
                 </div>
             `;
         }
     }
-
-    document.getElementById("money").innerText = gameData.money;
 }
 
 // Game Logic
 function getCostText(building) {
-    if (!building.resourcePrice) {return null;}
-
+    if (!building.resourcePrice) return '';
     const parts = [];
     for (const [resource, cost] of Object.entries(building.resourcePrice)) {
         parts.push(`${cost} ${resource}/s`);
@@ -119,7 +116,7 @@ function sell(resource) {
     const res = gameData.resources[resource];
     if (res.amount > 0) {
         res.amount -= 1;
-        gameData.money += res.worth;
+        gameData.resources.money.amount += res.worth;
         updateUI();
     } else {
         alert(`No ${resource} to sell.`);
@@ -169,6 +166,7 @@ function updateGains() {
             }
         }
     }
+
     for (const building of Object.values(gameData.buildings)) {
         const gain = (building.count * building.level) - gameData.resources[building.type].loss;
         gameData.resources[building.type].gain += gain;
@@ -181,8 +179,8 @@ function updateGains() {
 
 function unlock(resource) {
     const price = gameData.unlockPrices[resource];
-    if (gameData.money >= price) {
-        gameData.money -= gameData.unlockPrices[resource];
+    if (gameData.resources.money.amount >= price) {
+        gameData.resources.money.amount -= price;
         delete gameData.unlockPrices[resource];
         gameData.resources[resource].unlocked = true;
         document.getElementById(`unlock_${resource}`).style.display = "none";
