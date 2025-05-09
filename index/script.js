@@ -2,17 +2,17 @@
 const gameData = {
     collecting: null,
     resources: {
-        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true, collectible: false, sellable: false },
+        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: false, sellable: false },
         science: { amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
-        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true, collectible: true, sellable: true },
+        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: true, sellable: false },
         wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
         stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
         metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
     },
     buildings: {
         farm: {
-            type: "food", count: 0, level: 1, unlocked: true,
-            buildCost: { money: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            type: "food", count: 0, level: 1, unlocked: false,
+            buildCost: { food: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         lumbermill: {
             type: "wood", count: 0, level: 1, unlocked: false,
@@ -33,13 +33,29 @@ const gameData = {
     },
 
     research: {
+        unlockFood: {
+            name: "Unlock Food",
+            description: "You are litterally an empty void. So Eat",
+            cost: { food: 0 },
+            effect: () => { gameData.resources.food.unlocked = true; },
+            completed: false,
+            requires: []
+        },
+        unlockFarm: {
+            name: "Agiliculture",
+            description: "Somehow you figure out you dont have to rumuge around in the trash.",
+            cost: { food: 5 },
+            effect: () => { gameData.buildings.farm.unlocked = true; },
+            completed: false,
+            requires: ["unlockFood"]
+        },
         unlockScience: {
             name: "Unlock Science",
             description: "Unlocks science collection.",
             cost: { money: 5 },
             effect: () => { gameData.resources.science.unlocked = true; },
             completed: false,
-            requires: []
+            requires: ["unlockFood"]
         },
         unlockWood: {
             name: "Unlock Wood",
@@ -47,7 +63,7 @@ const gameData = {
             cost: { money: 25 },
             effect: () => { gameData.resources.wood.unlocked = true; },
             completed: false,
-            requires: []
+            requires: ["unlockFood"]
         },
         unlockLumbermill: {
             name: "Unlock Lumbermill",
