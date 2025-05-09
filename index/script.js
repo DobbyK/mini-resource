@@ -102,19 +102,21 @@ const gameData = {
 
 };
 
-// UI Initialization
 function initGame() {
     const container = document.getElementById("game");
     container.innerHTML = `
-    
+        <div id="save-controls">
+            <button onclick="exportSave()">Export Save</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
+            <button onclick="document.getElementById('importFile').click()">Import Save</button>
+        </div>
         <div id="resources"></div>
         <div id="buildings"></div>
         <div id="research"></div>
-        
     `;
-    // <button onclick="giveAllResourcesDebug()">Debug: Give 100K Resources</button>
     updateUI();
 }
+
 
 // Update UI Dynamically
 function updateUI() {
@@ -333,5 +335,39 @@ setInterval(() => {
     }
     updateUI();
 }, 1000);
+
+function exportSave() {
+    const dataStr = JSON.stringify(gameData, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "myGameSave.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function importSave(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            Object.assign(gameData, parsed);
+            updateGains();
+            updateUI();
+            alert("Save imported successfully!");
+        } catch (err) {
+            alert("Failed to load save file.");
+            console.error(err);
+        }
+    };
+    reader.readAsText(file);
+}
+
 
 initGame();
