@@ -11,21 +11,25 @@ const gameData = {
     buildings: {
         farm: {
             type: "food", count: 0, level: 1,
-            buildCost: { money: 10 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         lumbermill: {
             type: "wood", count: 0, level: 1,
-            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         quarry: {
             type: "stone", count: 0, level: 1,
-            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         mine: {
             type: "metal", count: 0, level: 1,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20, upgradeable: true
+        },
+        wheat_market: {
+            type: "money", count: 0, level: 1,
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
         }
-    },
+    }, 
     unlockPrices: {
         wood: 25,
         stone: 100,
@@ -86,7 +90,9 @@ function updateUI() {
                 <div>
                     <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
                     <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)} ${getCostText(building)})</button>
-                    <button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>
+                    ${building.upgradeable !== false 
+                        ? `<button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>`
+                        : '<em>Not upgradeable</em>'}                    
                 </div>
             `;
         }
@@ -173,6 +179,11 @@ function build(buildingName) {
 
 function levelUp(buildingName) {
     const building = gameData.buildings[buildingName];
+    if (building.upgradeable === false) {
+        alert(`${buildingName} cannot be upgraded.`);
+        return;
+    }
+
     const res = gameData.resources[building.type];
     const price = getLevelPrice(building);
 
@@ -185,6 +196,7 @@ function levelUp(buildingName) {
         alert(`Not enough ${building.type} to upgrade.`);
     }
 }
+
 
 function updateGains() {
     for (const res of Object.values(gameData.resources)) {
