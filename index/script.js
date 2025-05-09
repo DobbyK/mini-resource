@@ -2,12 +2,12 @@
 const gameData = {
     collecting: null,
     resources: {
-        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: false, sellable: false },
-        science: { amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
-        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: true, sellable: false },
-        wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
-        stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
-        metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
+        money: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: false, sellable: false },
+        science: { max: 100, amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
+        food: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: true, sellable: false },
+        wood: { max: 100, amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
+        stone: { max: 100, amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
+        metal: { max: 100, amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
     },
     buildings: {
         farm: {
@@ -49,13 +49,21 @@ const gameData = {
             completed: false,
             requires: ["unlockFood"]
         },
+        unlockMoney: {
+            name: "Economy",
+            description: "Here comes the money. $$$",
+            cost: { food: 5 },
+            effect: () => { gameData.resources.money.unlocked = true; gameData.resources.food.sellable = true; },
+            completed: false,
+            requires: ["unlockFood", "unlockFarm"]
+        },
         unlockScience: {
             name: "Unlock Science",
             description: "Unlocks science collection.",
             cost: { money: 5 },
             effect: () => { gameData.resources.science.unlocked = true; },
             completed: false,
-            requires: ["unlockFood"]
+            requires: ["unlockMoney"]
         },
         unlockWood: {
             name: "Unlock Wood",
@@ -63,7 +71,7 @@ const gameData = {
             cost: { money: 25 },
             effect: () => { gameData.resources.wood.unlocked = true; },
             completed: false,
-            requires: ["unlockFood"]
+            requires: ["unlockFood", "unlockMoney"]
         },
         unlockLumbermill: {
             name: "Unlock Lumbermill",
@@ -145,7 +153,7 @@ function updateUI() {
         if (res.unlocked) {
             rDiv.innerHTML += `
                 <div>
-                    <strong>${name}</strong>: <span id="${name}_amount">${res.amount}</span> 
+                    <strong>${name}</strong>: <span id="${name}_amount">${res.amount}/${res.max}</span> 
                     (+<span id="${name}_gain">${res.gain}</span>/s)
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
@@ -347,7 +355,9 @@ function giveAllResourcesDebug() {
 // Passive Gain
 setInterval(() => {
     for (const res of Object.values(gameData.resources)) {
-        res.amount += res.gain;
+        if (res.amount < res.max) {
+            res.amount += res.gain;
+        }
     }
     updateUI();
 }, 1000);
