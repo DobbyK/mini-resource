@@ -3,16 +3,16 @@ const gameData = {
     money: 0,
     collecting: null,
     resources: {
-        food: { amount: 0, gain: 0, worth: 1, unlocked: true},
-        wood: { amount: 0, gain: 0, worth: 2, unlocked: false },
-        stone: { amount: 0, gain: 0, worth: 5, unlocked: false },
-        metal: { amount: 0, gain: 0, worth: 10, unlocked: false }
+        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true},
+        wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false },
+        stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false },
+        metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false }
     },
     buildings: {
-        farm: { type: "food", count: 0, level: 1, basePrice: 10, baseUpgrade: 20 },
-        lumbermill: { type: "wood", count: 0, level: 1, basePrice: 10, baseUpgrade: 20 },
-        quarry: { type: "stone", count: 0, level: 1, basePrice: 10, baseUpgrade: 20 },
-        mine: { type: "metal", count: 0, level: 1, basePrice: 10, baseUpgrade: 20}
+        farm: { type: "food", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
+        lumbermill: { type: "wood", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
+        quarry: { type: "stone", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
+        mine: { type: "metal", count: 0, level: 1, basePrice: 10, resourcePrice: {"wood": 1}, baseUpgrade: 20}
     },
     unlockPrices: {
         wood: 25,
@@ -45,7 +45,7 @@ function updateUI() {
                     <strong>${name}</strong>: <span id="${name}_amount">${res.amount}</span> 
                     (+<span id="${name}_gain">${res.gain}</span>/s)
                     <button onclick="collect('${name}')">Collect</button>
-                    <button onclick="sell('${name}')">Sell</button>
+                    <button onclick="sell('${name}')">Sell $${res.worth}</button>
                     ${gameData.unlockPrices[name] !== undefined 
                         ? `<button id="unlock_${name}" onclick="unlock('${name}')">
                             Unlock for $${gameData.unlockPrices[name]}
@@ -73,7 +73,8 @@ function updateUI() {
             bDiv.innerHTML += `
                 <div>
                     <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${getPrice(building)} ${resType})</button>
+                    <button onclick="build('${bName}')">Build (${getPrice(building)} ${resType} ${getCostText(building)}) 
+                    </button>
                     <button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${resType})</button>
                 </div>
             `;
@@ -84,6 +85,16 @@ function updateUI() {
 }
 
 // Game Logic
+function getCostText(building) {
+    if (!building.resourcePrice) {return null;}
+
+    const parts = [];
+    for (const [resource, cost] of Object.entries(building.resourcePrice)) {
+        parts.push(`${cost} ${resource}/s`);
+    }
+    return ` | Cost: ${parts.join(', ')}`;
+}
+
 function getPrice(building) {
     return Math.floor(building.basePrice * Math.pow(1.25, building.count));
 }
@@ -151,7 +162,15 @@ function updateGains() {
     }
 
     for (const building of Object.values(gameData.buildings)) {
-        const gain = building.count * building.level;
+        if (building.resourcePrice) {
+            for (const resource in building.resourcePrice) {
+                const cost = building.resourcePrice[resource];
+                gameData.resources[resource].loss = building.count * cost;
+            }
+        }
+    }
+    for (const building of Object.values(gameData.buildings)) {
+        const gain = (building.count * building.level) - gameData.resources[building.type].loss;
         gameData.resources[building.type].gain += gain;
     }
 
