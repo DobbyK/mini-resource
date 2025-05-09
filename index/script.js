@@ -9,10 +9,22 @@ const gameData = {
         metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false }
     },
     buildings: {
-        farm: { type: "food", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
-        lumbermill: { type: "wood", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
-        quarry: { type: "stone", count: 0, level: 1, basePrice: 10, resourcePrice: {}, baseUpgrade: 20 },
-        mine: { type: "metal", count: 0, level: 1, basePrice: 10, resourcePrice: { wood: 1 }, baseUpgrade: 20 }
+        farm: {
+            type: "food", count: 0, level: 1,
+            buildCost: { money: 10 }, resourcePrice: {}, baseUpgrade: 20
+        },
+        lumbermill: {
+            type: "wood", count: 0, level: 1,
+            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20
+        },
+        quarry: {
+            type: "stone", count: 0, level: 1,
+            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20
+        },
+        mine: {
+            type: "metal", count: 0, level: 1,
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20
+        }
     },
     unlockPrices: {
         wood: 25,
@@ -70,19 +82,21 @@ function updateUI() {
     bDiv.innerHTML = '';
     for (const [bName, building] of Object.entries(gameData.buildings)) {
         if (gameData.resources[building.type].unlocked) {
-            const resType = building.type;
             bDiv.innerHTML += `
                 <div>
                     <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${getPrice(building)} ${resType} ${getCostText(building)})</button>
-                    <button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${resType})</button>
+                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)} ${getCostText(building)})</button>
+                    <button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>
                 </div>
             `;
         }
     }
 }
 
-// Game Logic
+function formatCost(costObj) {
+    return Object.entries(costObj).map(([res, amt]) => `${amt} ${res}`).join(', ');
+}
+
 function getCostText(building) {
     if (!building.resourcePrice) return '';
     const parts = [];
@@ -90,10 +104,6 @@ function getCostText(building) {
         parts.push(`${cost} ${resource}/s`);
     }
     return ` | Cost: ${parts.join(', ')}`;
-}
-
-function getPrice(building) {
-    return Math.floor(building.basePrice * Math.pow(1.25, building.count));
 }
 
 function getLevelPrice(building) {
@@ -125,14 +135,16 @@ function sell(resource) {
 
 function build(buildingName) {
     const building = gameData.buildings[buildingName];
-    const res = gameData.resources[building.type];
-    const price = getPrice(building);
 
-    if (res.amount < price) {
-        alert(`Not enough ${building.type}.`);
-        return;
+    // Check one-time costs
+    for (const [resource, cost] of Object.entries(building.buildCost)) {
+        if (gameData.resources[resource].amount < cost) {
+            alert(`Not enough ${resource} to build ${buildingName}.`);
+            return;
+        }
     }
 
+    // Check passive costs
     if (building.resourcePrice) {
         for (const [resource, costPerBuilding] of Object.entries(building.resourcePrice)) {
             const totalLoss = (building.count + 1) * costPerBuilding;
@@ -142,7 +154,6 @@ function build(buildingName) {
                     passiveGain += b.count * b.level;
                 }
             }
-
             if (passiveGain < totalLoss) {
                 alert(`You need at least ${totalLoss} ${resource}/s passive income to build another ${buildingName}.`);
                 return;
@@ -150,13 +161,15 @@ function build(buildingName) {
         }
     }
 
-    res.amount -= price;
+    // Deduct build cost
+    for (const [resource, cost] of Object.entries(building.buildCost)) {
+        gameData.resources[resource].amount -= cost;
+    }
+
     building.count += 1;
     updateGains();
     updateUI();
 }
-
-
 
 function levelUp(buildingName) {
     const building = gameData.buildings[buildingName];
@@ -176,13 +189,14 @@ function levelUp(buildingName) {
 function updateGains() {
     for (const res of Object.values(gameData.resources)) {
         res.gain = 0;
+        res.loss = 0;
     }
 
     for (const building of Object.values(gameData.buildings)) {
         if (building.resourcePrice) {
             for (const resource in building.resourcePrice) {
                 const cost = building.resourcePrice[resource];
-                gameData.resources[resource].loss = building.count * cost;
+                gameData.resources[resource].loss += building.count * cost;
             }
         }
     }
