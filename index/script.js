@@ -2,11 +2,12 @@
 const gameData = {
     collecting: null,
     resources: {
-        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true },
-        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true },
-        wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false },
-        stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false },
-        metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false }
+        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true, collectible: false, sellable: false },
+        science: { amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
+        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true, collectible: true, sellable: true },
+        wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
+        stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
+        metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
     },
     buildings: {
         farm: {
@@ -30,8 +31,16 @@ const gameData = {
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
         }
     },
-    
+
     research: {
+        unlockScience: {
+            name: "Unlock Science",
+            description: "Unlocks science collection.",
+            cost: { money: 5 },
+            effect: () => { gameData.resources.science.unlocked = true; },
+            completed: false,
+            requires: []
+        },
         unlockWood: {
             name: "Unlock Wood",
             description: "Unlocks wood collection.",
@@ -89,7 +98,7 @@ const gameData = {
             requires: ["unlockMine"]
         }
     }
-    
+
 
 };
 
@@ -120,10 +129,9 @@ function updateUI() {
                 <div>
                     <strong>${name}</strong>: <span id="${name}_amount">${res.amount}</span> 
                     (+<span id="${name}_gain">${res.gain}</span>/s)
-                    ${name !== 'money' ? `
-                        <button onclick="collect('${name}')">Collect</button>
-                        <button onclick="sell('${name}')">Sell $${res.worth}</button>
-                    ` : ''}
+                    ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
+${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
+
                 </div>
             `;
         } else {
@@ -133,7 +141,7 @@ function updateUI() {
 
     bDiv.innerHTML = '<h3>Buildings</h3>';
     for (const [bName, building] of Object.entries(gameData.buildings)) {
-        if (building.unlocked && gameData.resources[building.type].unlocked) {    
+        if (building.unlocked && gameData.resources[building.type].unlocked) {
             const costText = getCostText(building);
             bDiv.innerHTML += `
                 <div>
