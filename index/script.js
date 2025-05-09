@@ -10,39 +10,98 @@ const gameData = {
     },
     buildings: {
         farm: {
-            type: "food", count: 0, level: 1,
+            type: "food", count: 0, level: 1, unlocked: true,
             buildCost: { money: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         lumbermill: {
-            type: "wood", count: 0, level: 1,
+            type: "wood", count: 0, level: 1, unlocked: false,
             buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         quarry: {
-            type: "stone", count: 0, level: 1,
+            type: "stone", count: 0, level: 1, unlocked: false,
             buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         mine: {
-            type: "metal", count: 0, level: 1,
+            type: "metal", count: 0, level: 1, unlocked: false,
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20, upgradeable: true
         },
         market: {
-            type: "money", count: 0, level: 1,
+            type: "money", count: 0, level: 1, unlocked: false,
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
         }
-    }, 
-    unlockPrices: {
-        wood: 25,
-        stone: 100,
-        metal: 500
+    },
+    
+    research: {
+        unlockWood: {
+            name: "Unlock Wood",
+            description: "Unlocks wood collection.",
+            cost: { money: 25 },
+            effect: () => { gameData.resources.wood.unlocked = true; },
+            completed: false,
+            requires: []
+        },
+        unlockLumbermill: {
+            name: "Unlock Lumbermill",
+            description: "Unlocks building lumbermills.",
+            cost: { money: 30, food: 10 },
+            effect: () => { gameData.buildings.lumbermill.unlocked = true; },
+            completed: false,
+            requires: ["unlockWood"]
+        },
+        unlockStone: {
+            name: "Unlock Stone",
+            description: "Unlocks stone collection.",
+            cost: { money: 100, wood: 20 },
+            effect: () => { gameData.resources.stone.unlocked = true; },
+            completed: false,
+            requires: ["unlockLumbermill"]
+        },
+        unlockQuarry: {
+            name: "Unlock Quarry",
+            description: "Unlocks building quarries.",
+            cost: { money: 120, wood: 30 },
+            effect: () => { gameData.buildings.quarry.unlocked = true; },
+            completed: false,
+            requires: ["unlockStone"]
+        },
+        unlockMetal: {
+            name: "Unlock Metal",
+            description: "Unlocks metal collection.",
+            cost: { money: 250, stone: 50 },
+            effect: () => { gameData.resources.metal.unlocked = true; },
+            completed: false,
+            requires: ["unlockQuarry"]
+        },
+        unlockMine: {
+            name: "Unlock Mine",
+            description: "Unlocks building mines.",
+            cost: { money: 300, stone: 75 },
+            effect: () => { gameData.buildings.mine.unlocked = true; },
+            completed: false,
+            requires: ["unlockMetal"]
+        },
+        unlockMarket: {
+            name: "Unlock Market",
+            description: "Unlocks the market.",
+            cost: { money: 500, wood: 100, food: 100 },
+            effect: () => { gameData.buildings.market.unlocked = true; },
+            completed: false,
+            requires: ["unlockMine"]
+        }
     }
+    
+
 };
 
 // UI Initialization
 function initGame() {
     const container = document.getElementById("game");
     container.innerHTML = `
+    
         <div id="resources"></div>
         <div id="buildings"></div>
+        <div id="research"></div>
+        <button onclick="giveAllResourcesDebug()">Debug: Give 100K Resources</button>
     `;
     updateUI();
 }
@@ -51,6 +110,7 @@ function initGame() {
 function updateUI() {
     const rDiv = document.getElementById("resources");
     const bDiv = document.getElementById("buildings");
+    const researchDiv = document.getElementById("research");
 
     rDiv.innerHTML = '';
     for (const [name, res] of Object.entries(gameData.resources)) {
@@ -63,40 +123,46 @@ function updateUI() {
                         <button onclick="collect('${name}')">Collect</button>
                         <button onclick="sell('${name}')">Sell $${res.worth}</button>
                     ` : ''}
-                    ${gameData.unlockPrices[name] !== undefined 
-                        ? `<button id="unlock_${name}" onclick="unlock('${name}')">
-                            Unlock for $${gameData.unlockPrices[name]}
-                        </button>` 
-                        : ''
-                    }
                 </div>
             `;
         } else {
-            rDiv.innerHTML += `
+            rDiv.innerHTML += ``;
+        }
+    }
+
+    bDiv.innerHTML = '<h3>Buildings</h3>';
+    for (const [bName, building] of Object.entries(gameData.buildings)) {
+        if (building.unlocked && gameData.resources[building.type].unlocked) {    
+            const costText = getCostText(building);
+            bDiv.innerHTML += `
                 <div>
-                    <strong>${name}</strong> (locked)
-                    <button id="unlock_${name}" onclick="unlock('${name}')">
-                        Unlock for $${gameData.unlockPrices[name]}
-                    </button>
+                    <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
+                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>
+                    ${building.upgradeable !== false
+                    ? `<button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>`
+                    : '<em>Not upgradeable</em>'}                    
                 </div>
             `;
         }
     }
 
-    bDiv.innerHTML = '';
-    for (const [bName, building] of Object.entries(gameData.buildings)) {
-        if (gameData.resources[building.type].unlocked) {
-            bDiv.innerHTML += `
-                <div>
-                    <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)} ${getCostText(building)})</button>
-                    ${building.upgradeable !== false 
-                        ? `<button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>`
-                        : '<em>Not upgradeable</em>'}                    
-                </div>
-            `;
-        }
+    researchDiv.innerHTML = "<h3>Research</h3>";
+    for (const [key, item] of Object.entries(gameData.research)) {
+        if (item.completed) continue;
+
+        // Check if all prerequisites are met
+        const prereqsMet = item.requires.every(reqKey => gameData.research[reqKey]?.completed);
+        if (!prereqsMet) continue;
+
+        researchDiv.innerHTML += `
+        <div>
+            <strong>${item.name}</strong>: ${item.description}
+            <br>Cost: ${formatCost(item.cost)}
+            <br><button onclick="performResearch('${key}')">Research</button>
+        </div>
+    `;
     }
+
 }
 
 function formatCost(costObj) {
@@ -195,7 +261,6 @@ function levelUp(buildingName) {
     }
 }
 
-
 function updateGains() {
     for (const res of Object.values(gameData.resources)) {
         res.gain = 0;
@@ -221,17 +286,35 @@ function updateGains() {
     }
 }
 
-function unlock(resource) {
-    const price = gameData.unlockPrices[resource];
-    if (gameData.resources.money.amount >= price) {
-        gameData.resources.money.amount -= price;
-        delete gameData.unlockPrices[resource];
-        gameData.resources[resource].unlocked = true;
-        document.getElementById(`unlock_${resource}`).style.display = "none";
-        updateUI();
-    } else {
-        alert("Not enough money to unlock.");
+function performResearch(key) {
+    const item = gameData.research[key];
+
+    // Check resource availability
+    for (const [res, cost] of Object.entries(item.cost)) {
+        if (!gameData.resources[res] || gameData.resources[res].amount < cost) {
+            alert(`Not enough ${res} to research ${item.name}.`);
+            return;
+        }
     }
+
+    // Deduct cost
+    for (const [res, cost] of Object.entries(item.cost)) {
+        gameData.resources[res].amount -= cost;
+    }
+
+    // Apply effect
+    item.effect();
+    item.completed = true;
+
+    updateUI();
+}
+
+function giveAllResourcesDebug() {
+    for (const res of Object.values(gameData.resources)) {
+        res.amount = 100000;
+    }
+    updateUI();
+    console.log("All resources set to 100,000 for debugging.");
 }
 
 // Passive Gain
