@@ -128,15 +128,35 @@ function build(buildingName) {
     const res = gameData.resources[building.type];
     const price = getPrice(building);
 
-    if (res.amount >= price) {
-        res.amount -= price;
-        building.count += 1;
-        updateGains();
-        updateUI();
-    } else {
+    if (res.amount < price) {
         alert(`Not enough ${building.type}.`);
+        return;
     }
+
+    if (building.resourcePrice) {
+        for (const [resource, costPerBuilding] of Object.entries(building.resourcePrice)) {
+            const totalLoss = (building.count + 1) * costPerBuilding;
+            let passiveGain = 0;
+            for (const b of Object.values(gameData.buildings)) {
+                if (b.type === resource) {
+                    passiveGain += b.count * b.level;
+                }
+            }
+
+            if (passiveGain < totalLoss) {
+                alert(`You need at least ${totalLoss} ${resource}/s passive income to build another ${buildingName}.`);
+                return;
+            }
+        }
+    }
+
+    res.amount -= price;
+    building.count += 1;
+    updateGains();
+    updateUI();
 }
+
+
 
 function levelUp(buildingName) {
     const building = gameData.buildings[buildingName];
