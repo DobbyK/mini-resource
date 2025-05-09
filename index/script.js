@@ -101,8 +101,9 @@ function initGame() {
         <div id="resources"></div>
         <div id="buildings"></div>
         <div id="research"></div>
-        <button onclick="giveAllResourcesDebug()">Debug: Give 100K Resources</button>
+        
     `;
+    // <button onclick="giveAllResourcesDebug()">Debug: Give 100K Resources</button>
     updateUI();
 }
 
