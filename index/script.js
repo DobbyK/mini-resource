@@ -11,23 +11,27 @@ const gameData = {
     },
     buildings: {
         farm: {
-            type: "food", count: 0, level: 1, unlocked: false,
+            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { food: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
+        silo: {
+            type: "food", count: 0, level: 1, unlocked: true, maxBoost: 50, production: 0, 
+            buildCost: { wood: 20 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: false
+        },
         lumbermill: {
-            type: "wood", count: 0, level: 1, unlocked: false,
+            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         quarry: {
-            type: "stone", count: 0, level: 1, unlocked: false,
+            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
         },
         mine: {
-            type: "metal", count: 0, level: 1, unlocked: false,
+            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20, upgradeable: true
         },
         market: {
-            type: "money", count: 0, level: 1, unlocked: false,
+            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
         }
     },
@@ -272,6 +276,7 @@ function build(buildingName) {
     }
 
     building.count += 1;
+    gameData.resources[building.type].max += building.maxBoost;
     updateGains();
     updateUI();
 }
@@ -312,8 +317,9 @@ function updateGains() {
     }
 
     for (const building of Object.values(gameData.buildings)) {
-        const gain = (building.count * building.level) - gameData.resources[building.type].loss;
+        const gain = (building.count * building.level * building.production) - gameData.resources[building.type].loss;
         gameData.resources[building.type].gain += gain;
+
     }
 
     if (gameData.collecting) {
