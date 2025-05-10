@@ -361,8 +361,10 @@ function giveAllResourcesDebug() {
 // Passive Gain
 setInterval(() => {
     for (const res of Object.values(gameData.resources)) {
-        if (res.amount < res.max) {
+        if ((res.amount + res.gain) < res.max) {
             res.amount += res.gain;
+        } else {
+            res.amount = res.max;
         }
     }
     updateUI();
