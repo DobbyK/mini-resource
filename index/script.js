@@ -12,27 +12,27 @@ const gameData = {
     buildings: {
         farm: {
             type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { food: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            buildCost: { food: 10 }, resourcePrice: {}, baseUpgrade: 20
         },
         silo: {
-            type: "food", count: 0, level: 1, unlocked: true, maxBoost: 50, production: 0, 
-            buildCost: { wood: 20 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: false
+            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0, 
+            buildCost: { wood: 20 }, resourcePrice: {}, baseUpgrade: 20
         },
         lumbermill: {
             type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20
         },
         quarry: {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20
         },
         mine: {
             type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20, upgradeable: true
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20
         },
         market: {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20
         }
     },
 
@@ -60,6 +60,14 @@ const gameData = {
             effect: () => { gameData.resources.money.unlocked = true; gameData.resources.food.sellable = true; },
             completed: false,
             requires: ["unlockFood", "unlockFarm"]
+        },
+        unlockSilo: {
+            name: "Unlock Silos",
+            description: "You are swimming in food (i think)",
+            cost: { science: 10, food: 50 },
+            effect: () => { gameData.buildings.silo.unlocked = true; },
+            completed: false,
+            requires: ["unlockFarm"]
         },
         unlockScience: {
             name: "Unlock Science",
@@ -176,10 +184,7 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
             bDiv.innerHTML += `
                 <div>
                     <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>
-                    ${building.upgradeable !== false
-                    ? `<button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>`
-                    : '<em>Not upgradeable</em>'}                    
+                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
                 </div>
             `;
         }
@@ -281,25 +286,6 @@ function build(buildingName) {
     updateUI();
 }
 
-function levelUp(buildingName) {
-    const building = gameData.buildings[buildingName];
-    if (building.upgradeable === false) {
-        alert(`${buildingName} cannot be upgraded.`);
-        return;
-    }
-
-    const res = gameData.resources[building.type];
-    const price = getLevelPrice(building);
-
-    if (res.amount >= price) {
-        res.amount -= price;
-        building.level += 1;
-        updateGains();
-        updateUI();
-    } else {
-        alert(`Not enough ${building.type} to upgrade.`);
-    }
-}
 
 function updateGains() {
     for (const res of Object.values(gameData.resources)) {
