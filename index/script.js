@@ -3,6 +3,7 @@ const gameData = {
     collecting: null,
     resources: {
         money: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: false, sellable: false },
+        human: { max: 10, amount: 0, gain: 0, loss: 0, worth: 50, unlocked: false, collectible: false, sellable: false },
         science: { max: 100, amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
         food: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: true, sellable: false },
         wood: { max: 100, amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
@@ -10,6 +11,14 @@ const gameData = {
         metal: { max: 100, amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
     },
     buildings: {
+        nursery: {
+            type: "human", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { wood: 100, stone: 50, metal: 20 },resourcePrice: { food: 2 }, baseUpgrade: 20
+        },
+        hut: {
+            type: "human", count: 0, level: 1, unlocked: false, maxBoost: 10, production: 0,
+            buildCost: { wood: 50, stone: 25 }, resourcePrice: {}, baseUpgrade: 20
+        },
         school: {
             type: "science", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 20, food: 5 }, resourcePrice: {}, baseUpgrade: 20
@@ -57,6 +66,39 @@ const gameData = {
     },
 
     research: {
+        unlockHuman: {
+            name: "Reproduction",
+            description: "You figured it out! Finnally! If only you had...",
+            cost: { science: 50, stone: 50, food: 100 },
+            effect: () => {
+                gameData.resources.human.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockQuarry"]
+        },
+        
+        unlockNursery: {
+            name: "Like Rabbits",
+            description: "The humans, well they multiply.",
+            cost: { science: 40, food: 100 },
+            effect: () => {
+                gameData.buildings.nursery.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHuman"]
+        },
+        
+        unlockHut: {
+            name: "2009",
+            description: "The homes are too expensive!!!!!!!!! <a target='_blank' href='https://en.wikipedia.org/wiki/Subprime_mortgage_crisis'>Wiki</a>",
+            cost: {science: 50, wood: 100, food: 250},
+            effect: () => {
+                gameData.buildings.hut.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHuman"]
+        },
+        
         unlockBank: {
             name: "No Interest Banking",
             description: "Put your hard earned cash into legit buildings, but money still doesnt grow on trees.",
