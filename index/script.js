@@ -2,97 +2,193 @@
 const gameData = {
     collecting: null,
     resources: {
-        money: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true, collectible: false, sellable: false },
-        science: { amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
-        food: { amount: 0, gain: 0, loss: 0, worth: 1, unlocked: true, collectible: true, sellable: true },
-        wood: { amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
-        stone: { amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
-        metal: { amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
+        money: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: false, sellable: false },
+        science: { max: 100, amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
+        food: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: true, sellable: false },
+        wood: { max: 100, amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
+        stone: { max: 100, amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
+        metal: { max: 100, amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
     },
     buildings: {
+        school: {
+            type: "science", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 20, food: 5 }, resourcePrice: {}, baseUpgrade: 20
+        },
         farm: {
-            type: "food", count: 0, level: 1, unlocked: true,
-            buildCost: { money: 10 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { food: 10 }, resourcePrice: {}, baseUpgrade: 20
+        },
+        silo: {
+            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0, 
+            buildCost: { wood: 20 }, resourcePrice: {}, baseUpgrade: 20
         },
         lumbermill: {
-            type: "wood", count: 0, level: 1, unlocked: false,
-            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20
+        },
+        woodyard: {
+            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { money: 50, wood: 10 }, resourcePrice: {}, baseUpgrade: 20
         },
         quarry: {
-            type: "stone", count: 0, level: 1, unlocked: false,
-            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20, upgradeable: true
+            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20
+        },
+        stonepit: {
+            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { money: 75, stone: 20 }, resourcePrice: {}, baseUpgrade: 20
         },
         mine: {
-            type: "metal", count: 0, level: 1, unlocked: false,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20, upgradeable: true
+            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20
+        },
+        scrapyard: {
+            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { money: 80, metal: 30 }, resourcePrice: {}, baseUpgrade: 20
         },
         market: {
-            type: "money", count: 0, level: 1, unlocked: false,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20, upgradeable: false
+            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20
+        },
+        bank: {
+            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { money: 20, metal: 30, stone: 20 }, resourcePrice: {}, baseUpgrade: 20
         }
     },
 
     research: {
+        unlockBank: {
+            name: "No Interest Banking",
+            description: "Put your hard earned cash into legit buildings, but money still doesnt grow on trees.",
+            cost: { science: 50, stone: 50, wood: 40 },
+            effect: () => { gameData.buildings.bank.unlocked = true; },
+            completed: false,
+            requires: ["unlockMarket"]
+        },
+        unlockScrapyard: {
+            name: "Heavy Metal",
+            description: "You think you might be on to something. Put the metal you find in the mines into a big open field.",
+            cost: { science: 50, metal: 50 },
+            effect: () => { gameData.buildings.scrapyard.unlocked = true; },
+            completed: false,
+            requires: ["unlockMine"]
+        },
+        unlockPit: {
+            name: "Get Pitting",
+            description: "We gotta put the earth we dig up in another part of the earth we dug up",
+            cost: { science: 20, stone: 50 },
+            effect: () => { gameData.buildings.stonepit.unlocked = true; },
+            completed: false,
+            requires: ["unlockQuarry"]
+        },
+        unlockFood: {
+            name: "Unlock Food",
+            description: "You are litterally an empty void. So Eat",
+            cost: { food: 0 },
+            effect: () => { gameData.resources.food.unlocked = true; },
+            completed: false,
+            requires: []
+        },
+        unlockFarm: {
+            name: "Agiliculture",
+            description: "Somehow you figure out you dont have to rumuge around in the trash.",
+            cost: { food: 5 },
+            effect: () => { gameData.buildings.farm.unlocked = true; },
+            completed: false,
+            requires: ["unlockFood"]
+        },
+        unlockMoney: {
+            name: "Economy",
+            description: "Here comes the money. $$$",
+            cost: { food: 5 },
+            effect: () => { gameData.resources.money.unlocked = true; gameData.resources.food.sellable = true; },
+            completed: false,
+            requires: ["unlockFood", "unlockFarm"]
+        },
+        unlockSilo: {
+            name: "Unlock Silos",
+            description: "You are swimming in food (i think)",
+            cost: { science: 10, food: 50 },
+            effect: () => { gameData.buildings.silo.unlocked = true; },
+            completed: false,
+            requires: ["unlockFarm"]
+        },
+        unlockYard: {
+            name: "Unlock a Yard",
+            description: "You've chopped a crap ton of trees down",
+            cost: { science: 20, food: 50 },
+            effect: () => { gameData.buildings.woodyard.unlocked = true; },
+            completed: false,
+            requires: ["unlockLumbermill"]
+        },
         unlockScience: {
-            name: "Unlock Science",
+            name: "Unstupid",
             description: "Unlocks science collection.",
             cost: { money: 5 },
             effect: () => { gameData.resources.science.unlocked = true; },
             completed: false,
-            requires: []
+            requires: ["unlockMoney"]
+        },
+        unlockSchool: {
+            name: "Get Learning",
+            description: "I thought this science stuff was useless originally.",
+            cost: { science: 20 },
+            effect: () => { gameData.buildings.school.unlocked = true; },
+            completed: false,
+            requires: ["unlockMoney", "unlockScience"]
         },
         unlockWood: {
             name: "Unlock Wood",
-            description: "Unlocks wood collection.",
-            cost: { money: 25 },
+            description: "How much wood would a wood trimp trimp if a wood trimp could trimp wood. (Play Trimps!)",
+            cost: { money: 25, science: 5 },
             effect: () => { gameData.resources.wood.unlocked = true; },
             completed: false,
-            requires: []
+            requires: ["unlockFood", "unlockMoney"]
         },
         unlockLumbermill: {
-            name: "Unlock Lumbermill",
-            description: "Unlocks building lumbermills.",
-            cost: { money: 30, food: 10 },
+            name: "Deforstation",
+            description: "Unlocks building lumbermills. Now you can turn taking down plants industrially",
+            cost: { money: 30, food: 10, science: 20 },
             effect: () => { gameData.buildings.lumbermill.unlocked = true; },
             completed: false,
             requires: ["unlockWood"]
         },
         unlockStone: {
-            name: "Unlock Stone",
-            description: "Unlocks stone collection.",
-            cost: { money: 100, wood: 20 },
+            name: "Strike The Earth (Stone Collection)",
+            description: "Urist McMiner. (well not really but like yeah play dwarf fortress)",
+            cost: { money: 40, wood: 20, science: 20 },
             effect: () => { gameData.resources.stone.unlocked = true; },
             completed: false,
             requires: ["unlockLumbermill"]
         },
         unlockQuarry: {
-            name: "Unlock Quarry",
-            description: "Unlocks building quarries.",
-            cost: { money: 120, wood: 30 },
+            name: "Now with Rocks.",
+            description: "Quarry is the stupidest word in the dictionary.",
+            cost: { money: 50, stone: 5, science: 20 },
             effect: () => { gameData.buildings.quarry.unlocked = true; },
             completed: false,
             requires: ["unlockStone"]
         },
         unlockMetal: {
-            name: "Unlock Metal",
-            description: "Unlocks metal collection.",
-            cost: { money: 250, stone: 50 },
+            name: "Softcore metal",
+            description: "So this is what they meant when they said they are into softcore p-",
+            cost: { money: 75, stone: 50, science: 20 },
             effect: () => { gameData.resources.metal.unlocked = true; },
             completed: false,
             requires: ["unlockQuarry"]
         },
         unlockMine: {
-            name: "Unlock Mine",
-            description: "Unlocks building mines.",
-            cost: { money: 300, stone: 75 },
+            name: "No Diamonds",
+            description: "Even at y-11, this mine will not have diamonds",
+            cost: { money: 80, metal: 5, science: 20 },
             effect: () => { gameData.buildings.mine.unlocked = true; },
             completed: false,
             requires: ["unlockMetal"]
         },
         unlockMarket: {
-            name: "Unlock Market",
-            description: "Unlocks the market.",
-            cost: { money: 500, wood: 100, food: 100 },
+            name: "Get Selling ( well just food :( )",
+            description: "Capitalism at its finest, but people won't buy stuff besides food yet.",
+            cost: { money: 50, wood: 100, food: 100, science: 20 },
             effect: () => { gameData.buildings.market.unlocked = true; },
             completed: false,
             requires: ["unlockMine"]
@@ -109,6 +205,7 @@ function initGame() {
             <button onclick="exportSave()">Export Save</button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
+            <a target="_blank" href="changelog.html">v0.0.4</a>
         </div>
         <div id="resources"></div>
         <div id="buildings"></div>
@@ -129,7 +226,7 @@ function updateUI() {
         if (res.unlocked) {
             rDiv.innerHTML += `
                 <div>
-                    <strong>${name}</strong>: <span id="${name}_amount">${res.amount}</span> 
+                    <strong>${name}</strong>: <span id="${name}_amount">${res.amount}/${res.max}</span> 
                     (+<span id="${name}_gain">${res.gain}</span>/s)
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
@@ -148,10 +245,7 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
             bDiv.innerHTML += `
                 <div>
                     <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>
-                    ${building.upgradeable !== false
-                    ? `<button onclick="levelUp('${bName}')">Upgrade (${getLevelPrice(building)} ${building.type})</button>`
-                    : '<em>Not upgradeable</em>'}                    
+                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
                 </div>
             `;
         }
@@ -232,7 +326,7 @@ function build(buildingName) {
             let passiveGain = 0;
             for (const b of Object.values(gameData.buildings)) {
                 if (b.type === resource) {
-                    passiveGain += b.count * b.level;
+                    passiveGain += b.count * b.level * b.production;
                 }
             }
             if (passiveGain < totalLoss) {
@@ -248,29 +342,11 @@ function build(buildingName) {
     }
 
     building.count += 1;
+    gameData.resources[building.type].max += building.maxBoost;
     updateGains();
     updateUI();
 }
 
-function levelUp(buildingName) {
-    const building = gameData.buildings[buildingName];
-    if (building.upgradeable === false) {
-        alert(`${buildingName} cannot be upgraded.`);
-        return;
-    }
-
-    const res = gameData.resources[building.type];
-    const price = getLevelPrice(building);
-
-    if (res.amount >= price) {
-        res.amount -= price;
-        building.level += 1;
-        updateGains();
-        updateUI();
-    } else {
-        alert(`Not enough ${building.type} to upgrade.`);
-    }
-}
 
 function updateGains() {
     for (const res of Object.values(gameData.resources)) {
@@ -288,8 +364,9 @@ function updateGains() {
     }
 
     for (const building of Object.values(gameData.buildings)) {
-        const gain = (building.count * building.level) - gameData.resources[building.type].loss;
+        const gain = (building.count * building.level * building.production) - gameData.resources[building.type].loss;
         gameData.resources[building.type].gain += gain;
+
     }
 
     if (gameData.collecting) {
@@ -331,7 +408,11 @@ function giveAllResourcesDebug() {
 // Passive Gain
 setInterval(() => {
     for (const res of Object.values(gameData.resources)) {
-        res.amount += res.gain;
+        if ((res.amount + res.gain) < res.max) {
+            res.amount += res.gain;
+        } else {
+            res.amount = res.max;
+        }
     }
     updateUI();
 }, 1000);
