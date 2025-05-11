@@ -2,79 +2,147 @@
 const gameData = {
     collecting: null,
     resources: {
-        money: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: false, sellable: false },
-        human: { max: 10, amount: 0, gain: 0, loss: 0, worth: 50, unlocked: false, collectible: false, sellable: false },
-        science: { max: 100, amount: 0, gain: 0, loss: 0, worth: 0, unlocked: false, collectible: true, sellable: false },
-        food: { max: 100, amount: 0, gain: 0, loss: 0, worth: 1, unlocked: false, collectible: true, sellable: false },
-        wood: { max: 100, amount: 0, gain: 0, loss: 0, worth: 2, unlocked: false, collectible: true, sellable: true },
-        stone: { max: 100, amount: 0, gain: 0, loss: 0, worth: 5, unlocked: false, collectible: true, sellable: true },
-        metal: { max: 100, amount: 0, gain: 0, loss: 0, worth: 10, unlocked: false, collectible: true, sellable: true }
+        money: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "Money... Capitalism... Sell Stuff To get Money"
+        },
+        human: { 
+            max: 10, amount: 0, gain: 0, loss: 0, worth: 50, 
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "Weird creatures with 2 legs and 'brains'. Maybe they could do something, or be sold- i mean uh."
+        },
+        science: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 0, 
+            unlocked: false, collectible: true, sellable: false,
+            tooltip: "Knowledge is power. You need this to research most things"
+        },
+        food: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
+            unlocked: false, collectible: true, sellable: false,
+            tooltip: "Consumables"
+        },
+        wood: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 2, 
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "Take a tree cut it down. build stuff"
+        },
+        stone: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 5, 
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "Dwayne the rock johnson. Build slightly sturder than wood"
+        },
+        metal: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 10, 
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "Non-descript resource of stuff mined underground. Also buildin."
+        }
     },
     buildings: {
         nursery: {
             type: "human", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { wood: 100, stone: 50, metal: 20 },resourcePrice: { food: 2 }, baseUpgrade: 20
+            buildCost: { wood: 100, stone: 50, metal: 20 },
+            resourcePrice: { food: 2 },
+            baseUpgrade: 20,
+            tooltip: "If you feed some humans, they'll be birds & bees."
         },
         hut: {
             type: "human", count: 0, level: 1, unlocked: false, maxBoost: 10, production: 0,
-            buildCost: { wood: 50, stone: 25 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { wood: 50, stone: 25 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "The homeless rates are going down"
         },
         school: {
             type: "science", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { wood: 20, food: 5 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { wood: 20, food: 5 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Expires in the summer time. Makes science, somehow"
         },
         farm: {
             type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { food: 10 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { food: 10 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Agiliculture. Make the food, become the food."
         },
         silo: {
             type: "food", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0, 
-            buildCost: { wood: 20 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { wood: 20 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "All that food you got gotta go somewhere"
         },
         lumbermill: {
             type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { money: 10, food: 5 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 10, food: 5 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Industiral Climate Change"
         },
         woodyard: {
             type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 50, wood: 10 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 50, wood: 10 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Put chopped trees in a field for later use"
         },
         quarry: {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { wood: 10, money: 5 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { wood: 10, money: 5 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Choose one place randomly you'll get stone faster if you dont do it randomly"
         },
         stonepit: {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 75, stone: 20 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 75, stone: 20 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Throw that stone in a new area, for later use"
         },
         mine: {
             type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { wood: 1 }, baseUpgrade: 20
+            buildCost: { stone: 10, wood: 5 },
+            resourcePrice: { wood: 1 },
+            baseUpgrade: 20,
+            tooltip: "Don't mine straight down. Or up. Get Metal."
         },
         scrapyard: {
             type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 80, metal: 30 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 80, metal: 30 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "Find another places you can throw all that stuff you found."
         },
         market: {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { stone: 10, wood: 5 }, resourcePrice: { food: 1 }, baseUpgrade: 20
+            buildCost: { stone: 10, wood: 5 },
+            resourcePrice: { food: 1 },
+            baseUpgrade: 20,
+            tooltip: "Sell Food, Get Cash. Yum"
         },
         bank: {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 20, metal: 30, stone: 20 }, resourcePrice: {}, baseUpgrade: 20
+            buildCost: { money: 20, metal: 30, stone: 20 },
+            resourcePrice: {},
+            baseUpgrade: 20,
+            tooltip: "The Bank of ${GameName}. :) Store your money here!!!"
         }
     },
 
     research: {
         unlockHuman: {
             name: "Reproduction",
-            description: "You figured it out! Finnally! If only you had...",
+            description: "You figured it out! Finally! If only you had...",
             cost: { science: 50, stone: 50, food: 100 },
             effect: () => {
                 gameData.resources.human.unlocked = true;
             },
             completed: false,
-            requires: ["unlockQuarry"]
+            requires: ["unlockQuarry"],
+            tooltip: "Unlock Human"
         },
         
         unlockNursery: {
@@ -85,160 +153,198 @@ const gameData = {
                 gameData.buildings.nursery.unlocked = true;
             },
             completed: false,
-            requires: ["unlockHuman"]
+            requires: ["unlockHuman"],
+            tooltip: "Unlock Nursery"
         },
         
         unlockHut: {
             name: "2009",
             description: "The homes are too expensive!!!!!!!!! <a target='_blank' href='https://en.wikipedia.org/wiki/Subprime_mortgage_crisis'>Wiki</a>",
-            cost: {science: 50, wood: 100, food: 250},
+            cost: { science: 50, wood: 100, food: 250 },
             effect: () => {
                 gameData.buildings.hut.unlocked = true;
             },
             completed: false,
-            requires: ["unlockHuman"]
+            requires: ["unlockHuman"],
+            tooltip: "Unlock Hut"
         },
         
         unlockBank: {
             name: "No Interest Banking",
-            description: "Put your hard earned cash into legit buildings, but money still doesnt grow on trees.",
+            description: "Put your hard earned cash into legit buildings, but money still doesn't grow on trees.",
             cost: { science: 50, stone: 50, wood: 40 },
             effect: () => { gameData.buildings.bank.unlocked = true; },
             completed: false,
-            requires: ["unlockMarket"]
+            requires: ["unlockMarket"],
+            tooltip: "Unlock Bank"
         },
+        
         unlockScrapyard: {
             name: "Heavy Metal",
             description: "You think you might be on to something. Put the metal you find in the mines into a big open field.",
             cost: { science: 50, metal: 50 },
             effect: () => { gameData.buildings.scrapyard.unlocked = true; },
             completed: false,
-            requires: ["unlockMine"]
+            requires: ["unlockMine"],
+            tooltip: "Unlock Scrapyard"
         },
+        
         unlockPit: {
             name: "Get Pitting",
             description: "We gotta put the earth we dig up in another part of the earth we dug up",
             cost: { science: 20, stone: 50 },
             effect: () => { gameData.buildings.stonepit.unlocked = true; },
             completed: false,
-            requires: ["unlockQuarry"]
+            requires: ["unlockQuarry"],
+            tooltip: "Unlock Pit"
         },
+        
         unlockFood: {
             name: "Unlock Food",
-            description: "You are litterally an empty void. So Eat",
+            description: "You are literally an empty void. So Eat",
             cost: { food: 0 },
             effect: () => { gameData.resources.food.unlocked = true; },
             completed: false,
-            requires: []
+            requires: [],
+            tooltip: "Unlock Food"
         },
+        
         unlockFarm: {
             name: "Agiliculture",
-            description: "Somehow you figure out you dont have to rumuge around in the trash.",
+            description: "Somehow you figure out you don't have to rummage around in the trash.",
             cost: { food: 5 },
             effect: () => { gameData.buildings.farm.unlocked = true; },
             completed: false,
-            requires: ["unlockFood"]
+            requires: ["unlockFood"],
+            tooltip: "Unlock Farm"
         },
+        
         unlockMoney: {
             name: "Economy",
             description: "Here comes the money. $$$",
             cost: { food: 5 },
-            effect: () => { gameData.resources.money.unlocked = true; gameData.resources.food.sellable = true; },
+            effect: () => { 
+                gameData.resources.money.unlocked = true; 
+                gameData.resources.food.sellable = true; 
+            },
             completed: false,
-            requires: ["unlockFood", "unlockFarm"]
+            requires: ["unlockFood", "unlockFarm"],
+            tooltip: "Unlock Money"
         },
+        
         unlockSilo: {
             name: "Unlock Silos",
-            description: "You are swimming in food (i think)",
+            description: "You are swimming in food (I think)",
             cost: { science: 10, food: 50 },
             effect: () => { gameData.buildings.silo.unlocked = true; },
             completed: false,
-            requires: ["unlockFarm"]
+            requires: ["unlockFarm"],
+            tooltip: "Unlock Silo"
         },
+        
         unlockYard: {
             name: "Unlock a Yard",
             description: "You've chopped a crap ton of trees down",
             cost: { science: 20, food: 50 },
             effect: () => { gameData.buildings.woodyard.unlocked = true; },
             completed: false,
-            requires: ["unlockLumbermill"]
+            requires: ["unlockLumbermill"],
+            tooltip: "Unlock Yard"
         },
+        
         unlockScience: {
             name: "Unstupid",
             description: "Unlocks science collection.",
             cost: { money: 5 },
             effect: () => { gameData.resources.science.unlocked = true; },
             completed: false,
-            requires: ["unlockMoney"]
+            requires: ["unlockMoney"],
+            tooltip: "Unlock Science"
         },
+        
         unlockSchool: {
             name: "Get Learning",
             description: "I thought this science stuff was useless originally.",
             cost: { science: 20 },
             effect: () => { gameData.buildings.school.unlocked = true; },
             completed: false,
-            requires: ["unlockMoney", "unlockScience"]
+            requires: ["unlockMoney", "unlockScience"],
+            tooltip: "Unlock School"
         },
+        
         unlockWood: {
             name: "Unlock Wood",
             description: "How much wood would a wood trimp trimp if a wood trimp could trimp wood. (Play Trimps!)",
             cost: { money: 25, science: 5 },
             effect: () => { gameData.resources.wood.unlocked = true; },
             completed: false,
-            requires: ["unlockFood", "unlockMoney"]
+            requires: ["unlockFood", "unlockMoney"],
+            tooltip: "Unlock Wood"
         },
+        
         unlockLumbermill: {
             name: "Deforstation",
             description: "Unlocks building lumbermills. Now you can turn taking down plants industrially",
             cost: { money: 30, food: 10, science: 20 },
             effect: () => { gameData.buildings.lumbermill.unlocked = true; },
             completed: false,
-            requires: ["unlockWood"]
+            requires: ["unlockWood"],
+            tooltip: "Unlock Lumbermill"
         },
+        
         unlockStone: {
             name: "Strike The Earth (Stone Collection)",
             description: "Urist McMiner. (well not really but like yeah play dwarf fortress)",
             cost: { money: 40, wood: 20, science: 20 },
             effect: () => { gameData.resources.stone.unlocked = true; },
             completed: false,
-            requires: ["unlockLumbermill"]
+            requires: ["unlockLumbermill"],
+            tooltip: "Unlock Stone"
         },
+        
         unlockQuarry: {
             name: "Now with Rocks.",
             description: "Quarry is the stupidest word in the dictionary.",
             cost: { money: 50, stone: 5, science: 20 },
             effect: () => { gameData.buildings.quarry.unlocked = true; },
             completed: false,
-            requires: ["unlockStone"]
+            requires: ["unlockStone"],
+            tooltip: "Unlock Quarry"
         },
+        
         unlockMetal: {
             name: "Softcore metal",
             description: "So this is what they meant when they said they are into softcore p-",
             cost: { money: 75, stone: 50, science: 20 },
             effect: () => { gameData.resources.metal.unlocked = true; },
             completed: false,
-            requires: ["unlockQuarry"]
+            requires: ["unlockQuarry"],
+            tooltip: "Unlock Metal"
         },
+        
         unlockMine: {
             name: "No Diamonds",
             description: "Even at y-11, this mine will not have diamonds",
             cost: { money: 80, metal: 5, science: 20 },
             effect: () => { gameData.buildings.mine.unlocked = true; },
             completed: false,
-            requires: ["unlockMetal"]
+            requires: ["unlockMetal"],
+            tooltip: "Unlock Mine"
         },
+        
         unlockMarket: {
             name: "Get Selling ( well just food :( )",
             description: "Capitalism at its finest, but people won't buy stuff besides food yet.",
             cost: { money: 50, wood: 100, food: 100, science: 20 },
             effect: () => { gameData.buildings.market.unlocked = true; },
             completed: false,
-            requires: ["unlockMine"]
+            requires: ["unlockMine"],
+            tooltip: "Unlock Market"
         }
+        
     }
-
-
 };
+
 
 function initGame() {
     const container = document.getElementById("game");
@@ -270,7 +376,9 @@ function updateUI() {
         if (res.unlocked) {
             rDiv.innerHTML += `
                 <div>
-                    <strong>${name}</strong>: <span id="${name}_amount">${res.amount}/${res.max}</span> 
+                    <div class="tooltip">
+                    <span class="tooltiptext">${res.tooltip}</span>
+                    <strong>${name}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
                     (+<span id="${name}_gain">${res.gain}</span>/s)
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
@@ -288,7 +396,9 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
             const costText = getCostText(building);
             bDiv.innerHTML += `
                 <div>
-                    <strong>${bName}</strong> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
+                <div class="tooltip">
+                    <span class="tooltiptext">${building.tooltip}</span>
+                    <strong>${bName}</strong></div> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
                     <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
                 </div>
             `;
@@ -305,7 +415,9 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
 
         researchDiv.innerHTML += `
         <div>
-            <strong>${item.name}</strong>: ${item.description}
+            <div class="tooltip">
+            <span class="tooltiptext">${item.tooltip}</span>
+            <strong>${item.name}</strong></div>: ${item.description}
             <br>Cost: ${formatCost(item.cost)}
             <br><button onclick="performResearch('${key}')">Research</button>
         </div>

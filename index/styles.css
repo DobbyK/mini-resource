@@ -6,6 +6,40 @@ body {
     overflow: hidden;
 }
 
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;  /* White background */
+  color: black;             /* Black text */
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;   /* Optional border to make it look better */
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -40px;            /* Adjust this value to move the tooltip closer or farther */
+  left: 0;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 #game {
     display: flex;
     width: 100%;
