@@ -6,12 +6,56 @@ body {
     overflow: hidden;
 }
 
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;  /* White background */
+  color: black;             /* Black text */
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;   /* Optional border to make it look better */
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -40px;            /* Adjust this value to move the tooltip closer or farther */
+  left: 0;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 #game {
     display: flex;
     width: 100%;
     height: 100%;
 }
 
+#save-controls {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
 /* Left column: Resources */
 #resources {
     width: 20%;
