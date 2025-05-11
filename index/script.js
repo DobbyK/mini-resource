@@ -378,7 +378,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.5</a>
+            <a target="_blank" href="changelog.html">v0.0.5.1</a>
         </div>
         <div id="resources">
         </div>
@@ -502,19 +502,28 @@ function build(buildingName) {
     // Check passive costs
     if (building.resourcePrice) {
         for (const [resource, costPerBuilding] of Object.entries(building.resourcePrice)) {
-            const totalLoss = (building.count + 1) * costPerBuilding;
+            
+            let totalLoss = (building.count + 1) * costPerBuilding;
+            for (const otherBuilding of Object.values(gameData.buildings)) {
+                if (otherBuilding !== building && otherBuilding.resourcePrice && otherBuilding.resourcePrice[resource]) {
+                    totalLoss += otherBuilding.count * otherBuilding.resourcePrice[resource];
+                }
+            }
+    
             let passiveGain = 0;
             for (const b of Object.values(gameData.buildings)) {
                 if (b.type === resource) {
                     passiveGain += b.count * b.level * b.production;
                 }
             }
+    
             if (passiveGain < totalLoss) {
                 alert(`You need at least ${totalLoss} ${resource}/s passive income to build another ${buildingName}.`);
                 return;
             }
         }
     }
+    
 
     // Deduct build cost
     for (const [resource, cost] of Object.entries(building.buildCost)) {
