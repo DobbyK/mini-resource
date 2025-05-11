@@ -36,9 +36,21 @@ const gameData = {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 10, 
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Non-descript resource of stuff mined underground. Also buildin."
-        }
+        },
+        hoe: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 25, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "The Farming Kind, Not the other"
+        },
     },
     buildings: {
+        hoeMaker: {
+            type: "hoe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { wood: 200, metal: 100 },
+            resourcePrice: { human: 1 },
+            baseUpgrade: 20,
+            tooltip: "Use unpaid labor to make hoes! And some wood & stone"
+        },
         nursery: {
             type: "human", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 100, stone: 50, metal: 20 },
@@ -133,6 +145,18 @@ const gameData = {
     },
 
     research: {
+        unlockHoe: {
+            name: "Make some tools!",
+            description: "People need some way to strike the farms.",
+            cost: { science: 100, stone: 200, food: 100, metal: 100 },
+            effect: () => {
+                gameData.resources.hoe.unlocked = true;
+                gameData.buildings.hoeMaker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockMine"],
+            tooltip: "Unlock Hoes"
+        },
         unlockHuman: {
             name: "Reproduction",
             description: "You figured it out! Finally! If only you had...",
