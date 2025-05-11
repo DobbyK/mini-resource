@@ -629,7 +629,7 @@ function importSave(event) {
     reader.onload = function(e) {
         try {
             const parsed = JSON.parse(e.target.result);
-            Object.assign(gameData, parsed);
+            deepMerge(gameData, parsed);
             updateGains();
             updateUI();
             alert("Save imported successfully!");
@@ -640,6 +640,28 @@ function importSave(event) {
     };
     reader.readAsText(file);
 }
+
+function deepMerge(target, source) {
+    for (const key in source) {
+        const sourceVal = source[key];
+        const targetVal = target[key];
+
+        if (
+            sourceVal &&
+            typeof sourceVal === 'object' &&
+            !Array.isArray(sourceVal)
+        ) {
+            if (!targetVal || typeof targetVal !== 'object' || Array.isArray(targetVal)) {
+                target[key] = {};
+            }
+            deepMerge(target[key], sourceVal);
+        } else {
+            target[key] = sourceVal; // Overwrite primitives and arrays or add new fields
+        }
+    }
+}
+
+
 
 
 initGame();
