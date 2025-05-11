@@ -12,6 +12,16 @@ body {
     height: 100%;
 }
 
+#save-controls {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
 /* Left column: Resources */
 #resources {
     width: 20%;

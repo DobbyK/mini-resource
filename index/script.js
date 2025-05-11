@@ -247,9 +247,11 @@ function initGame() {
             <button onclick="exportSave()">Export Save</button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
+            <button onclick="giveAllResourcesDebug()">Don't Press</button>
             <a target="_blank" href="changelog.html">v0.0.4</a>
         </div>
-        <div id="resources"></div>
+        <div id="resources">
+        </div>
         <div id="buildings"></div>
         <div id="research"></div>
     `;
@@ -263,7 +265,7 @@ function updateUI() {
     const bDiv = document.getElementById("buildings");
     const researchDiv = document.getElementById("research");
 
-    rDiv.innerHTML = '';
+    rDiv.innerHTML = '<h3>Resources</h3>';
     for (const [name, res] of Object.entries(gameData.resources)) {
         if (res.unlocked) {
             rDiv.innerHTML += `
@@ -406,8 +408,10 @@ function updateGains() {
     }
 
     for (const building of Object.values(gameData.buildings)) {
-        const gain = (building.count * building.level * building.production) - gameData.resources[building.type].loss;
-        gameData.resources[building.type].gain += gain;
+        if (building.production != 0) {
+            const gain = (building.count * building.level * building.production) - gameData.resources[building.type].loss;
+            gameData.resources[building.type].gain += gain;
+        }
 
     }
 
