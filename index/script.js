@@ -47,7 +47,7 @@ const gameData = {
         hoeMaker: {
             type: "hoe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 200, metal: 100 },
-            resourcePrice: { human: 1 },
+            resourcePrice: { human: 1, wood: 2, stone: 1 },
             baseUpgrade: 20,
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
