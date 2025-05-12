@@ -518,7 +518,7 @@ function updateUI() {
                     <div class="tooltip">
                     <span class="tooltiptext">${res.tooltip}</span>
                     <strong>${name}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
-                    (+<span id="${name}_gain">${res.gain}</span>/s)
+                    <div class="tooltip"><span class="tooltiptext">+${res.gain+res}, -${res.loss}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div>
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
 
