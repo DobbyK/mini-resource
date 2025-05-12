@@ -493,7 +493,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.5.1</a>
+            <a target="_blank" href="changelog.html">v0.0.6</a>
         </div>
         <div id="resources">
         </div>
