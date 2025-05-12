@@ -44,10 +44,19 @@ const gameData = {
         },
     },
     buildings: {
+        AutoHoer: {
+            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0, 
+            buildCost: { food: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
+            resourcePrice: { hoe: 2, human: 2, food: 10 },
+            buildingProd: { "farm": 1 },
+            baseUpgrade: 20,
+            tooltip: "Peak Human Integunity. (no spell check)"
+        },
         hoeMaker: {
             type: "hoe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 200, metal: 100 },
             resourcePrice: { human: 1, wood: 2, stone: 1 },
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
@@ -55,6 +64,7 @@ const gameData = {
             type: "human", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 100, stone: 50, metal: 20 },
             resourcePrice: { food: 2 },
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "If you feed some humans, they'll be birds & bees."
         },
@@ -62,6 +72,7 @@ const gameData = {
             type: "human", count: 0, level: 1, unlocked: false, maxBoost: 10, production: 0,
             buildCost: { wood: 50, stone: 25 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "The homeless rates are going down"
         },
@@ -69,6 +80,7 @@ const gameData = {
             type: "science", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 20, food: 5 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Expires in the summer time. Makes science, somehow"
         },
@@ -76,6 +88,7 @@ const gameData = {
             type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { food: 10 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Agiliculture. Make the food, become the food."
         },
@@ -83,6 +96,7 @@ const gameData = {
             type: "food", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0, 
             buildCost: { wood: 20 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "All that food you got gotta go somewhere"
         },
@@ -90,6 +104,7 @@ const gameData = {
             type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { money: 10, food: 5 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Industiral Climate Change"
         },
@@ -97,6 +112,7 @@ const gameData = {
             type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 50, wood: 10 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Put chopped trees in a field for later use"
         },
@@ -104,6 +120,7 @@ const gameData = {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 10, money: 5 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Choose one place randomly you'll get stone faster if you dont do it randomly"
         },
@@ -111,6 +128,7 @@ const gameData = {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 75, stone: 20 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Throw that stone in a new area, for later use"
         },
@@ -118,6 +136,7 @@ const gameData = {
             type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 },
             resourcePrice: { wood: 1 },
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Don't mine straight down. Or up. Get Metal."
         },
@@ -125,6 +144,7 @@ const gameData = {
             type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 80, metal: 30 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Find another places you can throw all that stuff you found."
         },
@@ -132,6 +152,7 @@ const gameData = {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 },
             resourcePrice: { food: 1 },
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "Sell Food, Get Cash. Yum"
         },
@@ -139,12 +160,43 @@ const gameData = {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 20, metal: 30, stone: 20 },
             resourcePrice: {},
+            buildingProd: {},
             baseUpgrade: 20,
             tooltip: "The Bank of ${GameName}. :) Store your money here!!!"
-        }
+        },
+        library: {
+            type: "science", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { human: 20, money: 100, stone: 200 },
+            resourcePrice: {},
+            buildingProd: {},
+            baseUpgrade: 20,
+            tooltip: "Some inspirational quote for why it costs humans - DobbyK"
+        },
     },
 
     research: {
+        unlockLibrary: {
+            name: "Alexandria",
+            description: "Store all of your knowledge, lets hope it doesn't burn down",
+            cost: { science: 100, food: 50, money: 500 },
+            effect: () => {
+                gameData.buildings.library.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHuman"],
+            tooltip: "Unlock Library"
+        },
+        unlockAutoHoe: {
+            name: "Crop Rotation",
+            description: "Using ancient ways, you can teach some people to keep making farms.",
+            cost: { science: 200, stone: 500, food: 750, metal: 300, money: 200 },
+            effect: () => {
+                gameData.buildings.AutoHoer.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHoes"],
+            tooltip: "Unlock AutoHoer"
+        },
         unlockHoe: {
             name: "Make some tools!",
             description: "People need some way to strike the farms.",
@@ -374,6 +426,8 @@ function initGame() {
     const container = document.getElementById("game");
     container.innerHTML = `
         <div id="save-controls">
+            <button onclick="saveGame()">Save In Browser</button>
+            <button onclick="loadGame()">Load From Browser</button>
             <button onclick="exportSave()">Export Save</button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
@@ -605,6 +659,15 @@ setInterval(() => {
             res.amount = res.max;
         }
     }
+    for (const building of Object.values(gameData.buildings)) {
+        if (building.buildingProd) {
+            for (const build in building.buildingProd) {
+                const prod = building.buildingProd[build];
+                gameData.buildings[build].count += prod * building.count;
+            }
+        }
+    }
+    updateGains();
     updateUI();
 }, 1000);
 
@@ -661,6 +724,22 @@ function deepMerge(target, source) {
     }
 }
 
+function saveGame() {
+    localStorage.setItem("gameSave", JSON.stringify(gameData));
+    alert("Game saved!");
+}
+
+function loadGame() {
+    const savedData = localStorage.getItem("gameSave");
+    if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        deepMerge(gameData, parsedData);
+        alert("Game loaded!");
+        updateUI();
+    } else {
+        alert("No save found.");
+    }
+}
 
 
 
