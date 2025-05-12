@@ -12,6 +12,11 @@ const gameData = {
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Weird creatures with 2 legs and 'brains'. Maybe they could do something, or be sold- i mean uh."
         },
+        rat: { 
+            max: 20, amount: 0, gain: 0, loss: 0, worth: 100, 
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "Offspring of ratsareamazing. Chef"
+        },
         science: { 
             max: 100, amount: 0, gain: 0, loss: 0, worth: 0, 
             unlocked: false, collectible: true, sellable: false,
@@ -21,6 +26,11 @@ const gameData = {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
             unlocked: false, collectible: true, sellable: false,
             tooltip: "Consumables"
+        },
+        meal: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 100, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "+1 Enchanted Food"
         },
         wood: { 
             max: 100, amount: 0, gain: 0, loss: 0, worth: 2, 
@@ -44,6 +54,22 @@ const gameData = {
         },
     },
     buildings: {
+        ratTrainer: {
+            type: "rat", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { food: 400, wood: 400, stone: 100, money: 100 },
+            resourcePrice: { human: 2, food: 8, stone: 1 },
+            buildingProd: { },
+            baseUpgrade: 20,
+            tooltip: "Use food to train rats who in turn make food better. And some traping"
+        },
+        kitchen: {
+            type: "meal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { food: 200, metal: 400, stone: 100 },
+            resourcePrice: { rat: 2, human: 1, food: 5 },
+            buildingProd: {  },
+            baseUpgrade: 20,
+            tooltip: "Food+Rats+Human Slave = Better Food?"
+        },
         AutoHoer: {
             type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0, 
             buildCost: { food: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
@@ -175,6 +201,30 @@ const gameData = {
     },
 
     research: {
+        unlockMeals: {
+            name: "Make The Food Better?",
+            description: "The Humans think the rats are smart. make Food???",
+            cost: { science: 500, food: 1000, metal: 350 },
+            effect: () => {
+                gameData.buildings.kitchen.unlocked = true;
+                gameData.resources.meal.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockRat"],
+            tooltip: "Unlock Meals & Kitchen"
+        },
+        unlockRat: {
+            name: "Anyone Can Cook",
+            description: "see title",
+            cost: { science: 400, food: 500, human: 40 },
+            effect: () => {
+                gameData.buildings.ratTrainer.unlocked = true;
+                gameData.resources.rat.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHoe"],
+            tooltip: "Unlock Rats"
+        },
         unlockLibrary: {
             name: "Alexandria",
             description: "Store all of your knowledge, lets hope it doesn't burn down",
