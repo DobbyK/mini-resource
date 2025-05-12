@@ -244,7 +244,7 @@ const gameData = {
                 gameData.buildings.AutoHoer.unlocked = true;
             },
             completed: false,
-            requires: ["unlockHoes"],
+            requires: ["unlockHoe"],
             tooltip: "Unlock AutoHoer"
         },
         unlockHoe: {
