@@ -259,6 +259,17 @@ const gameData = {
             requires: ["unlockMine"],
             tooltip: "Unlock Hoes"
         },
+        unlockSlavery: {
+            name: "Crime Against Humanity",
+            description: "But if you need cash...",
+            cost: { science: 75, stone: 500, money: 200 },
+            effect: () => {
+                gameData.resources.human.sellable = true;
+            },
+            completed: false,
+            requires: ["unlockNursery"],
+            tooltip: "Unlock Selling Humans"
+        },
         unlockHuman: {
             name: "Reproduction",
             description: "You figured it out! Finally! If only you had...",
