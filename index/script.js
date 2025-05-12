@@ -530,19 +530,39 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
     }
 
     bDiv.innerHTML = '<h3>Buildings</h3>';
+
+    const buildingsByType = {};
+    
+    // Group buildings by type
     for (const [bName, building] of Object.entries(gameData.buildings)) {
-        if (building.unlocked && gameData.resources[building.type].unlocked) {
+        if (building.unlocked && gameData.resources[building.type]?.unlocked) {
+            if (!buildingsByType[building.type]) {
+                buildingsByType[building.type] = [];
+            }
+            buildingsByType[building.type].push({ name: bName, ...building });
+        }
+    }
+    
+    // Optional: Sort types alphabetically
+    const sortedTypes = Object.keys(buildingsByType).sort();
+    
+    for (const type of sortedTypes) {
+        bDiv.innerHTML += `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>`;
+        
+        for (const building of buildingsByType[type]) {
             const costText = getCostText(building);
             bDiv.innerHTML += `
                 <div>
-                <div class="tooltip">
-                    <span class="tooltiptext">${building.tooltip}</span>
-                    <strong>${bName}</strong></div> (Lv ${building.level}) - Count: <span id="${bName}_count">${building.count}</span>
-                    <button onclick="build('${bName}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
+                    <div class="tooltip">
+                        <span class="tooltiptext">${building.tooltip}</span>
+                        <strong>${building.name}</strong>
+                    </div> (Lv ${building.level}) - Count: <span id="${building.name}_count">${building.count}</span>
+                    <button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
                 </div>
             `;
         }
     }
+    
 
     researchDiv.innerHTML = "<h3>Research</h3>";
     for (const [key, item] of Object.entries(gameData.research)) {
