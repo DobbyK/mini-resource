@@ -56,9 +56,48 @@ const gameData = {
             max: 50, amount: 0, gain: 0, loss: 0, worth: 40, 
             unlocked: false, collectible: false, sellable: true,
             tooltip: "How the frick did you collect wood before?"
-        }
+        },
+        hammer: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 60, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "All I can think of is the Harmer class in final fantasy"
+        },
+        pickaxe: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 80, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Mining away on this minecraft day"
+        },
+        
     },
     buildings: {
+        hammerMaker: {
+            type: "hammer", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 300, metal: 150, stone: 200 },
+            resourcePrice: { human: 1, wood: 2, metal: 2 },
+            buildingProd: {},
+            tooltip: "The 50 billionth type of toolsmith"
+        },
+        autoHammerer: {
+            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0,
+            buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
+            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 10, money: 5 },
+            buildingProd: { "quarry": 1 },
+            tooltip: "Teach a man to hammer, get infinite rocks"
+        },
+        pickaxeMaker: {
+            type: "pickaxe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 400, metal: 300, stone: 300 },
+            resourcePrice: { human: 1, wood: 5, metal: 10 },
+            buildingProd: {},
+            tooltip: "Not a crafting table?"
+        },
+        autoPicker: {
+            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0,
+            buildCost: { pickaxe: 10, wood: 150, stone: 150, metal: 300, money: 400 },
+            resourcePrice: { pickaxe: 2, human: 2, food: 10, wood: 1 },
+            buildingProd: { "mine": 1 },
+            tooltip: "Redstone..."
+        },        
         axeSmith: {
             type: "axe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { metal: 400, money: 150, stone: 200 },
@@ -145,7 +184,7 @@ const gameData = {
         },
         superAxeHacker: {
             type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { metal: 500, wood: 200, stone: 300, money: 1000 },
+            buildCost: { metal: 500, wood: 200, stone: 300, money: 1000, axe: 20 },
             resourcePrice: { human: 2, axe: 2, money: 10, food: 5 },
             buildingProd: {"lumbermill": 1},
             tooltip: "How bad could I possibly be?"
@@ -209,6 +248,52 @@ const gameData = {
     },
 
     research: {
+        unlockHammer: {
+            name: "Now We're getting somewhere",
+            description: "The hammer is flat just like you",
+            cost: { science: 200, food: 300, stone: 200, metal: 150, wood: 200 },
+            effect: () => {
+                gameData.resources.hammer.unlocked = true;
+                gameData.buildings.hammerMaker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockAxe"],
+            tooltip: "Unlock Hammer & Hammer Maker"
+        },
+        unlockAutoHammer: {
+            name: "Rock Hard ;)",
+            description: "Okay maybe I have made too many dirty jokes...",
+            cost: { science: 400, food: 500, stone: 300, metal: 250 },
+            effect: () => {
+                gameData.buildings.autoHammerer.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHammer"],
+            tooltip: "Unlock AutoHammerer"
+        },
+        unlockPickaxe: {
+            name: "Deeper into your mo-",
+            description: "Theoritcally (again no spell check in my IDE) you could go bellow y=11",
+            cost: { science: 300, food: 400, stone: 300, metal: 200 },
+            effect: () => {
+                gameData.resources.pickaxe.unlocked = true;
+                gameData.buildings.pickaxeMaker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHammer"],
+            tooltip: "Unlock Pickaxe & Pickaxe Maker"
+        },
+        unlockAutoPicker: {
+            name: "The Quicker Picker Upper",
+            description: "Paper Towel to be added in full release <a target='_blank' href='https://bountytowels.com/en-us'>Not The Trimps Bounty</a>",
+            cost: { science: 500, food: 600, metal: 400, money: 300 },
+            effect: () => {
+                gameData.buildings.autoPicker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockPickaxe"],
+            tooltip: "Unlock AutoPicker"
+        },        
         unlockAxeHacker: {
             name: "Anti-lorax",
             description: "It's a principle of nature, that almost every creature knows  <a target='_blank' href='https://seuss.fandom.com/wiki/Super_Axe_Hacker'>Wiki</a>",
