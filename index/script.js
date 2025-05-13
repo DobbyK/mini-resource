@@ -500,11 +500,12 @@ function updateUI() {
                     <div class="tooltip">
                     <span class="tooltiptext">${res.tooltip}</span>
                     <strong>${format(name)}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
-                    <div class="tooltip"><span class="tooltiptext">${getProductionBreakdown(name)}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div>
+                    <div class="tooltip"><span class="tooltiptext">${getProductionBreakdown(name)}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div><br>
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
 
                 </div>
+                <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
             `;
         } else {
             rDiv.innerHTML += ``;
@@ -529,7 +530,8 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
     const sortedTypes = Object.keys(buildingsByType).sort();
     
     for (const type of sortedTypes) {
-        bDiv.innerHTML += `<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>`;
+        bDiv.innerHTML += `<hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
+<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>`;
         
         for (const building of buildingsByType[type]) {
             const costText = getCostText(building);
@@ -542,6 +544,7 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
                     <br><button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>
                     <button onclick="destroy('${building.name}')">Destroy</button>                   
                 </div>
+                
             `;
         }
     }
