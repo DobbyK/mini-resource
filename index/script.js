@@ -708,12 +708,55 @@ function sell(resource) {
 
 function destroy(buildingName) {
     const building = gameData.buildings[buildingName];
-    if (building.count >= 1) {
-        building.count -= 1;
-    } else {
+
+    if (building.count < 1) {
         alert('How the hell you gonna destroy you got none');
+        return;
     }
+
+    // Simulate the new building count after destruction
+    const newCount = building.count - 1;
+
+    // Collect all affected resources
+    const affectedResources = new Set(Object.keys(building.resourcePrice));
+
+    // Add any other resources consumed by other buildings
+    for (const otherBuilding of Object.values(gameData.buildings)) {
+        if (otherBuilding.resourcePrice) {
+            for (const res in otherBuilding.resourcePrice) {
+                affectedResources.add(res);
+            }
+        }
+    }
+
+    for (const resource of affectedResources) {
+        let newTotalConsumption = 0;
+
+        for (const [bName, b] of Object.entries(gameData.buildings)) {
+            const price = b.resourcePrice?.[resource] || 0;
+            const count = (bName === buildingName) ? newCount : b.count;
+            newTotalConsumption += price * count;
+        }
+
+        let newTotalProduction = 0;
+        for (const b of Object.values(gameData.buildings)) {
+            const isProducer = b.type === resource;
+            const producerCount = (b === building && b.type === resource) ? newCount : b.count;
+            if (isProducer) {
+                newTotalProduction += producerCount * b.level * b.production;
+            }
+        }
+
+        if (newTotalProduction < newTotalConsumption) {
+            alert(`You cannot destroy a ${buildingName} because it would reduce ${resource} production below consumption. Required: ${newTotalConsumption}/s, Available: ${newTotalProduction}/s`);
+            return;
+        }
+    }
+
+    // All checks passed, safe to destroy
+    building.count -= 1;
 }
+
 
 function build(buildingName) {
     const building = gameData.buildings[buildingName];
