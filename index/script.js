@@ -566,6 +566,7 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
             <br>Cost: ${formatCost(item.cost)}
             <br><button onclick="performResearch('${key}')">Research</button>
         </div>
+        <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
     `;
     }
 
