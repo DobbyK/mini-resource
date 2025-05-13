@@ -518,7 +518,7 @@ function updateUI() {
                     <div class="tooltip">
                     <span class="tooltiptext">${res.tooltip}</span>
                     <strong>${name}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
-                    <div class="tooltip"><span class="tooltiptext">+${res.gain+res.loss}, -${res.loss}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div>
+                    <div class="tooltip"><span class="tooltiptext">${getProductionBreakdown(name)}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div>
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
 
@@ -585,6 +585,41 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
     }
 
 }
+
+function getProductionBreakdown(resourceName) {
+    let breakdown = [];
+    const res = gameData.resources[resourceName];
+
+    // Positive production
+    for (const [bName, building] of Object.entries(gameData.buildings)) {
+        if (building.type === resourceName && building.count > 0 && building.production > 0) {
+            const gain = building.count * building.level * building.production;
+            breakdown.push(`+${gain} ${resourceName}/s (${bName})`);
+        }
+    }
+
+    // Manual collection
+    if (gameData.collecting === resourceName) {
+        breakdown.push(`+1 ${resourceName}/s (manual collection)`);
+    }
+
+    // Negative consumption
+    for (const [bName, building] of Object.entries(gameData.buildings)) {
+        if (building.resourcePrice && building.resourcePrice[resourceName]) {
+            const loss = building.count * building.resourcePrice[resourceName];
+            if (loss > 0) {
+                breakdown.push(`-${loss} ${resourceName}/s (${bName})`);
+            }
+        }
+    }
+
+    if (breakdown.length === 0) {
+        return `No active production or consumption for ${resourceName}.`;
+    }
+
+    return breakdown.join('<br>');
+}
+
 
 function formatCost(costObj) {
     return Object.entries(costObj).map(([res, amt]) => `${amt} ${res}`).join(', ');
