@@ -557,7 +557,7 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
                         <span class="tooltiptext">${building.tooltip}</span>
                         <strong>${building.name}</strong>
                     </div> (Lv ${building.level}) - Count: <span id="${building.name}_count">${building.count}</span>
-                    <button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
+                    <br><button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>                   
                 </div>
             `;
         }
