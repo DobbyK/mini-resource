@@ -25,22 +25,22 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     white-space: normal;
     word-wrap: break-word;
-  
+
     position: absolute;
     z-index: 10;
     top: 125%;
     left: 50%;
     transform: translateX(20%);
-  
+
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
-  }
+}
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #game {
@@ -57,8 +57,9 @@ body {
     border: 1px solid #ccc;
     padding: 10px;
     z-index: 1000;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 /* Left column: Resources */
 #resources {
     width: 20%;
@@ -87,6 +88,44 @@ body {
     box-sizing: border-box;
     overflow-y: auto;
     border-left: 1px solid #ccc;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+body.dark-mode .tooltiptext {
+    background-color: #333;
+    color: #eee;
+    border-color: #555;
+}
+
+body.dark-mode button {
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-mode hr {
+    border-top: 1px solid #444;
+}
+
+body.dark-mode h3,
+body.dark-mode h4 {
+    color: #fff;
+}
+
+body.dark-mode .tooltip strong {
+    color: #fff;
+}
+
+body.dark-mode #resources,
+body.dark-mode #buildings,
+body.dark-mode #research {
+    background-color: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
 }
 
 /* Basic styling for buttons and headers */

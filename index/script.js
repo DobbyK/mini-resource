@@ -469,13 +469,14 @@ function initGame() {
     const container = document.getElementById("game");
     container.innerHTML = `
         <div id="save-controls">
+            <button onclick="darkModeToggle()">Dark Mode</button>
             <button onclick="saveGame()">Save In Browser</button>
             <button onclick="loadGame()">Load From Browser</button>
             <button onclick="exportSave()">Export Save</button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.6</a>
+            <a target="_blank" href="changelog.html">v0.0.6.1</a>
         </div>
         <div id="resources">
         </div>
@@ -767,6 +768,15 @@ function format(name) {
         .replace(/([a-z])([A-Z])/g, '$1 $2')  // insert space before capital letters
         .replace(/^./, str => str.toUpperCase());  // capitalize first letter
 }
+
+function darkModeToggle() {
+    document.body.classList.toggle("dark-mode");
+
+    // Optional: save preference in localStorage
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", isDark ? "on" : "off");
+}
+
 
 // Passive Gain
 setInterval(() => {
