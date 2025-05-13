@@ -600,7 +600,7 @@ function getProductionBreakdown(resourceName) {
     }
 
     if (breakdown.length === 0) {
-        return `No active production or consumption for ${resourceName}.`;
+        return `You get no ${resourceName} idiot.`;
     }
 
     return breakdown.join('<br>');
