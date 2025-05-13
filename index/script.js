@@ -52,8 +52,59 @@ const gameData = {
             unlocked: false, collectible: false, sellable: true,
             tooltip: "The Farming Kind, Not the other"
         },
+        axe: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 40, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "How the frick did you collect wood before?"
+        },
+        hammer: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 60, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "All I can think of is the Harmer class in final fantasy"
+        },
+        pickaxe: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 80, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Mining away on this minecraft day"
+        },
+        
     },
     buildings: {
+        hammerMaker: {
+            type: "hammer", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 300, metal: 150, stone: 200 },
+            resourcePrice: { human: 1, wood: 2, metal: 2 },
+            buildingProd: {},
+            tooltip: "The 50 billionth type of toolsmith"
+        },
+        autoHammerer: {
+            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0,
+            buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
+            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 10, money: 5 },
+            buildingProd: { "quarry": 1 },
+            tooltip: "Teach a man to hammer, get infinite rocks"
+        },
+        pickaxeMaker: {
+            type: "pickaxe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 400, metal: 300, stone: 300 },
+            resourcePrice: { human: 1, wood: 5, metal: 10 },
+            buildingProd: {},
+            tooltip: "Not a crafting table?"
+        },
+        autoPicker: {
+            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0,
+            buildCost: { pickaxe: 10, wood: 150, stone: 150, metal: 300, money: 400 },
+            resourcePrice: { pickaxe: 2, human: 2, food: 10, wood: 1 },
+            buildingProd: { "mine": 1 },
+            tooltip: "Redstone..."
+        },        
+        axeSmith: {
+            type: "axe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { metal: 400, money: 150, stone: 200 },
+            resourcePrice: { human: 1, metal: 6, wood: 2},
+            buildingProd: { },
+            tooltip: "Train some dude to strike together some axes"
+        },
         ratTrainer: {
             type: "rat", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { food: 400, wood: 400, stone: 100, money: 100 },
@@ -131,6 +182,13 @@ const gameData = {
             buildingProd: {},
             tooltip: "Put chopped trees in a field for later use"
         },
+        superAxeHacker: {
+            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { metal: 500, wood: 200, stone: 300, money: 1000, axe: 20 },
+            resourcePrice: { human: 2, axe: 2, money: 10, food: 5 },
+            buildingProd: {"lumbermill": 1},
+            tooltip: "How bad could I possibly be?"
+        },
         quarry: {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 10, money: 5 },
@@ -166,6 +224,13 @@ const gameData = {
             buildingProd: {},
             tooltip: "Sell Food, Get Cash. Yum"
         },
+        lumberCompany: {
+            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 2,
+            buildCost: { stone: 50, wood: 40, metal: 40 },
+            resourcePrice: { wood: 1 },
+            buildingProd: {},
+            tooltip: "Sell Lumber Large Scale Baby"
+        },
         bank: {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 20, metal: 30, stone: 20 },
@@ -183,6 +248,86 @@ const gameData = {
     },
 
     research: {
+        unlockHammer: {
+            name: "Now We're getting somewhere",
+            description: "The hammer is flat just like you",
+            cost: { science: 200, food: 300, stone: 200, metal: 150, wood: 200 },
+            effect: () => {
+                gameData.resources.hammer.unlocked = true;
+                gameData.buildings.hammerMaker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockAxe"],
+            tooltip: "Unlock Hammer & Hammer Maker"
+        },
+        unlockAutoHammer: {
+            name: "Rock Hard ;)",
+            description: "Okay maybe I have made too many dirty jokes...",
+            cost: { science: 400, food: 500, stone: 300, metal: 250 },
+            effect: () => {
+                gameData.buildings.autoHammerer.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHammer"],
+            tooltip: "Unlock AutoHammerer"
+        },
+        unlockPickaxe: {
+            name: "Deeper into your mo-",
+            description: "Theoritcally (again no spell check in my IDE) you could go bellow y=11",
+            cost: { science: 300, food: 400, stone: 300, metal: 200 },
+            effect: () => {
+                gameData.resources.pickaxe.unlocked = true;
+                gameData.buildings.pickaxeMaker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHammer"],
+            tooltip: "Unlock Pickaxe & Pickaxe Maker"
+        },
+        unlockAutoPicker: {
+            name: "The Quicker Picker Upper",
+            description: "Paper Towel to be added in full release <a target='_blank' href='https://bountytowels.com/en-us'>Not The Trimps Bounty</a>",
+            cost: { science: 500, food: 600, metal: 400, money: 300 },
+            effect: () => {
+                gameData.buildings.autoPicker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockPickaxe"],
+            tooltip: "Unlock AutoPicker"
+        },        
+        unlockAxeHacker: {
+            name: "Anti-lorax",
+            description: "It's a principle of nature, that almost every creature knows  <a target='_blank' href='https://seuss.fandom.com/wiki/Super_Axe_Hacker'>Wiki</a>",
+            cost: { science: 400, food: 600, stone: 300, metal: 200 },
+            effect: () => {
+                gameData.buildings.superAxeHacker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockAutoHoe"],
+            tooltip: "Unlock Super Axe Hacker"
+        },
+        unlockLumberCompany: {
+            name: "Capitalism 2.0",
+            description: "New Update! Sell Wood to the masses",
+            cost: { science: 200, food: 800, stone: 150 },
+            effect: () => {
+                gameData.buildings.lumberCompany.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockMarket", "unlockLibrary"],
+            tooltip: "Unlock Lumber Company"
+        },
+        unlockAxe: {
+            name: "Chop Chop",
+            description: "Hilt + Handle - wait aren't those the same.",
+            cost: { science: 150, food: 100, stone: 150 },
+            effect: () => {
+                gameData.resources.axe.unlocked = true;
+                gameData.buildings.axeSmith.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHoe"],
+            tooltip: "Unlock Axe"
+        },
         unlockMeals: {
             name: "Make The Food Better?",
             description: "The Humans think the rats are smart. make Food???",
@@ -476,7 +621,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.6.1</a>
+            <a target="_blank" href="changelog.html">v0.0.7</a>
         </div>
         <div id="resources">
         </div>
@@ -648,12 +793,55 @@ function sell(resource) {
 
 function destroy(buildingName) {
     const building = gameData.buildings[buildingName];
-    if (building.count >= 1) {
-        building.count -= 1;
-    } else {
+
+    if (building.count < 1) {
         alert('How the hell you gonna destroy you got none');
+        return;
     }
+
+    // Simulate the new building count after destruction
+    const newCount = building.count - 1;
+
+    // Collect all affected resources
+    const affectedResources = new Set(Object.keys(building.resourcePrice));
+
+    // Add any other resources consumed by other buildings
+    for (const otherBuilding of Object.values(gameData.buildings)) {
+        if (otherBuilding.resourcePrice) {
+            for (const res in otherBuilding.resourcePrice) {
+                affectedResources.add(res);
+            }
+        }
+    }
+
+    for (const resource of affectedResources) {
+        let newTotalConsumption = 0;
+
+        for (const [bName, b] of Object.entries(gameData.buildings)) {
+            const price = b.resourcePrice?.[resource] || 0;
+            const count = (bName === buildingName) ? newCount : b.count;
+            newTotalConsumption += price * count;
+        }
+
+        let newTotalProduction = 0;
+        for (const b of Object.values(gameData.buildings)) {
+            const isProducer = b.type === resource;
+            const producerCount = (b === building && b.type === resource) ? newCount : b.count;
+            if (isProducer) {
+                newTotalProduction += producerCount * b.level * b.production;
+            }
+        }
+
+        if (newTotalProduction < newTotalConsumption) {
+            alert(`You cannot destroy a ${buildingName} because it would reduce ${resource} production below consumption. Required: ${newTotalConsumption}/s, Available: ${newTotalProduction}/s`);
+            return;
+        }
+    }
+
+    // All checks passed, safe to destroy
+    building.count -= 1;
 }
+
 
 function build(buildingName) {
     const building = gameData.buildings[buildingName];
@@ -757,7 +945,8 @@ function performResearch(key) {
 
 function giveAllResourcesDebug() {
     for (const res of Object.values(gameData.resources)) {
-        res.amount = 100000;
+        res.max += 100000;
+        res.amount += 100000;
     }
     updateUI();
     console.log("All resources set to 100,000 for debugging.");
