@@ -52,8 +52,20 @@ const gameData = {
             unlocked: false, collectible: false, sellable: true,
             tooltip: "The Farming Kind, Not the other"
         },
+        axe: { 
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 40, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "How the frick did you collect wood before?"
+        }
     },
     buildings: {
+        axeSmith: {
+            type: "axe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { metal: 400, money: 150, stone: 200 },
+            resourcePrice: { human: 1, metal: 6, wood: 2},
+            buildingProd: { },
+            tooltip: "Train some dude to strike together some axes"
+        },
         ratTrainer: {
             type: "rat", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { food: 400, wood: 400, stone: 100, money: 100 },
@@ -131,6 +143,13 @@ const gameData = {
             buildingProd: {},
             tooltip: "Put chopped trees in a field for later use"
         },
+        superAxeHacker: {
+            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            buildCost: { metal: 500, wood: 200, stone: 300, money: 1000 },
+            resourcePrice: { human: 2, axe: 2, money: 10, food: 5 },
+            buildingProd: {"lumbermill": 1},
+            tooltip: "How bad could I possibly be?"
+        },
         quarry: {
             type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 10, money: 5 },
@@ -166,6 +185,13 @@ const gameData = {
             buildingProd: {},
             tooltip: "Sell Food, Get Cash. Yum"
         },
+        lumberCompany: {
+            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 2,
+            buildCost: { stone: 50, wood: 40, metal: 40 },
+            resourcePrice: { wood: 1 },
+            buildingProd: {},
+            tooltip: "Sell Lumber Large Scale Baby"
+        },
         bank: {
             type: "money", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 20, metal: 30, stone: 20 },
@@ -183,6 +209,40 @@ const gameData = {
     },
 
     research: {
+        unlockAxeHacker: {
+            name: "Anti-lorax",
+            description: "It's a principle of nature, that almost every creature knows  <a target='_blank' href='https://seuss.fandom.com/wiki/Super_Axe_Hacker'>Wiki</a>",
+            cost: { science: 400, food: 600, stone: 300, metal: 200 },
+            effect: () => {
+                gameData.buildings.superAxeHacker.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockAutoHoe"],
+            tooltip: "Unlock Super Axe Hacker"
+        },
+        unlockLumberCompany: {
+            name: "Capitalism 2.0",
+            description: "New Update! Sell Wood to the masses",
+            cost: { science: 200, food: 800, stone: 150 },
+            effect: () => {
+                gameData.buildings.lumberCompany.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockMarket", "unlockLibrary"],
+            tooltip: "Unlock Lumber Company"
+        },
+        unlockAxe: {
+            name: "Chop Chop",
+            description: "Hilt + Handle - wait aren't those the same.",
+            cost: { science: 150, food: 100, stone: 150 },
+            effect: () => {
+                gameData.resources.axe.unlocked = true;
+                gameData.buildings.axeSmith.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockHoe"],
+            tooltip: "Unlock Axe"
+        },
         unlockMeals: {
             name: "Make The Food Better?",
             description: "The Humans think the rats are smart. make Food???",
