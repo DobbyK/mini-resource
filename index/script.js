@@ -59,7 +59,6 @@ const gameData = {
             buildCost: { food: 400, wood: 400, stone: 100, money: 100 },
             resourcePrice: { human: 2, food: 8, stone: 1 },
             buildingProd: { },
-            baseUpgrade: 20,
             tooltip: "Use food to train rats who in turn make food better. And some traping"
         },
         kitchen: {
@@ -67,7 +66,6 @@ const gameData = {
             buildCost: { food: 200, metal: 400, stone: 100 },
             resourcePrice: { rat: 2, human: 1, food: 5 },
             buildingProd: {  },
-            baseUpgrade: 20,
             tooltip: "Food+Rats+Human Slave = Better Food?"
         },
         AutoHoer: {
@@ -75,7 +73,6 @@ const gameData = {
             buildCost: { food: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
             resourcePrice: { hoe: 2, human: 2, food: 10 },
             buildingProd: { "farm": 1 },
-            baseUpgrade: 20,
             tooltip: "Peak Human Integunity. (no spell check)"
         },
         hoeMaker: {
@@ -83,7 +80,6 @@ const gameData = {
             buildCost: { wood: 200, metal: 100 },
             resourcePrice: { human: 1, wood: 2, stone: 1 },
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
         nursery: {
@@ -91,7 +87,6 @@ const gameData = {
             buildCost: { wood: 100, stone: 50, metal: 20 },
             resourcePrice: { food: 2 },
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "If you feed some humans, they'll be birds & bees."
         },
         hut: {
@@ -99,7 +94,6 @@ const gameData = {
             buildCost: { wood: 50, stone: 25 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "The homeless rates are going down"
         },
         school: {
@@ -107,7 +101,6 @@ const gameData = {
             buildCost: { wood: 20, food: 5 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Expires in the summer time. Makes science, somehow"
         },
         farm: {
@@ -115,7 +108,6 @@ const gameData = {
             buildCost: { food: 10 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Agiliculture. Make the food, become the food."
         },
         silo: {
@@ -123,7 +115,6 @@ const gameData = {
             buildCost: { wood: 20 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "All that food you got gotta go somewhere"
         },
         lumbermill: {
@@ -131,7 +122,6 @@ const gameData = {
             buildCost: { money: 10, food: 5 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Industiral Climate Change"
         },
         woodyard: {
@@ -139,7 +129,6 @@ const gameData = {
             buildCost: { money: 50, wood: 10 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Put chopped trees in a field for later use"
         },
         quarry: {
@@ -147,7 +136,6 @@ const gameData = {
             buildCost: { wood: 10, money: 5 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Choose one place randomly you'll get stone faster if you dont do it randomly"
         },
         stonepit: {
@@ -155,7 +143,6 @@ const gameData = {
             buildCost: { money: 75, stone: 20 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Throw that stone in a new area, for later use"
         },
         mine: {
@@ -163,7 +150,6 @@ const gameData = {
             buildCost: { stone: 10, wood: 5 },
             resourcePrice: { wood: 1 },
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Don't mine straight down. Or up. Get Metal."
         },
         scrapyard: {
@@ -171,7 +157,6 @@ const gameData = {
             buildCost: { money: 80, metal: 30 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Find another places you can throw all that stuff you found."
         },
         market: {
@@ -179,7 +164,6 @@ const gameData = {
             buildCost: { stone: 10, wood: 5 },
             resourcePrice: { food: 1 },
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Sell Food, Get Cash. Yum"
         },
         bank: {
@@ -187,7 +171,6 @@ const gameData = {
             buildCost: { money: 20, metal: 30, stone: 20 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "The Bank of ${GameName}. :) Store your money here!!!"
         },
         library: {
@@ -195,7 +178,6 @@ const gameData = {
             buildCost: { human: 20, money: 100, stone: 200 },
             resourcePrice: {},
             buildingProd: {},
-            baseUpgrade: 20,
             tooltip: "Some inspirational quote for why it costs humans - DobbyK"
         },
     },
@@ -517,7 +499,7 @@ function updateUI() {
                 <div>
                     <div class="tooltip">
                     <span class="tooltiptext">${res.tooltip}</span>
-                    <strong>${name}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
+                    <strong>${format(name)}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
                     <div class="tooltip"><span class="tooltiptext">${getProductionBreakdown(name)}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div>
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
 ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
@@ -555,8 +537,8 @@ ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>`
                 <div>
                     <div class="tooltip">
                         <span class="tooltiptext">${building.tooltip}</span>
-                        <strong>${building.name}</strong>
-                    </div> (Lv ${building.level}) - Count: <span id="${building.name}_count">${building.count}</span>
+                        <strong>${format(building.name)}</strong>
+                    </div> - <span id="${building.name}_count">${building.count}</span>
                     <br><button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>
                     <button onclick="destroy('${building.name}')">Destroy</button>                   
                 </div>
@@ -774,6 +756,12 @@ function giveAllResourcesDebug() {
     }
     updateUI();
     console.log("All resources set to 100,000 for debugging.");
+}
+
+function format(name) {
+    return name
+        .replace(/([a-z])([A-Z])/g, '$1 $2')  // insert space before capital letters
+        .replace(/^./, str => str.toUpperCase());  // capitalize first letter
 }
 
 // Passive Gain
