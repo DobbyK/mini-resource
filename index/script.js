@@ -945,7 +945,8 @@ function performResearch(key) {
 
 function giveAllResourcesDebug() {
     for (const res of Object.values(gameData.resources)) {
-        res.amount = 100000;
+        res.max += 100000;
+        res.amount += 100000;
     }
     updateUI();
     console.log("All resources set to 100,000 for debugging.");
