@@ -206,7 +206,7 @@ const gameData = {
         mine: {
             type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 },
-            resourcePrice: { wood: 1 },
+            resourcePrice: { },
             buildingProd: {},
             tooltip: "Don't mine straight down. Or up. Get Metal."
         },
@@ -629,6 +629,7 @@ function initGame() {
         <div id="research"></div>
     `;
     renderStaticUI();
+    requestAnimationFrame(gameLoop);
 }
 
 
@@ -711,15 +712,15 @@ function updateDynamicUI() {
         if (res.unlocked) {
             const amountElem = document.getElementById(`${name}_amount`);
             const gainElem = document.getElementById(`${name}_gain`);
-            if (amountElem) amountElem.innerHTML = `${res.amount}/${res.max}`;
-            if (gainElem) gainElem.innerHTML = res.gain;
+            if (amountElem) amountElem.innerHTML = `${res.amount.toFixed()}/${res.max}`;
+            if (gainElem) gainElem.innerHTML = res.gain.toFixed();
         }
     }
 
     for (const [bName, building] of Object.entries(gameData.buildings)) {
         if (building.unlocked) {
             const countElem = document.getElementById(`${bName}_count`);
-            if (countElem) countElem.innerHTML = building.count;
+            if (countElem) countElem.innerHTML = building.count.toFixed();
         }
     }
 
@@ -740,7 +741,7 @@ function getProductionBreakdown(resourceName) {
     for (const [bName, building] of Object.entries(gameData.buildings)) {
         if (building.type === resourceName && building.count > 0 && building.production > 0) {
             const gain = building.count * building.level * building.production;
-            breakdown.push(`+${gain} ${resourceName}/s (${bName})`);
+            breakdown.push(`+${gain.toFixed()} ${resourceName}/s (${bName})`);
         }
     }
 
@@ -754,7 +755,7 @@ function getProductionBreakdown(resourceName) {
         if (building.resourcePrice && building.resourcePrice[resourceName]) {
             const loss = building.count * building.resourcePrice[resourceName];
             if (loss > 0) {
-                breakdown.push(`-${loss} ${resourceName}/s (${bName})`);
+                breakdown.push(`-${loss.toFixed()} ${resourceName}/s (${bName})`);
             }
         }
     }
@@ -791,7 +792,6 @@ function collect(resource) {
     }
 
     gameData.resources[resource].gain += 1;
-    renderStaticUI();
 }
 
 function sell(resource) {
@@ -799,7 +799,6 @@ function sell(resource) {
     if (res.amount > 0) {
         res.amount -= 1;
         gameData.resources.money.amount += res.worth;
-        renderStaticUI();
     } else {
         alert(`No ${resource} to sell.`);
     }
@@ -902,7 +901,6 @@ function build(buildingName) {
     building.count += 1;
     gameData.resources[building.type].max += building.maxBoost;
     updateGains();
-    renderStaticUI();
 }
 
 
@@ -962,7 +960,6 @@ function giveAllResourcesDebug() {
         res.max += 100000;
         res.amount += 100000;
     }
-    renderStaticUI();
     console.log("All resources set to 100,000 for debugging.");
 }
 
@@ -982,25 +979,33 @@ function darkModeToggle() {
 
 
 // Passive Gain
-setInterval(() => {
+let lastTime = performance.now();
+
+function gameLoop(currentTime) {
+    const deltaTime = (currentTime - lastTime) / 1000;
+    lastTime = currentTime;
+
     for (const res of Object.values(gameData.resources)) {
-        if ((res.amount + res.gain) < res.max) {
-            res.amount += res.gain;
-        } else {
-            res.amount = res.max;
+        if (res.gain > 0) {
+            res.amount += res.gain * deltaTime;
+            if (res.amount > res.max) res.amount = res.max;
         }
     }
+
     for (const building of Object.values(gameData.buildings)) {
         if (building.buildingProd) {
             for (const build in building.buildingProd) {
                 const prod = building.buildingProd[build];
-                gameData.buildings[build].count += prod * building.count;
+                gameData.buildings[build].count += prod * building.count * deltaTime;
             }
         }
     }
+
     updateGains();
-    updateDynamicUI()
-}, 1000);
+    updateDynamicUI();
+
+    requestAnimationFrame(gameLoop);
+}
 
 function exportSave() {
     const dataStr = JSON.stringify(gameData, null, 2);
