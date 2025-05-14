@@ -628,12 +628,12 @@ function initGame() {
         <div id="buildings"></div>
         <div id="research"></div>
     `;
-    updateUI();
+    renderStaticUI();
 }
 
 
 // Update UI Dynamically
-function updateUI() {
+function renderStaticUI() {
     const rDiv = document.getElementById("resources");
     const bDiv = document.getElementById("buildings");
     const researchDiv = document.getElementById("research");
@@ -644,79 +644,93 @@ function updateUI() {
             rDiv.innerHTML += `
                 <div>
                     <div class="tooltip">
-                    <span class="tooltiptext">${res.tooltip}</span>
-                    <strong>${format(name)}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
-                    <div class="tooltip"><span class="tooltiptext">${getProductionBreakdown(name)}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div><br>
+                        <span class="tooltiptext">${res.tooltip}</span>
+                        <strong>${format(name)}</strong>:
+                    </div>
+                    <span id="${name}_amount">${res.amount}/${res.max}</span> 
+                    <div class="tooltip">
+                        <span class="tooltiptext" id="${name}_tip">${getProductionBreakdown(name)}</span>
+                        (+<span id="${name}_gain">${res.gain}</span>/s)
+                    </div><br>
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
-${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
-
+                    ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
                 </div>
                 <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
             `;
-        } else {
-            rDiv.innerHTML += ``;
         }
     }
 
     bDiv.innerHTML = '<h3>Buildings</h3>';
-
     const buildingsByType = {};
-    
-    // Group buildings by type
+
     for (const [bName, building] of Object.entries(gameData.buildings)) {
         if (building.unlocked && gameData.resources[building.type]?.unlocked) {
-            if (!buildingsByType[building.type]) {
-                buildingsByType[building.type] = [];
-            }
+            if (!buildingsByType[building.type]) buildingsByType[building.type] = [];
             buildingsByType[building.type].push({ name: bName, ...building });
         }
     }
-    
-    // Optional: Sort types alphabetically
+
     const sortedTypes = Object.keys(buildingsByType).sort();
-    
     for (const type of sortedTypes) {
-        bDiv.innerHTML += `<hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
-<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>`;
-        
+        bDiv.innerHTML += `<hr><h4>${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>`;
         for (const building of buildingsByType[type]) {
-            const costText = getCostText(building);
             bDiv.innerHTML += `
                 <div>
                     <div class="tooltip">
                         <span class="tooltiptext">${building.tooltip}</span>
                         <strong>${format(building.name)}</strong>
                     </div> - <span id="${building.name}_count">${building.count}</span>
-                    <br><button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>
-                    <button onclick="destroy('${building.name}')">Destroy</button>                   
+                    <br>
+                    <button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${getCostText(building)})</button>
+                    <button onclick="destroy('${building.name}')">Destroy</button>
                 </div>
-                
             `;
         }
     }
-    
 
     researchDiv.innerHTML = "<h3>Research</h3>";
     for (const [key, item] of Object.entries(gameData.research)) {
-        if (item.completed) continue;
-
-        // Check if all prerequisites are met
-        const prereqsMet = item.requires.every(reqKey => gameData.research[reqKey]?.completed);
-        if (!prereqsMet) continue;
+        if (item.completed || !item.requires.every(reqKey => gameData.research[reqKey]?.completed)) continue;
 
         researchDiv.innerHTML += `
-        <div>
-            <div class="tooltip">
-            <span class="tooltiptext">${item.tooltip}</span>
-            <strong>${item.name}</strong></div>: ${item.description}
-            <br>Cost: ${formatCost(item.cost)}
-            <br><button onclick="performResearch('${key}')">Research</button>
-        </div>
-        <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
-    `;
+            <div>
+                <div class="tooltip">
+                    <span class="tooltiptext">${item.tooltip}</span>
+                    <strong>${item.name}</strong>
+                </div>: ${item.description}
+                <br>Cost: ${formatCost(item.cost)}
+                <br><button onclick="performResearch('${key}')">Research</button>
+            </div>
+            <hr>
+        `;
+    }
+}
+
+function updateDynamicUI() {
+    for (const [name, res] of Object.entries(gameData.resources)) {
+        if (res.unlocked) {
+            const amountElem = document.getElementById(`${name}_amount`);
+            const gainElem = document.getElementById(`${name}_gain`);
+            if (amountElem) amountElem.innerHTML = `${res.amount}/${res.max}`;
+            if (gainElem) gainElem.innerHTML = res.gain;
+        }
     }
 
+    for (const [bName, building] of Object.entries(gameData.buildings)) {
+        if (building.unlocked) {
+            const countElem = document.getElementById(`${bName}_count`);
+            if (countElem) countElem.innerHTML = building.count;
+        }
+    }
+
+    for (const [name, res] of Object.entries(gameData.resources)) {
+        if (res.unlocked) {
+        const tip = document.getElementById(`${name}_tip`);
+        if (tip) tip.innerHTML = getProductionBreakdown(name);
+        }
+    }
 }
+
 
 function getProductionBreakdown(resourceName) {
     let breakdown = [];
@@ -777,7 +791,7 @@ function collect(resource) {
     }
 
     gameData.resources[resource].gain += 1;
-    updateUI();
+    renderStaticUI();
 }
 
 function sell(resource) {
@@ -785,7 +799,7 @@ function sell(resource) {
     if (res.amount > 0) {
         res.amount -= 1;
         gameData.resources.money.amount += res.worth;
-        updateUI();
+        renderStaticUI();
     } else {
         alert(`No ${resource} to sell.`);
     }
@@ -888,7 +902,7 @@ function build(buildingName) {
     building.count += 1;
     gameData.resources[building.type].max += building.maxBoost;
     updateGains();
-    updateUI();
+    renderStaticUI();
 }
 
 
@@ -940,7 +954,7 @@ function performResearch(key) {
     item.effect();
     item.completed = true;
 
-    updateUI();
+    renderStaticUI();
 }
 
 function giveAllResourcesDebug() {
@@ -948,7 +962,7 @@ function giveAllResourcesDebug() {
         res.max += 100000;
         res.amount += 100000;
     }
-    updateUI();
+    renderStaticUI();
     console.log("All resources set to 100,000 for debugging.");
 }
 
@@ -985,7 +999,7 @@ setInterval(() => {
         }
     }
     updateGains();
-    updateUI();
+    updateDynamicUI()
 }, 1000);
 
 function exportSave() {
@@ -1011,7 +1025,7 @@ function importSave(event) {
             const parsed = JSON.parse(e.target.result);
             deepMerge(gameData, parsed);
             updateGains();
-            updateUI();
+            renderStaticUI();
             alert("Save imported successfully!");
         } catch (err) {
             alert("Failed to load save file.");
@@ -1052,7 +1066,7 @@ function loadGame() {
         const parsedData = JSON.parse(savedData);
         deepMerge(gameData, parsedData);
         alert("Game loaded!");
-        updateUI();
+        renderStaticUI();
     } else {
         alert("No save found.");
     }
