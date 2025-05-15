@@ -3,7 +3,7 @@ const gameData = {
     collecting: null,
     resources: {
         money: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
+            max: 10000, amount: 0, gain: 0, loss: 0, worth: 1, 
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Money... Capitalism... Sell Stuff To get Money"
         },
@@ -123,7 +123,7 @@ const gameData = {
         autoHammerer: {
             type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
-            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 10, money: 5 },
+            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 50, money: 25 },
             buildingProd: { "quarry": 1 },
             tooltip: "Teach a man to hammer, get infinite rocks"
         },
@@ -137,7 +137,7 @@ const gameData = {
         autoPicker: {
             type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { pickaxe: 10, wood: 150, stone: 150, metal: 300, money: 400 },
-            resourcePrice: { pickaxe: 2, human: 2, food: 10, wood: 1 },
+            resourcePrice: { pickaxe: 2, human: 2, stone: 50, wood: 25 },
             buildingProd: { "mine": 1 },
             tooltip: "Redstone..."
         },        
@@ -213,7 +213,7 @@ const gameData = {
         },
         lumbermill: {
             type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { money: 10, food: 5 },
+            buildCost: { money: 15, food: 5, wood: 5 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Industiral Climate Change"
@@ -228,13 +228,13 @@ const gameData = {
         superAxeHacker: {
             type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { metal: 500, wood: 200, stone: 300, money: 1000, axe: 20 },
-            resourcePrice: { human: 2, axe: 2, money: 10, food: 5 },
+            resourcePrice: { human: 2, axe: 2, money: 15, food: 5, wood: 5 },
             buildingProd: {"lumbermill": 1},
             tooltip: "How bad could I possibly be?"
         },
         quarry: {
             type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { wood: 10, money: 5 },
+            buildCost: { wood: 50, money: 100 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Choose one place randomly you'll get stone faster if you dont do it randomly"
@@ -248,7 +248,7 @@ const gameData = {
         },
         mine: {
             type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { stone: 10, wood: 5 },
+            buildCost: { stone: 50, wood: 25 },
             resourcePrice: { },
             buildingProd: {},
             tooltip: "Don't mine straight down. Or up. Get Metal."
@@ -275,7 +275,7 @@ const gameData = {
             tooltip: "Sell Lumber Large Scale Baby"
         },
         bank: {
-            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
+            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 5000, production: 0,
             buildCost: { money: 20, metal: 30, stone: 20 },
             resourcePrice: {},
             buildingProd: {},
