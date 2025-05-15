@@ -32,15 +32,20 @@ const gameData = {
             unlocked: false, collectible: true, sellable: false,
             tooltip: "Knowledge is power. You need this to research most things"
         },
-        food: { 
+        wheat: { 
             max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
             unlocked: false, collectible: true, sellable: false,
             tooltip: "Consumables"
         },
+		meat: {
+			max: 100, amount: 0, gain: 0, loss: 0, worth: 100,
+			unlocked: false, collectible: false, sellable: true,
+			tooltip: "Don't beat this, eat it"
+		},
         meal: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 100, 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 150, 
             unlocked: false, collectible: false, sellable: true,
-            tooltip: "+1 Enchanted Food"
+            tooltip: "Combination of wheat and meat. A sandwich?"
         },
         wood: { 
             max: 100, amount: 0, gain: 0, loss: 0, worth: 2, 
@@ -61,6 +66,11 @@ const gameData = {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 100, 
             unlocked: false, collectible: true, sellable: true,
             tooltip: "I don't remember anyone ever making leather armor"
+        },
+		milk: {
+			max: 100, amount: 0, gain: 0, loss: 0, worth: 50,
+			unlocked: false, collectible: false, sellable: true,
+			tooltip: "Not safe for babies? Too bad"
         },
         hoe: { 
             max: 50, amount: 0, gain: 0, loss: 0, worth: 25, 
@@ -86,18 +96,32 @@ const gameData = {
     },
     buildings: {
         pen: {
-            type: "cow", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
-            buildCost: { wood: 2000, stone: 1500, food: 900 },
-            resourcePrice: { human: 1, food: 5 },
+            type: "cow", count: 0, gain: 1, unlocked: false, maxBoost: 5, production: 1, gain: 0,
+            buildCost: { wood: 2000, stone: 1500, wheat: 900 },
+            resourcePrice: { human: 1, wheat: 5 },
             buildingProd: {},
             tooltip: "Moo"
         },
         tannery: {
-            type: "leather", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            type: "leather", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 2 },
             buildingProd: {},
             tooltip: "Moo-but dead (no meat)"
+        },
+		butcher: {
+			type: "meat", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+			buildCost: { wood: 2500, metal: 750 },
+			resourcePrice: { human: 1, cow: 1 },
+			buildingProd: {},
+			tooltip: "Moo-but dead (no leather)"
+		},
+		parlor: {
+            type: "milk", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            buildCost: { wood: 2500, metal: 750 },
+            resourcePrice: { human: 1, cow: 1 },
+            buildingProd: {},
+            tooltip: "Violate the cows"
         },
         church: {
             type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
@@ -108,7 +132,7 @@ const gameData = {
         },
         house: {
             type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 10, production: 0,
-            buildCost: { stone: 100, metal: 600, food: 2000 },
+            buildCost: { stone: 100, metal: 600, wheat: 2000 },
             resourcePrice: { },
             buildingProd: {},
             tooltip: "Only people happily married get the right not to live in huts"
@@ -123,7 +147,7 @@ const gameData = {
         autoHammerer: {
             type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
-            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 50, money: 25 },
+            resourcePrice: { hammer: 2, human: 2, wheat: 8, wood: 50, money: 25 },
             buildingProd: { "quarry": 1 },
             tooltip: "Teach a man to hammer, get infinite rocks"
         },
@@ -150,22 +174,22 @@ const gameData = {
         },
         ratTrainer: {
             type: "rat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { food: 400, wood: 400, stone: 100, money: 100 },
-            resourcePrice: { human: 2, food: 8, stone: 1 },
+            buildCost: { wheat: 400, wood: 400, stone: 100, money: 100 },
+            resourcePrice: { human: 2, wheat: 8, stone: 1 },
             buildingProd: { },
-            tooltip: "Use food to train rats who in turn make food better. And some traping"
+            tooltip: "Use wheat to train rats who in turn make wheat better. And some traping"
         },
         kitchen: {
             type: "meal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { food: 200, metal: 400, stone: 100 },
-            resourcePrice: { rat: 2, human: 1, food: 5 },
+            buildCost: { wheat: 200, metal: 400, stone: 100 },
+            resourcePrice: { rat: 2, human: 1, wheat: 5, meat: 1 },
             buildingProd: {  },
-            tooltip: "Food+Rats+Human Slave = Better Food?"
+            tooltip: "Wheat+Meat+Rats+Human Slave = Better food?"
         },
         AutoHoer: {
-            type: "food", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0, 
-            buildCost: { food: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
-            resourcePrice: { hoe: 2, human: 2, food: 10 },
+            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0, 
+            buildCost: { wheat: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
+            resourcePrice: { hoe: 2, human: 2, wheat: 10 },
             buildingProd: { "farm": 1 },
             tooltip: "Peak Human Integunity. (no spell check)"
         },
@@ -179,7 +203,7 @@ const gameData = {
         nursery: {
             type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 100, stone: 50, metal: 20 },
-            resourcePrice: { food: 2 },
+            resourcePrice: { wheat: 2 },
             buildingProd: {},
             tooltip: "If you feed some humans, they'll be birds & bees."
         },
@@ -192,28 +216,28 @@ const gameData = {
         },
         school: {
             type: "science", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { wood: 20, food: 5 },
+            buildCost: { wood: 20, wheat: 5 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Expires in the summer time. Makes science, somehow"
         },
         farm: {
-            type: "food", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { food: 10 },
+            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wheat: 10 },
             resourcePrice: {},
             buildingProd: {},
-            tooltip: "Agiliculture. Make the food, become the food."
+            tooltip: "Agiliculture. Make the wheat, become the wheat."
         },
         silo: {
-            type: "food", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0, 
+            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0, 
             buildCost: { wood: 20 },
             resourcePrice: {},
             buildingProd: {},
-            tooltip: "All that food you got gotta go somewhere"
+            tooltip: "All that wheat you got gotta go somewhere"
         },
         lumbermill: {
             type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { money: 15, food: 5, wood: 5 },
+            buildCost: { money: 15, wheat: 5, wood: 5 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Industiral Climate Change"
@@ -228,7 +252,7 @@ const gameData = {
         superAxeHacker: {
             type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { metal: 500, wood: 200, stone: 300, money: 1000, axe: 20 },
-            resourcePrice: { human: 2, axe: 2, money: 15, food: 5, wood: 5 },
+            resourcePrice: { human: 2, axe: 2, money: 15, wheat: 5, wood: 5 },
             buildingProd: {"lumbermill": 1},
             tooltip: "How bad could I possibly be?"
         },
@@ -263,9 +287,9 @@ const gameData = {
         market: {
             type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 },
-            resourcePrice: { food: 1 },
+            resourcePrice: { wheat: 1 },
             buildingProd: {},
-            tooltip: "Sell Food, Get Cash. Yum"
+            tooltip: "Sell wheat, Get Cash. Yum"
         },
         lumberCompany: {
             type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 2,
@@ -294,7 +318,7 @@ const gameData = {
         unlockCows: {
             name: "Knock Knock",
             description: "Who's there, interupting cow, interupting c- MOOOOO BIT-",
-            cost: { science: 250, food: 1000, wood: 750 },
+            cost: { science: 250, wheat: 1000, wood: 750 },
             effect: () => {
                 gameData.resources.cow.unlocked = true;
                 gameData.buildings.pen.unlocked = true;
@@ -315,10 +339,34 @@ const gameData = {
             requires: ["unlockCows"],
             tooltip: "Unlock Leather and Tannery"
         },
+		unlockMilk: {
+			name: "Cowlcium",
+			description: "Don't tell anyone what you were doing to the cows to get this.",
+			cost: { science: 300, stone: 700, metal: 500 },
+			effect: () => {
+				gameData.resources.milk.unlocked = true;
+				gameData.buildings.parlor.unlocked = true;
+			},
+			completed: false,
+			requires: ["unlockCows"],
+			tooltip: "Unlock Milk and Parlor"
+		},
+        unlockMeat: {
+			name: "Fast Food Nation",
+			description: "Arby's we have the meats (i have never been to an arby's and never will",
+			cost: { science: 300, stone: 700, metal: 500 },
+			effect: () => {
+				gameData.resources.meat.unlocked = true;
+				gameData.buildings.butcher.unlocked = true;
+			},
+			completed: false,
+			requires: ["unlockCows"],
+			tooltip: "Unlock Meat and Butcher"
+		},
         unlockFamilies: {
             name: "Everybody needs one",
             description: "Maybe humans need each other, eh nah",
-            cost: { science: 300, food: 500, wood: 300 },
+            cost: { science: 300, wheat: 500, wood: 300 },
             effect: () => {
                 gameData.resources.family.unlocked = true;
             },
@@ -351,7 +399,7 @@ const gameData = {
         unlockHammer: {
             name: "Now We're getting somewhere",
             description: "The hammer is flat just like you",
-            cost: { science: 200, food: 300, stone: 200, metal: 150, wood: 200 },
+            cost: { science: 200, wheat: 300, stone: 200, metal: 150, wood: 200 },
             effect: () => {
                 gameData.resources.hammer.unlocked = true;
                 gameData.buildings.hammerMaker.unlocked = true;
@@ -363,7 +411,7 @@ const gameData = {
         unlockAutoHammer: {
             name: "Rock Hard ;)",
             description: "Okay maybe I have made too many dirty jokes...",
-            cost: { science: 400, food: 500, stone: 300, metal: 250 },
+            cost: { science: 400, wheat: 500, stone: 300, metal: 250 },
             effect: () => {
                 gameData.buildings.autoHammerer.unlocked = true;
             },
@@ -374,7 +422,7 @@ const gameData = {
         unlockPickaxe: {
             name: "Deeper into your mo-",
             description: "Theoritcally (again no spell check in my IDE) you could go bellow y=11",
-            cost: { science: 300, food: 400, stone: 300, metal: 200 },
+            cost: { science: 300, wheat: 400, stone: 300, metal: 200 },
             effect: () => {
                 gameData.resources.pickaxe.unlocked = true;
                 gameData.buildings.pickaxeMaker.unlocked = true;
@@ -386,7 +434,7 @@ const gameData = {
         unlockAutoPicker: {
             name: "The Quicker Picker Upper",
             description: "Paper Towel to be added in full release <a target='_blank' href='https://bountytowels.com/en-us'>Not The Trimps Bounty</a>",
-            cost: { science: 500, food: 600, metal: 400, money: 300 },
+            cost: { science: 500, wheat: 600, metal: 400, money: 300 },
             effect: () => {
                 gameData.buildings.autoPicker.unlocked = true;
             },
@@ -397,7 +445,7 @@ const gameData = {
         unlockAxeHacker: {
             name: "Anti-lorax",
             description: "It's a principle of nature, that almost every creature knows  <a target='_blank' href='https://seuss.fandom.com/wiki/Super_Axe_Hacker'>Wiki</a>",
-            cost: { science: 400, food: 600, stone: 300, metal: 200 },
+            cost: { science: 400, wheat: 600, stone: 300, metal: 200 },
             effect: () => {
                 gameData.buildings.superAxeHacker.unlocked = true;
             },
@@ -408,7 +456,7 @@ const gameData = {
         unlockLumberCompany: {
             name: "Capitalism 2.0",
             description: "New Update! Sell Wood to the masses",
-            cost: { science: 200, food: 800, stone: 150 },
+            cost: { science: 200, wheat: 800, stone: 150 },
             effect: () => {
                 gameData.buildings.lumberCompany.unlocked = true;
             },
@@ -419,7 +467,7 @@ const gameData = {
         unlockAxe: {
             name: "Chop Chop",
             description: "Hilt + Handle - wait aren't those the same.",
-            cost: { science: 150, food: 100, stone: 150 },
+            cost: { science: 150, wheat: 100, stone: 150 },
             effect: () => {
                 gameData.resources.axe.unlocked = true;
                 gameData.buildings.axeSmith.unlocked = true;
@@ -429,21 +477,21 @@ const gameData = {
             tooltip: "Unlock Axe"
         },
         unlockMeals: {
-            name: "Make The Food Better?",
-            description: "The Humans think the rats are smart. make Food???",
-            cost: { science: 500, food: 1000, metal: 350 },
+            name: "Make The wheat Better?",
+            description: "The Humans think the rats are smart. make wheat???",
+            cost: { science: 500, wheat: 1000, metal: 350 },
             effect: () => {
                 gameData.buildings.kitchen.unlocked = true;
                 gameData.resources.meal.unlocked = true;
             },
             completed: false,
-            requires: ["unlockRat"],
+            requires: ["unlockRat", "unlockMeat"],
             tooltip: "Unlock Meals & Kitchen"
         },
         unlockRat: {
             name: "Anyone Can Cook",
             description: "see title",
-            cost: { science: 400, food: 500, human: 40 },
+            cost: { science: 400, wheat: 500, human: 40 },
             effect: () => {
                 gameData.buildings.ratTrainer.unlocked = true;
                 gameData.resources.rat.unlocked = true;
@@ -455,7 +503,7 @@ const gameData = {
         unlockLibrary: {
             name: "Alexandria",
             description: "Store all of your knowledge, lets hope it doesn't burn down",
-            cost: { science: 100, food: 50, money: 500 },
+            cost: { science: 100, wheat: 50, money: 500 },
             effect: () => {
                 gameData.buildings.library.unlocked = true;
             },
@@ -466,7 +514,7 @@ const gameData = {
         unlockAutoHoe: {
             name: "Crop Rotation",
             description: "Using ancient ways, you can teach some people to keep making farms.",
-            cost: { science: 200, stone: 500, food: 750, metal: 300, money: 200 },
+            cost: { science: 200, stone: 500, wheat: 750, metal: 300, money: 200 },
             effect: () => {
                 gameData.buildings.AutoHoer.unlocked = true;
             },
@@ -477,7 +525,7 @@ const gameData = {
         unlockHoe: {
             name: "Make some tools!",
             description: "People need some way to strike the farms.",
-            cost: { science: 100, stone: 200, food: 100, metal: 100 },
+            cost: { science: 100, stone: 200, wheat: 100, metal: 100 },
             effect: () => {
                 gameData.resources.hoe.unlocked = true;
                 gameData.buildings.hoeMaker.unlocked = true;
@@ -500,7 +548,7 @@ const gameData = {
         unlockHuman: {
             name: "Reproduction",
             description: "You figured it out! Finally! If only you had...",
-            cost: { science: 50, stone: 50, food: 100 },
+            cost: { science: 50, stone: 50, wheat: 100 },
             effect: () => {
                 gameData.resources.human.unlocked = true;
             },
@@ -512,7 +560,7 @@ const gameData = {
         unlockNursery: {
             name: "Like Rabbits",
             description: "The humans, well they multiply.",
-            cost: { science: 40, food: 100 },
+            cost: { science: 40, wheat: 100 },
             effect: () => {
                 gameData.buildings.nursery.unlocked = true;
             },
@@ -524,7 +572,7 @@ const gameData = {
         unlockHut: {
             name: "2009",
             description: "The homes are too expensive!!!!!!!!! <a target='_blank' href='https://en.wikipedia.org/wiki/Subprime_mortgage_crisis'>Wiki</a>",
-            cost: { science: 50, wood: 100, food: 250 },
+            cost: { science: 50, wood: 100, wheat: 250 },
             effect: () => {
                 gameData.buildings.hut.unlocked = true;
             },
@@ -563,43 +611,43 @@ const gameData = {
             tooltip: "Unlock Pit"
         },
         
-        unlockFood: {
-            name: "Unlock Food",
+        unlockWheat: {
+            name: "Unlock wheat",
             description: "You are literally an empty void. So Eat",
-            cost: { food: 0 },
-            effect: () => { gameData.resources.food.unlocked = true; },
+            cost: { wheat: 0 },
+            effect: () => { gameData.resources.wheat.unlocked = true; },
             completed: false,
             requires: [],
-            tooltip: "Unlock Food"
+            tooltip: "Unlock wheat"
         },
         
         unlockFarm: {
             name: "Agiliculture",
             description: "Somehow you figure out you don't have to rummage around in the trash.",
-            cost: { food: 5 },
+            cost: { wheat: 5 },
             effect: () => { gameData.buildings.farm.unlocked = true; },
             completed: false,
-            requires: ["unlockFood"],
+            requires: ["unlockWheat"],
             tooltip: "Unlock Farm"
         },
         
         unlockMoney: {
             name: "Economy",
             description: "Here comes the money. $$$",
-            cost: { food: 5 },
+            cost: { wheat: 5 },
             effect: () => { 
                 gameData.resources.money.unlocked = true; 
-                gameData.resources.food.sellable = true; 
+                gameData.resources.wheat.sellable = true; 
             },
             completed: false,
-            requires: ["unlockFood", "unlockFarm"],
+            requires: ["unlockWheat", "unlockFarm"],
             tooltip: "Unlock Money"
         },
         
         unlockSilo: {
             name: "Unlock Silos",
-            description: "You are swimming in food (I think)",
-            cost: { science: 10, food: 50 },
+            description: "You are swimming in wheat (I think)",
+            cost: { science: 10, wheat: 50 },
             effect: () => { gameData.buildings.silo.unlocked = true; },
             completed: false,
             requires: ["unlockFarm"],
@@ -609,7 +657,7 @@ const gameData = {
         unlockYard: {
             name: "Unlock a Yard",
             description: "You've chopped a crap ton of trees down",
-            cost: { science: 20, food: 50 },
+            cost: { science: 20, wheat: 50 },
             effect: () => { gameData.buildings.woodyard.unlocked = true; },
             completed: false,
             requires: ["unlockLumbermill"],
@@ -642,14 +690,14 @@ const gameData = {
             cost: { money: 25, science: 5 },
             effect: () => { gameData.resources.wood.unlocked = true; },
             completed: false,
-            requires: ["unlockFood", "unlockMoney"],
+            requires: ["unlockWheat", "unlockMoney"],
             tooltip: "Unlock Wood"
         },
         
         unlockLumbermill: {
             name: "Deforstation",
             description: "Unlocks building lumbermills. Now you can turn taking down plants industrially",
-            cost: { money: 30, food: 10, science: 20 },
+            cost: { money: 30, wheat: 10, science: 20 },
             effect: () => { gameData.buildings.lumbermill.unlocked = true; },
             completed: false,
             requires: ["unlockWood"],
@@ -697,9 +745,9 @@ const gameData = {
         },
         
         unlockMarket: {
-            name: "Get Selling ( well just food :( )",
-            description: "Capitalism at its finest, but people won't buy stuff besides food yet.",
-            cost: { money: 50, wood: 100, food: 100, science: 20 },
+            name: "Get Selling ( well just wheat :( )",
+            description: "Capitalism at its finest, but people won't buy stuff besides wheat yet.",
+            cost: { money: 50, wood: 100, wheat: 100, science: 20 },
             effect: () => { gameData.buildings.market.unlocked = true; },
             completed: false,
             requires: ["unlockMine"],
