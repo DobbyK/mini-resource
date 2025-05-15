@@ -3,7 +3,7 @@ const gameData = {
     collecting: null,
     resources: {
         money: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
+            max: 10000, amount: 0, gain: 0, loss: 0, worth: 1, 
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Money... Capitalism... Sell Stuff To get Money"
         },
@@ -12,10 +12,20 @@ const gameData = {
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Weird creatures with 2 legs and 'brains'. Maybe they could do something, or be sold- i mean uh."
         },
+        family: {
+            max: 10, amount: 0, gain: 0, loss: 0, worth: 500, 
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "Not Yet Nuclear"  
+        },
         rat: { 
             max: 20, amount: 0, gain: 0, loss: 0, worth: 100, 
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Offspring of ratsareamazing. Chef"
+        },
+        cow: {
+            max: 40, amount: 0, gain: 0, loss: 0, worth: 20, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Not To Eat"  
         },
         science: { 
             max: 100, amount: 0, gain: 0, loss: 0, worth: 0, 
@@ -47,6 +57,11 @@ const gameData = {
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Non-descript resource of stuff mined underground. Also buildin."
         },
+        leather: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 100, 
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "I don't remember anyone ever making leather armor"
+        },
         hoe: { 
             max: 50, amount: 0, gain: 0, loss: 0, worth: 25, 
             unlocked: false, collectible: false, sellable: true,
@@ -70,176 +85,204 @@ const gameData = {
         
     },
     buildings: {
+        pen: {
+            type: "cow", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            buildCost: { wood: 2000, stone: 1500, food: 900 },
+            resourcePrice: { human: 1, food: 5 },
+            buildingProd: {},
+            tooltip: "Moo"
+        },
+        tannery: {
+            type: "leather", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            buildCost: { wood: 2500, metal: 750 },
+            resourcePrice: { human: 1, cow: 2 },
+            buildingProd: {},
+            tooltip: "Moo-but dead (no meat)"
+        },
+        church: {
+            type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { meal: 20, wood: 500, metal: 150, stone: 200 },
+            resourcePrice: { human: 4, wood: 20, meal: 2 },
+            buildingProd: {},
+            tooltip: "Non-religious"
+        },
+        house: {
+            type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 10, production: 0,
+            buildCost: { stone: 100, metal: 600, food: 2000 },
+            resourcePrice: { },
+            buildingProd: {},
+            tooltip: "Only people happily married get the right not to live in huts"
+        },
         hammerMaker: {
-            type: "hammer", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "hammer", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 300, metal: 150, stone: 200 },
             resourcePrice: { human: 1, wood: 2, metal: 2 },
             buildingProd: {},
             tooltip: "The 50 billionth type of toolsmith"
         },
         autoHammerer: {
-            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0,
+            type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
-            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 10, money: 5 },
+            resourcePrice: { hammer: 2, human: 2, food: 8, wood: 50, money: 25 },
             buildingProd: { "quarry": 1 },
             tooltip: "Teach a man to hammer, get infinite rocks"
         },
         pickaxeMaker: {
-            type: "pickaxe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "pickaxe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 400, metal: 300, stone: 300 },
             resourcePrice: { human: 1, wood: 5, metal: 10 },
             buildingProd: {},
             tooltip: "Not a crafting table?"
         },
         autoPicker: {
-            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0,
+            type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { pickaxe: 10, wood: 150, stone: 150, metal: 300, money: 400 },
-            resourcePrice: { pickaxe: 2, human: 2, food: 10, wood: 1 },
+            resourcePrice: { pickaxe: 2, human: 2, stone: 50, wood: 25 },
             buildingProd: { "mine": 1 },
             tooltip: "Redstone..."
         },        
         axeSmith: {
-            type: "axe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            type: "axe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { metal: 400, money: 150, stone: 200 },
             resourcePrice: { human: 1, metal: 6, wood: 2},
             buildingProd: { },
             tooltip: "Train some dude to strike together some axes"
         },
         ratTrainer: {
-            type: "rat", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            type: "rat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { food: 400, wood: 400, stone: 100, money: 100 },
             resourcePrice: { human: 2, food: 8, stone: 1 },
             buildingProd: { },
             tooltip: "Use food to train rats who in turn make food better. And some traping"
         },
         kitchen: {
-            type: "meal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            type: "meal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { food: 200, metal: 400, stone: 100 },
             resourcePrice: { rat: 2, human: 1, food: 5 },
             buildingProd: {  },
             tooltip: "Food+Rats+Human Slave = Better Food?"
         },
         AutoHoer: {
-            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 0, 
+            type: "food", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0, 
             buildCost: { food: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
             resourcePrice: { hoe: 2, human: 2, food: 10 },
             buildingProd: { "farm": 1 },
             tooltip: "Peak Human Integunity. (no spell check)"
         },
         hoeMaker: {
-            type: "hoe", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            type: "hoe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 200, metal: 100 },
             resourcePrice: { human: 1, wood: 2, stone: 1 },
             buildingProd: {},
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
         nursery: {
-            type: "human", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
+            type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
             buildCost: { wood: 100, stone: 50, metal: 20 },
             resourcePrice: { food: 2 },
             buildingProd: {},
             tooltip: "If you feed some humans, they'll be birds & bees."
         },
         hut: {
-            type: "human", count: 0, level: 1, unlocked: false, maxBoost: 10, production: 0,
+            type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 10, production: 0,
             buildCost: { wood: 50, stone: 25 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "The homeless rates are going down"
         },
         school: {
-            type: "science", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "science", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 20, food: 5 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Expires in the summer time. Makes science, somehow"
         },
         farm: {
-            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "food", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { food: 10 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Agiliculture. Make the food, become the food."
         },
         silo: {
-            type: "food", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0, 
+            type: "food", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0, 
             buildCost: { wood: 20 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "All that food you got gotta go somewhere"
         },
         lumbermill: {
-            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { money: 10, food: 5 },
+            type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { money: 15, food: 5, wood: 5 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Industiral Climate Change"
         },
         woodyard: {
-            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 50, wood: 10 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Put chopped trees in a field for later use"
         },
         superAxeHacker: {
-            type: "wood", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { metal: 500, wood: 200, stone: 300, money: 1000, axe: 20 },
-            resourcePrice: { human: 2, axe: 2, money: 10, food: 5 },
+            resourcePrice: { human: 2, axe: 2, money: 15, food: 5, wood: 5 },
             buildingProd: {"lumbermill": 1},
             tooltip: "How bad could I possibly be?"
         },
         quarry: {
-            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, 
-            buildCost: { wood: 10, money: 5 },
+            type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            buildCost: { wood: 50, money: 100 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Choose one place randomly you'll get stone faster if you dont do it randomly"
         },
         stonepit: {
-            type: "stone", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 75, stone: 20 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Throw that stone in a new area, for later use"
         },
         mine: {
-            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
-            buildCost: { stone: 10, wood: 5 },
-            resourcePrice: { wood: 1 },
+            type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { stone: 50, wood: 25 },
+            resourcePrice: { },
             buildingProd: {},
             tooltip: "Don't mine straight down. Or up. Get Metal."
         },
         scrapyard: {
-            type: "metal", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { money: 80, metal: 30 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "Find another places you can throw all that stuff you found."
         },
         market: {
-            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 10, wood: 5 },
             resourcePrice: { food: 1 },
             buildingProd: {},
             tooltip: "Sell Food, Get Cash. Yum"
         },
         lumberCompany: {
-            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 2,
+            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 2,
             buildCost: { stone: 50, wood: 40, metal: 40 },
             resourcePrice: { wood: 1 },
             buildingProd: {},
             tooltip: "Sell Lumber Large Scale Baby"
         },
         bank: {
-            type: "money", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 5000, production: 0,
             buildCost: { money: 20, metal: 30, stone: 20 },
             resourcePrice: {},
             buildingProd: {},
             tooltip: "The Bank of ${GameName}. :) Store your money here!!!"
         },
         library: {
-            type: "science", count: 0, level: 1, unlocked: false, maxBoost: 50, production: 0,
+            type: "science", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { human: 20, money: 100, stone: 200 },
             resourcePrice: {},
             buildingProd: {},
@@ -248,6 +291,63 @@ const gameData = {
     },
 
     research: {
+        unlockCows: {
+            name: "Knock Knock",
+            description: "Who's there, interupting cow, interupting c- MOOOOO BIT-",
+            cost: { science: 250, food: 1000, wood: 750 },
+            effect: () => {
+                gameData.resources.cow.unlocked = true;
+                gameData.buildings.pen.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockLumberCompany"], 
+            tooltip: "Unlock Cow & Pen"
+        },
+        unlockLeather: {
+            name: "I'm loving it",
+            description: "I don't know why i thought of mcdonalds. see tooltip.",
+            cost: { science: 300, stone: 700, metal: 500 },
+            effect: () => {
+                gameData.resources.leather.unlocked = true;
+                gameData.buildings.tannery.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockCows"],
+            tooltip: "Unlock Leather and Tannery"
+        },
+        unlockFamilies: {
+            name: "Everybody needs one",
+            description: "Maybe humans need each other, eh nah",
+            cost: { science: 300, food: 500, wood: 300 },
+            effect: () => {
+                gameData.resources.family.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockPickaxe"],
+            tooltip: "Unlock Families as a resource"
+        },   
+        unlockHouse: {
+            name: "Better homes",
+            description: "Waste, cause what if single moms",
+            cost: { science: 400, stone: 300, metal: 200 },
+            effect: () => {
+                gameData.buildings.house.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockFamilies"],
+            tooltip: "Unlock House building"
+        },
+        unlockChurch: {
+            name: "Marriage",
+            description: "I now pronounce you hʌzbənd ænd waɪf",
+            cost: { science: 550, wood: 600, metal: 300, meal: 40 },
+            effect: () => {
+                gameData.buildings.church.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockFamilies"],
+            tooltip: "Unlock Church building"
+        },        
         unlockHammer: {
             name: "Now We're getting somewhere",
             description: "The hammer is flat just like you",
@@ -621,19 +721,20 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.7</a>
+            <a target="_blank" href="changelog.html">v0.0.8</a>
         </div>
         <div id="resources">
         </div>
         <div id="buildings"></div>
         <div id="research"></div>
     `;
-    updateUI();
+    renderStaticUI();
+    requestAnimationFrame(gameLoop);
 }
 
 
 // Update UI Dynamically
-function updateUI() {
+function renderStaticUI() {
     const rDiv = document.getElementById("resources");
     const bDiv = document.getElementById("buildings");
     const researchDiv = document.getElementById("research");
@@ -644,79 +745,110 @@ function updateUI() {
             rDiv.innerHTML += `
                 <div>
                     <div class="tooltip">
-                    <span class="tooltiptext">${res.tooltip}</span>
-                    <strong>${format(name)}</strong>: </div> <span id="${name}_amount">${res.amount}/${res.max}</span> 
-                    <div class="tooltip"><span class="tooltiptext">${getProductionBreakdown(name)}</span>(+<span id="${name}_gain">${res.gain}</span>/s)</div><br>
+                        <span class="tooltiptext">${res.tooltip}</span>
+                        <strong>
+                            <a href="javascript:void(0);" onclick="scrollToBuildingCategory('${name}')">${format(name)}</a>
+                        </strong>:
+                    </div>
+                    <span id="${name}_amount">${res.amount}/${res.max}</span> 
+                    <div class="tooltip">
+                        <span class="tooltiptext" id="${name}_tip">${getProductionBreakdown(name)}</span>
+                        (+<span id="${name}_gain">${res.gain}</span>/s)
+                    </div><br>
                     ${res.collectible ? `<button onclick="collect('${name}')">Collect</button>` : ''}
-${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
-
+                    ${res.sellable ? `<button onclick="sell('${name}')">Sell $${res.worth}</button>` : ''}
                 </div>
                 <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
             `;
-        } else {
-            rDiv.innerHTML += ``;
         }
     }
 
     bDiv.innerHTML = '<h3>Buildings</h3>';
-
     const buildingsByType = {};
-    
-    // Group buildings by type
+
     for (const [bName, building] of Object.entries(gameData.buildings)) {
         if (building.unlocked && gameData.resources[building.type]?.unlocked) {
-            if (!buildingsByType[building.type]) {
-                buildingsByType[building.type] = [];
-            }
+            if (!buildingsByType[building.type]) buildingsByType[building.type] = [];
             buildingsByType[building.type].push({ name: bName, ...building });
         }
     }
-    
-    // Optional: Sort types alphabetically
+
     const sortedTypes = Object.keys(buildingsByType).sort();
-    
     for (const type of sortedTypes) {
-        bDiv.innerHTML += `<hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
-<h4>${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>`;
-        
+        bDiv.innerHTML += `
+            <hr>
+            <h4 id="building_category_${type}">${type.charAt(0).toUpperCase() + type.slice(1)} Buildings</h4>
+        `;
         for (const building of buildingsByType[type]) {
-            const costText = getCostText(building);
             bDiv.innerHTML += `
                 <div>
                     <div class="tooltip">
                         <span class="tooltiptext">${building.tooltip}</span>
                         <strong>${format(building.name)}</strong>
-                    </div> - <span id="${building.name}_count">${building.count}</span>
-                    <br><button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${costText})</button>
-                    <button onclick="destroy('${building.name}')">Destroy</button>                   
+                    </div> - <span id="${building.name}_count">${building.count}</span> (+<span id="${building.name}_gain">${building.gain}</span>/s)
+                    <br>
+                    <button onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${getCostText(building)})</button>
+                    <button onclick="destroy('${building.name}')">Destroy</button>
                 </div>
-                
             `;
         }
     }
-    
 
     researchDiv.innerHTML = "<h3>Research</h3>";
     for (const [key, item] of Object.entries(gameData.research)) {
-        if (item.completed) continue;
-
-        // Check if all prerequisites are met
-        const prereqsMet = item.requires.every(reqKey => gameData.research[reqKey]?.completed);
-        if (!prereqsMet) continue;
+        if (item.completed || !item.requires.every(reqKey => gameData.research[reqKey]?.completed)) continue;
 
         researchDiv.innerHTML += `
-        <div>
-            <div class="tooltip">
-            <span class="tooltiptext">${item.tooltip}</span>
-            <strong>${item.name}</strong></div>: ${item.description}
-            <br>Cost: ${formatCost(item.cost)}
-            <br><button onclick="performResearch('${key}')">Research</button>
-        </div>
-        <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
-    `;
+            <div>
+                <div class="tooltip">
+                    <span class="tooltiptext">${item.tooltip}</span>
+                    <strong>${item.name}</strong>
+                </div>: ${item.description}
+                <br>Cost: ${formatCost(item.cost)}
+                <br><button onclick="performResearch('${key}')">Research</button>
+            </div>
+            <hr>
+        `;
+    }
+}
+
+function scrollToBuildingCategory(resourceType) {
+    const elem = document.getElementById(`building_category_${resourceType}`);
+    if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+
+function updateDynamicUI() {
+    for (const [name, res] of Object.entries(gameData.resources)) {
+        if (res.unlocked) {
+            const amountElem = document.getElementById(`${name}_amount`);
+            const gainElem = document.getElementById(`${name}_gain`);
+            if (amountElem) amountElem.innerHTML = `${res.amount.toFixed()}/${res.max}`;
+            if (gainElem) gainElem.innerHTML = res.gain.toFixed();
+        }
     }
 
+    for (const [bName, building] of Object.entries(gameData.buildings)) {
+        if (building.unlocked) {
+            const countElem = document.getElementById(`${bName}_count`);
+            if (countElem) countElem.innerHTML = building.count.toFixed();
+            const gainElem = document.getElementById(`${bName}_gain`);
+            gainElem.innerHTML = building.gain;
+        }
+        
+
+    }
+
+    for (const [name, res] of Object.entries(gameData.resources)) {
+        if (res.unlocked) {
+        const tip = document.getElementById(`${name}_tip`);
+        if (tip) tip.innerHTML = getProductionBreakdown(name);
+        }
+    }
 }
+
 
 function getProductionBreakdown(resourceName) {
     let breakdown = [];
@@ -725,8 +857,8 @@ function getProductionBreakdown(resourceName) {
     // Positive production
     for (const [bName, building] of Object.entries(gameData.buildings)) {
         if (building.type === resourceName && building.count > 0 && building.production > 0) {
-            const gain = building.count * building.level * building.production;
-            breakdown.push(`+${gain} ${resourceName}/s (${bName})`);
+            const gain = building.count * building.production;
+            breakdown.push(`+${gain.toFixed()} ${resourceName}/s (${bName})`);
         }
     }
 
@@ -740,7 +872,7 @@ function getProductionBreakdown(resourceName) {
         if (building.resourcePrice && building.resourcePrice[resourceName]) {
             const loss = building.count * building.resourcePrice[resourceName];
             if (loss > 0) {
-                breakdown.push(`-${loss} ${resourceName}/s (${bName})`);
+                breakdown.push(`-${loss.toFixed()} ${resourceName}/s (${bName})`);
             }
         }
     }
@@ -764,8 +896,8 @@ function getCostText(building) {
     return parts.length > 0 ? ` | Cost: ${parts.join(', ')}` : '';
 }
 
-function getLevelPrice(building) {
-    return Math.floor(building.baseUpgrade * Math.pow(1.5, building.level - 1));
+function getgainPrice(building) {
+    return Math.floor(building.baseUpgrade * Math.pow(1.5, building.gain - 1));
 }
 
 function collect(resource) {
@@ -777,7 +909,6 @@ function collect(resource) {
     }
 
     gameData.resources[resource].gain += 1;
-    updateUI();
 }
 
 function sell(resource) {
@@ -785,7 +916,6 @@ function sell(resource) {
     if (res.amount > 0) {
         res.amount -= 1;
         gameData.resources.money.amount += res.worth;
-        updateUI();
     } else {
         alert(`No ${resource} to sell.`);
     }
@@ -828,7 +958,7 @@ function destroy(buildingName) {
             const isProducer = b.type === resource;
             const producerCount = (b === building && b.type === resource) ? newCount : b.count;
             if (isProducer) {
-                newTotalProduction += producerCount * b.level * b.production;
+                newTotalProduction += producerCount * b.production;
             }
         }
 
@@ -868,7 +998,7 @@ function build(buildingName) {
             let passiveGain = 0;
             for (const b of Object.values(gameData.buildings)) {
                 if (b.type === resource) {
-                    passiveGain += b.count * b.level * b.production;
+                    passiveGain += b.count * b.production;
                 }
             }
     
@@ -888,7 +1018,6 @@ function build(buildingName) {
     building.count += 1;
     gameData.resources[building.type].max += building.maxBoost;
     updateGains();
-    updateUI();
 }
 
 
@@ -909,7 +1038,7 @@ function updateGains() {
 
     for (const building of Object.values(gameData.buildings)) {
         if (building.production != 0) {
-            const gain = (building.count * building.level * building.production) - gameData.resources[building.type].loss;
+            const gain = (building.count * building.production) - gameData.resources[building.type].loss;
             gameData.resources[building.type].gain += gain;
         }
 
@@ -917,6 +1046,15 @@ function updateGains() {
 
     if (gameData.collecting) {
         gameData.resources[gameData.collecting].gain += 1;
+    }
+
+    for (const building of Object.values(gameData.buildings)) {
+        if (building.buildingProd) {
+            for (const build in building.buildingProd) {
+                const prod = building.buildingProd[build];
+                gameData.buildings[build].gain = prod * building.count;
+            }
+        }
     }
 }
 
@@ -940,7 +1078,7 @@ function performResearch(key) {
     item.effect();
     item.completed = true;
 
-    updateUI();
+    renderStaticUI();
 }
 
 function giveAllResourcesDebug() {
@@ -948,7 +1086,6 @@ function giveAllResourcesDebug() {
         res.max += 100000;
         res.amount += 100000;
     }
-    updateUI();
     console.log("All resources set to 100,000 for debugging.");
 }
 
@@ -968,25 +1105,28 @@ function darkModeToggle() {
 
 
 // Passive Gain
-setInterval(() => {
+let lastTime = performance.now();
+
+function gameLoop(currentTime) {
+    const deltaTime = (currentTime - lastTime) / 1000;
+    lastTime = currentTime;
+
     for (const res of Object.values(gameData.resources)) {
-        if ((res.amount + res.gain) < res.max) {
-            res.amount += res.gain;
-        } else {
-            res.amount = res.max;
+        if (res.gain > 0) {
+            res.amount += res.gain * deltaTime;
+            if (res.amount > res.max) res.amount = res.max;
         }
     }
+
     for (const building of Object.values(gameData.buildings)) {
-        if (building.buildingProd) {
-            for (const build in building.buildingProd) {
-                const prod = building.buildingProd[build];
-                gameData.buildings[build].count += prod * building.count;
-            }
-        }
+        building.count += building.gain * deltaTime;
     }
+
     updateGains();
-    updateUI();
-}, 1000);
+    updateDynamicUI();
+
+    requestAnimationFrame(gameLoop);
+}
 
 function exportSave() {
     const dataStr = JSON.stringify(gameData, null, 2);
@@ -1011,7 +1151,7 @@ function importSave(event) {
             const parsed = JSON.parse(e.target.result);
             deepMerge(gameData, parsed);
             updateGains();
-            updateUI();
+            renderStaticUI();
             alert("Save imported successfully!");
         } catch (err) {
             alert("Failed to load save file.");
@@ -1052,7 +1192,7 @@ function loadGame() {
         const parsedData = JSON.parse(savedData);
         deepMerge(gameData, parsedData);
         alert("Game loaded!");
-        updateUI();
+        renderStaticUI();
     } else {
         alert("No save found.");
     }
