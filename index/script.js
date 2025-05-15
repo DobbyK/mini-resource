@@ -22,6 +22,11 @@ const gameData = {
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Offspring of ratsareamazing. Chef"
         },
+        cow: {
+            max: 40, amount: 0, gain: 0, loss: 0, worth: 20, 
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Not To Eat"  
+        },
         science: { 
             max: 100, amount: 0, gain: 0, loss: 0, worth: 0, 
             unlocked: false, collectible: true, sellable: false,
@@ -52,6 +57,11 @@ const gameData = {
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Non-descript resource of stuff mined underground. Also buildin."
         },
+        leather: { 
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 100, 
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "I don't remember anyone ever making leather armor"
+        },
         hoe: { 
             max: 50, amount: 0, gain: 0, loss: 0, worth: 25, 
             unlocked: false, collectible: false, sellable: true,
@@ -75,6 +85,20 @@ const gameData = {
         
     },
     buildings: {
+        pen: {
+            type: "cow", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            buildCost: { wood: 2000, stone: 1500, food: 900 },
+            resourcePrice: { human: 1, food: 5 },
+            buildingProd: {},
+            tooltip: "Moo"
+        },
+        tannery: {
+            type: "leather", count: 0, level: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            buildCost: { wood: 2500, metal: 750 },
+            resourcePrice: { human: 1, cow: 2 },
+            buildingProd: {},
+            tooltip: "Moo-but dead (no meat)"
+        },
         church: {
             type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { meal: 20, wood: 500, metal: 150, stone: 200 },
@@ -267,6 +291,30 @@ const gameData = {
     },
 
     research: {
+        unlockCows: {
+            name: "Knock Knock",
+            description: "Who's there, interupting cow, interupting c- MOOOOO BIT-",
+            cost: { science: 250, food: 1000, wood: 750 },
+            effect: () => {
+                gameData.resources.cow.unlocked = true;
+                gameData.buildings.pen.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockLumberCompany"], 
+            tooltip: "Unlock Cow & Pen"
+        },
+        unlockLeather: {
+            name: "I'm loving it",
+            description: "I don't know why i thought of mcdonalds. see tooltip.",
+            cost: { science: 300, stone: 700, metal: 500 },
+            effect: () => {
+                gameData.resources.leather.unlocked = true;
+                gameData.buildings.tannery.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockCows"],
+            tooltip: "Unlock Leather and Tannery"
+        },
         unlockFamilies: {
             name: "Everybody needs one",
             description: "Maybe humans need each other, eh nah",
