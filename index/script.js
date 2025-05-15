@@ -105,7 +105,7 @@ const gameData = {
         tannery: {
             type: "leather", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
             buildCost: { wood: 2500, metal: 750 },
-            resourcePrice: { human: 1, cow: 2 },
+            resourcePrice: { human: 1, cow: 1 },
             buildingProd: {},
             tooltip: "Moo-but dead (no meat)"
         },
