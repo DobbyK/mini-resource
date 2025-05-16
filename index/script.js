@@ -100,7 +100,7 @@ const gameData = {
             buildCost: { wood: 2000, stone: 1500, wheat: 900 },
             resourcePrice: { human: 1, wheat: 5 },
             buildingBoost: {},
-            scale: { human: 1.2, wheat: 1.2 },
+            scale: { wood: 1.05, stone: 1.05, wheat: 1.05 },
             tooltip: "Moo"
         },
         tannery: {
@@ -108,7 +108,7 @@ const gameData = {
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
-            scale: { wood: 1.2, metal: 1.2 },
+            scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Moo-but dead (no meat)"
         },
         butcher: {
@@ -116,7 +116,7 @@ const gameData = {
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
-            scale: { wood: 1.2, metal: 1.2 },
+            scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Moo-but dead (no leather)"
         },
         parlor: {
@@ -124,15 +124,15 @@ const gameData = {
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
-            scale: { wood: 1.2, metal: 1.2 },
+            scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Violate the cows"
         },
         church: {
             type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { meal: 20, wood: 500, metal: 150, stone: 200 },
-            resourcePrice: { human: 4, wood: 20, meal: 2 },
+            resourcePrice: { human: 4, wood: 6, meal: 2 },
             buildingBoost: {},
-            scale: { meal: 1, wood: 1.2, metal: 1.2, stone: 1.2 },
+            scale: { meal: 1, wood: 1.05, metal: 1.05, stone: 1.05 },
             tooltip: "Non-religious"
         },
         house: {
@@ -140,7 +140,7 @@ const gameData = {
             buildCost: { stone: 100, metal: 600, wheat: 2000 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { stone: 1.2, metal: 1.2, wheat: 1.2 },
+            scale: { stone: 1.05, metal: 1.05, wheat: 1.05 },
             tooltip: "Only people happily married get the right not to live in huts"
         },
         hammerMaker: {
@@ -148,47 +148,47 @@ const gameData = {
             buildCost: { wood: 300, metal: 150, stone: 200 },
             resourcePrice: { human: 1, wood: 2, metal: 2 },
             buildingBoost: {},
-            scale: { wood: 1.2, metal: 1.2, stone: 1.2 },
+            scale: { wood: 1.05, metal: 1.05, stone: 1.05 },
             tooltip: "The 50 billionth type of toolsmith"
         },
         autoHammerer: {
             type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
-            resourcePrice: { hammer: 2, human: 2, wheat: 8, wood: 50, money: 25 },
+            resourcePrice: { hammer: 2, human: 2, wheat: 4, wood: 2, money: 8 },
             buildingBoost: { "quarry": 2 },
-            scale: { hammer: 1, wood: 1.2, metal: 1.2, money: 1.2 },
+            scale: { hammer: 1, wood: 1.05, metal: 1.05, money: 1.05 },
             tooltip: "Teach a man to hammer, get infinite rocks"
         },
         pickaxeMaker: {
             type: "pickaxe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 400, metal: 300, stone: 300 },
-            resourcePrice: { human: 1, wood: 5, metal: 10 },
+            resourcePrice: { human: 1, wood: 4, metal: 3 },
             buildingBoost: {},
-            scale: { wood: 1.2, metal: 1.2, stone: 1.2 },
+            scale: { wood: 1.05, metal: 1.05, stone: 1.05 },
             tooltip: "Not a crafting table?"
         },
         autoPicker: {
             type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { pickaxe: 10, wood: 150, stone: 150, metal: 300, money: 400 },
-            resourcePrice: { pickaxe: 2, human: 2, stone: 50, wood: 25 },
+            resourcePrice: { pickaxe: 2, human: 2, stone: 3, wood: 4 },
             buildingBoost: { "mine": 2 },
-            scale: { pickaxe: 1, wood: 1.2, stone: 1.2, metal: 1.2, money: 1.2 },
+            scale: { pickaxe: 1, wood: 1.05, stone: 1.05, metal: 1.05, money: 1.05 },
             tooltip: "Redstone..."
         },
         axeSmith: {
             type: "axe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { metal: 400, money: 150, stone: 200 },
-            resourcePrice: { human: 1, metal: 6, wood: 2 },
+            resourcePrice: { human: 1, metal: 2, wood: 2 },
             buildingBoost: {},
-            scale: { metal: 1.2, money: 1.2, stone: 1.2 },
+            scale: { metal: 1.05, money: 1.05, stone: 1.05 },
             tooltip: "Train some dude to strike together some axes"
         },
         ratTrainer: {
             type: "rat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wheat: 400, wood: 400, stone: 100, money: 100 },
-            resourcePrice: { human: 2, wheat: 8, stone: 1 },
+            resourcePrice: { human: 2, wheat: 3, stone: 1 },
             buildingBoost: {},
-            scale: { wheat: 1.2, wood: 1.2, stone: 1.2, money: 1.2 },
+            scale: { wheat: 1.05, wood: 1.05, stone: 1.05, money: 1.05 },
             tooltip: "Use wheat to train rats who in turn make wheat better. And some traping"
         },
         kitchen: {
@@ -196,15 +196,15 @@ const gameData = {
             buildCost: { wheat: 200, metal: 400, stone: 100 },
             resourcePrice: { rat: 2, human: 1, wheat: 5, meat: 1 },
             buildingBoost: {},
-            scale: { wheat: 1.2, metal: 1.2, stone: 1.2 },
+            scale: { wheat: 1.05, metal: 1.05, stone: 1.05 },
             tooltip: "Wheat+Meat+Rats+Human Slave = Better food?"
         },
         AutoHoer: {
             type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { wheat: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
-            resourcePrice: { hoe: 2, human: 2, wheat: 10 },
+            resourcePrice: { hoe: 2, human: 2 },
             buildingBoost: { "farm": 2 },
-            scale: { wheat: 1.2, hoe: 1, wood: 1.2, metal: 1.2, money: 1.2 },
+            scale: { wheat: 1.05, hoe: 1, wood: 1.05, metal: 1.05, money: 1.05 },
             tooltip: "Peak Human Integunity. (no spell check)"
         },
         hoeMaker: {
@@ -212,7 +212,7 @@ const gameData = {
             buildCost: { wood: 200, metal: 100 },
             resourcePrice: { human: 1, wood: 2, stone: 1 },
             buildingBoost: {},
-            scale: { wood: 1.2, metal: 1.2 },
+            scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
         nursery: {
@@ -220,7 +220,7 @@ const gameData = {
             buildCost: { wood: 100, stone: 50, metal: 20 },
             resourcePrice: { wheat: 2 },
             buildingBoost: {},
-            scale: { wood: 1.2, stone: 1.2, metal: 1.2 },
+            scale: { wood: 1.05, stone: 1.05, metal: 1.05 },
             tooltip: "If you feed some humans, they'll be birds & bees."
         },
         hut: {
@@ -228,7 +228,7 @@ const gameData = {
             buildCost: { wood: 50, stone: 25 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { wood: 1.2, stone: 1.2 },
+            scale: { wood: 1.05, stone: 1.05 },
             tooltip: "The homeless rates are going down"
         },
         school: {
@@ -236,7 +236,7 @@ const gameData = {
             buildCost: { wood: 20, wheat: 5 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { wood: 1.2, wheat: 1.2 },
+            scale: { wood: 1.05, wheat: 1.05 },
             tooltip: "Expires in the summer time. Makes science, somehow"
         },
         farm: {
@@ -244,7 +244,7 @@ const gameData = {
             buildCost: { wheat: 10 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { wheat: 1.2 },
+            scale: { wheat: 1.05 },
             tooltip: "Agiliculture. Make the wheat, become the wheat."
         },
         silo: {
@@ -252,7 +252,7 @@ const gameData = {
             buildCost: { wood: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { wood: 1.2 },
+            scale: { wood: 1.05 },
             tooltip: "All that wheat you got gotta go somewhere"
         },
         lumbermill: {
@@ -260,7 +260,7 @@ const gameData = {
             buildCost: { money: 15, wheat: 5, wood: 5 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, wheat: 1.2, wood: 1.2 },
+            scale: { money: 1.05, wheat: 1.05, wood: 1.05 },
             tooltip: "Industiral Climate Change"
         },
         woodyard: {
@@ -268,15 +268,15 @@ const gameData = {
             buildCost: { money: 50, wood: 10 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, wood: 1.2 },
+            scale: { money: 1.05, wood: 1.05 },
             tooltip: "Put chopped trees in a field for later use"
         },
         superAxeHacker: {
             type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { metal: 500, wood: 200, stone: 300, money: 1000, axe: 20 },
-            resourcePrice: { human: 2, axe: 2, money: 15, wheat: 5, wood: 5 },
+            resourcePrice: { human: 2, axe: 2, money: 4, wheat: 5 },
             buildingBoost: { "lumbermill": 2 },
-            scale: { metal: 1.2, wood: 1.2, stone: 1.2, money: 1.2, axe: 1 },
+            scale: { metal: 1.05, wood: 1.05, stone: 1.05, money: 1.05, axe: 1 },
             tooltip: "How bad could I possibly be?"
         },
         quarry: {
@@ -284,7 +284,7 @@ const gameData = {
             buildCost: { wood: 50, money: 100 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { wood: 1.2, money: 1.2 },
+            scale: { wood: 1.05, money: 1.05 },
             tooltip: "Choose one place randomly you'll get stone faster if you dont do it randomly"
         },
         stonepit: {
@@ -292,7 +292,7 @@ const gameData = {
             buildCost: { money: 75, stone: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, stone: 1.2 },
+            scale: { money: 1.05, stone: 1.05 },
             tooltip: "Throw that stone in a new area, for later use"
         },
         mine: {
@@ -300,7 +300,7 @@ const gameData = {
             buildCost: { stone: 50, wood: 25 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { stone: 1.2, wood: 1.2 },
+            scale: { stone: 1.05, wood: 1.05 },
             tooltip: "Don't mine straight down. Or up. Get Metal."
         },
         scrapyard: {
@@ -308,7 +308,7 @@ const gameData = {
             buildCost: { money: 80, metal: 30 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, metal: 1.2 },
+            scale: { money: 1.05, metal: 1.05 },
             tooltip: "Find another places you can throw all that stuff you found."
         },
         market: {
@@ -316,7 +316,7 @@ const gameData = {
             buildCost: { stone: 10, wood: 5 },
             resourcePrice: { wheat: 1 },
             buildingBoost: {},
-            scale: { stone: 1.2, wood: 1.2 },
+            scale: { stone: 1.05, wood: 1.05 },
             tooltip: "Sell wheat, Get Cash. Yum"
         },
         lumberCompany: {
@@ -324,7 +324,7 @@ const gameData = {
             buildCost: { stone: 50, wood: 40, metal: 40 },
             resourcePrice: { wood: 1 },
             buildingBoost: {},
-            scale: { stone: 1.2, wood: 1.2, metal: 1.2 },
+            scale: { stone: 1.05, wood: 1.05, metal: 1.05 },
             tooltip: "Sell Lumber Large Scale Baby"
         },
         bank: {
@@ -332,7 +332,7 @@ const gameData = {
             buildCost: { money: 20, metal: 30, stone: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, metal: 1.2, stone: 1.2 },
+            scale: { money: 1.05, metal: 1.05, stone: 1.05 },
             tooltip: "The Bank of ${GameName}. :) Store your money here!!!"
         },
         library: {
@@ -340,10 +340,11 @@ const gameData = {
             buildCost: { human: 20, money: 100, stone: 200 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { human: 1.2, money: 1.2, stone: 1.2 },
+            scale: { human: 1.05, money: 1.05, stone: 1.05 },
             tooltip: "Some inspirational quote for why it costs humans - DobbyK"
         },
     },
+    
     research: {
         unlockCows: {
             name: "Knock Knock",
@@ -799,7 +800,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.9.1</a>
+            <a target="_blank" href="changelog.html">v0.0.9.2</a>
         </div>
         <div id="game">
         <div id="resources">
@@ -1105,6 +1106,8 @@ function destroy(buildingName) {
     }
 
     // All checks passed, safe to destroy
+    gameData.resources[building.type].max -= building.maxBoost;
+    if (gameData.resources[building.type].amount > gameData.resources[building.type].max) gameData.resources[building.type].amount = gameData.resources[building.type].max;
     building.count -= 1;
 }
 
