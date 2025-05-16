@@ -156,7 +156,7 @@ const gameData = {
             buildCost: { hammer: 10, wood: 100, metal: 250, money: 300 },
             resourcePrice: { hammer: 2, human: 2, wheat: 8, wood: 50, money: 25 },
             buildingBoost: { "quarry": 2 },
-            scale: { hammer: 1.2, wood: 1.2, metal: 1.2, money: 1.2 },
+            scale: { hammer: 1, wood: 1.2, metal: 1.2, money: 1.2 },
             tooltip: "Teach a man to hammer, get infinite rocks"
         },
         pickaxeMaker: {
@@ -799,7 +799,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.9</a>
+            <a target="_blank" href="changelog.html">v0.0.9.1</a>
         </div>
         <div id="game">
         <div id="resources">
@@ -1089,6 +1089,19 @@ function destroy(buildingName) {
             alert(`You cannot destroy a ${buildingName} because it would reduce ${resource} production below consumption. Required: ${newTotalConsumption}/s, Available: ${newTotalProduction}/s`);
             return;
         }
+    }
+    
+    if (building.buildingBoost) {
+        for (const target in building.buildingBoost) {
+            const boost = building.buildingBoost[target];
+            if (gameData.buildings[target]) {
+                gameData.buildings[target].production /= boost;
+            }
+        }
+    }
+
+    for (const [resource, cost] of Object.entries(building.buildCost)) {
+        building.buildCost[resource] = Math.floor(building.buildCost[resource] / building.scale[resource]);
     }
 
     // All checks passed, safe to destroy
