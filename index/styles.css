@@ -1,43 +1,43 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     height: 100vh;
     overflow: hidden;
+    background-color: #e9ecef;
+    color: #333;
 }
 
 /* Tooltip container */
 .tooltip {
     position: relative;
-    display: inline-block;/
+    display: inline-block;
+    cursor: pointer;
 }
 
 /* Tooltip text */
 .tooltip .tooltiptext {
     visibility: hidden;
     max-width: 800px;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #ffffff;
+    color: #222;
     text-align: left;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 10px 14px;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     white-space: normal;
     word-wrap: break-word;
-
     position: absolute;
     z-index: 10;
     top: 125%;
     left: 50%;
-    transform: translateX(20%);
-
+    transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
@@ -49,32 +49,34 @@ body {
     height: 100%;
 }
 
+/* Floating save panel */
 #save-controls {
     position: fixed;
-    right: 10px;
-    bottom: 10px;
+    right: 12px;
+    bottom: 12px;
     background-color: #fff;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
     z-index: 1000;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* Left column: Resources */
 #resources {
     width: 20%;
-    background-color: #f4f4f4;
-    padding: 10px;
+    background-color: #f8f9fa;
+    padding: 16px;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 14px;
     overflow-y: auto;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #ced4da;
 }
 
 /* Middle column: Buildings */
 #buildings {
     flex: 1;
-    padding: 20px;
+    padding: 24px;
     overflow-y: auto;
     text-align: center;
     background-color: #ffffff;
@@ -83,28 +85,70 @@ body {
 /* Right column: Research */
 #research {
     width: 25%;
-    background-color: #f9f9f9;
-    padding: 10px;
+    background-color: #f1f3f5;
+    padding: 16px;
     box-sizing: border-box;
     overflow-y: auto;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #ced4da;
+    padding-bottom: 80px;
 }
 
+/* Button styling */
+button {
+    font-size: 13px;
+    padding: 6px 10px;
+    margin: 4px 2px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #5a2304;
+}
+
+button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Header styling */
+h3, h4 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+/* Horizontal line styling */
+hr {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    margin: 10px 0;
+}
+
+/* Dark Mode Enhancements */
 body.dark-mode {
     background-color: #121212;
     color: #f0f0f0;
 }
 
 body.dark-mode .tooltiptext {
-    background-color: #333;
+    background-color: #2a2a2a;
     color: #eee;
     border-color: #555;
 }
 
 body.dark-mode button {
-    background-color: #222;
+    background-color: #333;
     color: #fff;
     border: 1px solid #555;
+}
+
+body.dark-mode button:hover {
+    background-color: #444;
 }
 
 body.dark-mode hr {
@@ -113,7 +157,7 @@ body.dark-mode hr {
 
 body.dark-mode h3,
 body.dark-mode h4 {
-    color: #fff;
+    color: #f0f0f0;
 }
 
 body.dark-mode .tooltip strong {
@@ -123,19 +167,22 @@ body.dark-mode .tooltip strong {
 body.dark-mode #resources,
 body.dark-mode #buildings,
 body.dark-mode #research {
-    background-color: #1a1a1a;
+    background-color: #1e1e1e;
     padding: 10px;
     border-radius: 4px;
 }
-
-/* Basic styling for buttons and headers */
-button {
-    font-size: 12px;
-    padding: 2px 6px;
-    margin: 2px;
+body.dark-mode #research {
+    padding-bottom: 80px;
 }
 
-h3 {
-    margin-top: 0;
-    font-size: 16px;
+/* Hide scrollbars but keep scrolling */
+#resources, #buildings, #research {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+#resources::-webkit-scrollbar,
+#buildings::-webkit-scrollbar,
+#research::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }

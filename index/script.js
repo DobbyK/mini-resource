@@ -2,97 +2,97 @@
 const gameData = {
     collecting: null,
     resources: {
-        money: { 
-            max: 10000, amount: 0, gain: 0, loss: 0, worth: 1, 
+        money: {
+            max: 10000, amount: 0, gain: 0, loss: 0, worth: 1,
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Money... Capitalism... Sell Stuff To get Money"
         },
-        human: { 
-            max: 10, amount: 0, gain: 0, loss: 0, worth: 50, 
+        human: {
+            max: 10, amount: 0, gain: 0, loss: 0, worth: 50,
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Weird creatures with 2 legs and 'brains'. Maybe they could do something, or be sold- i mean uh."
         },
         family: {
-            max: 10, amount: 0, gain: 0, loss: 0, worth: 500, 
+            max: 10, amount: 0, gain: 0, loss: 0, worth: 500,
             unlocked: false, collectible: false, sellable: false,
-            tooltip: "Not Yet Nuclear"  
+            tooltip: "Not Yet Nuclear"
         },
-        rat: { 
-            max: 20, amount: 0, gain: 0, loss: 0, worth: 100, 
+        rat: {
+            max: 20, amount: 0, gain: 0, loss: 0, worth: 100,
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Offspring of ratsareamazing. Chef"
         },
         cow: {
-            max: 40, amount: 0, gain: 0, loss: 0, worth: 20, 
+            max: 40, amount: 0, gain: 0, loss: 0, worth: 20,
             unlocked: false, collectible: false, sellable: true,
-            tooltip: "Not To Eat"  
+            tooltip: "Not To Eat"
         },
-        science: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 0, 
+        science: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 0,
             unlocked: false, collectible: true, sellable: false,
             tooltip: "Knowledge is power. You need this to research most things"
         },
-        wheat: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 1, 
+        wheat: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 1,
             unlocked: false, collectible: true, sellable: false,
             tooltip: "Consumables"
         },
-		meat: {
-			max: 100, amount: 0, gain: 0, loss: 0, worth: 100,
-			unlocked: false, collectible: false, sellable: true,
-			tooltip: "Don't beat this, eat it"
-		},
-        meal: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 150, 
+        meat: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 100,
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Don't beat this, eat it"
+        },
+        meal: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 150,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Combination of wheat and meat. A sandwich?"
         },
-        wood: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 2, 
+        wood: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 2,
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Take a tree cut it down. build stuff"
         },
-        stone: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 5, 
+        stone: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 5,
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Dwayne the rock johnson. Build slightly sturder than wood"
         },
-        metal: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 10, 
+        metal: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 10,
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Non-descript resource of stuff mined underground. Also buildin."
         },
-        leather: { 
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 100, 
+        leather: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 100,
             unlocked: false, collectible: true, sellable: true,
             tooltip: "I don't remember anyone ever making leather armor"
         },
-		milk: {
-			max: 100, amount: 0, gain: 0, loss: 0, worth: 50,
-			unlocked: false, collectible: false, sellable: true,
-			tooltip: "Not safe for babies? Too bad"
+        milk: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 50,
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Not safe for babies? Too bad"
         },
-        hoe: { 
-            max: 50, amount: 0, gain: 0, loss: 0, worth: 25, 
+        hoe: {
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 25,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "The Farming Kind, Not the other"
         },
-        axe: { 
-            max: 50, amount: 0, gain: 0, loss: 0, worth: 40, 
+        axe: {
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 40,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "How the frick did you collect wood before?"
         },
-        hammer: { 
-            max: 50, amount: 0, gain: 0, loss: 0, worth: 60, 
+        hammer: {
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 60,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "All I can think of is the Harmer class in final fantasy"
         },
-        pickaxe: { 
-            max: 50, amount: 0, gain: 0, loss: 0, worth: 80, 
+        pickaxe: {
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 80,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Mining away on this minecraft day"
         },
-        
+
     },
     buildings: {
         pen: {
@@ -116,7 +116,7 @@ const gameData = {
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
-            scale: { wood: 1.2 , metal: 1.2  },
+            scale: { wood: 1.2, metal: 1.2 },
             tooltip: "Moo-but dead (no leather)"
         },
         parlor: {
@@ -124,7 +124,7 @@ const gameData = {
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
-            scale: { wood: 1.2 , metal: 1.2  },
+            scale: { wood: 1.2, metal: 1.2 },
             tooltip: "Violate the cows"
         },
         church: {
@@ -132,14 +132,14 @@ const gameData = {
             buildCost: { meal: 20, wood: 500, metal: 150, stone: 200 },
             resourcePrice: { human: 4, wood: 20, meal: 2 },
             buildingBoost: {},
-            scale: { meal: 1, wood: 1.2 , metal: 1.2, stone: 1.2 },
+            scale: { meal: 1, wood: 1.2, metal: 1.2, stone: 1.2 },
             tooltip: "Non-religious"
         },
         house: {
             type: "family", count: 0, gain: 0, unlocked: false, maxBoost: 10, production: 0,
             buildCost: { stone: 100, metal: 600, wheat: 2000 },
             resourcePrice: {},
-            buildingBoost: { },
+            buildingBoost: {},
             scale: { stone: 1.2, metal: 1.2, wheat: 1.2 },
             tooltip: "Only people happily married get the right not to live in huts"
         },
@@ -176,15 +176,15 @@ const gameData = {
             tooltip: "Redstone..."
         },
         axeSmith: {
-            type: "axe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            type: "axe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { metal: 400, money: 150, stone: 200 },
-            resourcePrice: { human: 1, metal: 6, wood: 2},
+            resourcePrice: { human: 1, metal: 6, wood: 2 },
             buildingBoost: {},
             scale: { metal: 1.2, money: 1.2, stone: 1.2 },
             tooltip: "Train some dude to strike together some axes"
         },
         ratTrainer: {
-            type: "rat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            type: "rat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wheat: 400, wood: 400, stone: 100, money: 100 },
             resourcePrice: { human: 2, wheat: 8, stone: 1 },
             buildingBoost: {},
@@ -192,7 +192,7 @@ const gameData = {
             tooltip: "Use wheat to train rats who in turn make wheat better. And some traping"
         },
         kitchen: {
-            type: "meal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            type: "meal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wheat: 200, metal: 400, stone: 100 },
             resourcePrice: { rat: 2, human: 1, wheat: 5, meat: 1 },
             buildingBoost: {},
@@ -200,7 +200,7 @@ const gameData = {
             tooltip: "Wheat+Meat+Rats+Human Slave = Better food?"
         },
         AutoHoer: {
-            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0, 
+            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
             buildCost: { wheat: 500, hoe: 20, wood: 100, metal: 300, money: 400 },
             resourcePrice: { hoe: 2, human: 2, wheat: 10 },
             buildingBoost: { "farm": 2 },
@@ -208,7 +208,7 @@ const gameData = {
             tooltip: "Peak Human Integunity. (no spell check)"
         },
         hoeMaker: {
-            type: "hoe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            type: "hoe", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 200, metal: 100 },
             resourcePrice: { human: 1, wood: 2, stone: 1 },
             buildingBoost: {},
@@ -216,7 +216,7 @@ const gameData = {
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
         nursery: {
-            type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 100, stone: 50, metal: 20 },
             resourcePrice: { wheat: 2 },
             buildingBoost: {},
@@ -228,7 +228,7 @@ const gameData = {
             buildCost: { wood: 50, stone: 25 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: {wood: 1.2, stone: 1.2},
+            scale: { wood: 1.2, stone: 1.2 },
             tooltip: "The homeless rates are going down"
         },
         school: {
@@ -236,7 +236,7 @@ const gameData = {
             buildCost: { wood: 20, wheat: 5 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: {wood: 1.2, wheat: 1.2},
+            scale: { wood: 1.2, wheat: 1.2 },
             tooltip: "Expires in the summer time. Makes science, somehow"
         },
         farm: {
@@ -244,15 +244,15 @@ const gameData = {
             buildCost: { wheat: 10 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: {wheat: 1.2},
+            scale: { wheat: 1.2 },
             tooltip: "Agiliculture. Make the wheat, become the wheat."
         },
         silo: {
-            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0, 
+            type: "wheat", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
             buildCost: { wood: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: {wood: 1.2},
+            scale: { wood: 1.2 },
             tooltip: "All that wheat you got gotta go somewhere"
         },
         lumbermill: {
@@ -260,7 +260,7 @@ const gameData = {
             buildCost: { money: 15, wheat: 5, wood: 5 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, wheat: 1.2, wood: 1.2},
+            scale: { money: 1.2, wheat: 1.2, wood: 1.2 },
             tooltip: "Industiral Climate Change"
         },
         woodyard: {
@@ -268,7 +268,7 @@ const gameData = {
             buildCost: { money: 50, wood: 10 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, wood: 1.2},
+            scale: { money: 1.2, wood: 1.2 },
             tooltip: "Put chopped trees in a field for later use"
         },
         superAxeHacker: {
@@ -280,7 +280,7 @@ const gameData = {
             tooltip: "How bad could I possibly be?"
         },
         quarry: {
-            type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1, 
+            type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 50, money: 100 },
             resourcePrice: {},
             buildingBoost: {},
@@ -292,15 +292,15 @@ const gameData = {
             buildCost: { money: 75, stone: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: {money: 1.2, stone: 1.2},
+            scale: { money: 1.2, stone: 1.2 },
             tooltip: "Throw that stone in a new area, for later use"
         },
         mine: {
             type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { stone: 50, wood: 25 },
-            resourcePrice: { },
+            resourcePrice: {},
             buildingBoost: {},
-            scale: { stone: 1.2, wood: 1.2},
+            scale: { stone: 1.2, wood: 1.2 },
             tooltip: "Don't mine straight down. Or up. Get Metal."
         },
         scrapyard: {
@@ -308,7 +308,7 @@ const gameData = {
             buildCost: { money: 80, metal: 30 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.2, metal: 1.2},
+            scale: { money: 1.2, metal: 1.2 },
             tooltip: "Find another places you can throw all that stuff you found."
         },
         market: {
@@ -332,7 +332,7 @@ const gameData = {
             buildCost: { money: 20, metal: 30, stone: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: {money: 1.2, metal: 1.2, stone: 1.2},
+            scale: { money: 1.2, metal: 1.2, stone: 1.2 },
             tooltip: "The Bank of ${GameName}. :) Store your money here!!!"
         },
         library: {
@@ -340,7 +340,7 @@ const gameData = {
             buildCost: { human: 20, money: 100, stone: 200 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { human: 1.2, money: 1.2, stone: 1.2},
+            scale: { human: 1.2, money: 1.2, stone: 1.2 },
             tooltip: "Some inspirational quote for why it costs humans - DobbyK"
         },
     },
@@ -354,7 +354,7 @@ const gameData = {
                 gameData.buildings.pen.unlocked = true;
             },
             completed: false,
-            requires: ["unlockLumberCompany"], 
+            requires: ["unlockLumberCompany"],
             tooltip: "Unlock Cow & Pen"
         },
         unlockLeather: {
@@ -369,30 +369,30 @@ const gameData = {
             requires: ["unlockCows"],
             tooltip: "Unlock Leather and Tannery"
         },
-		unlockMilk: {
-			name: "Cowlcium",
-			description: "Don't tell anyone what you were doing to the cows to get this.",
-			cost: { science: 300, stone: 700, metal: 500 },
-			effect: () => {
-				gameData.resources.milk.unlocked = true;
-				gameData.buildings.parlor.unlocked = true;
-			},
-			completed: false,
-			requires: ["unlockCows"],
-			tooltip: "Unlock Milk and Parlor"
-		},
+        unlockMilk: {
+            name: "Cowlcium",
+            description: "Don't tell anyone what you were doing to the cows to get this.",
+            cost: { science: 300, stone: 700, metal: 500 },
+            effect: () => {
+                gameData.resources.milk.unlocked = true;
+                gameData.buildings.parlor.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockCows"],
+            tooltip: "Unlock Milk and Parlor"
+        },
         unlockMeat: {
-			name: "Fast Food Nation",
-			description: "Arby's we have the meats (i have never been to an arby's and never will",
-			cost: { science: 300, stone: 700, metal: 500 },
-			effect: () => {
-				gameData.resources.meat.unlocked = true;
-				gameData.buildings.butcher.unlocked = true;
-			},
-			completed: false,
-			requires: ["unlockCows"],
-			tooltip: "Unlock Meat and Butcher"
-		},
+            name: "Fast Food Nation",
+            description: "Arby's we have the meats (i have never been to an arby's and never will",
+            cost: { science: 300, stone: 700, metal: 500 },
+            effect: () => {
+                gameData.resources.meat.unlocked = true;
+                gameData.buildings.butcher.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockCows"],
+            tooltip: "Unlock Meat and Butcher"
+        },
         unlockFamilies: {
             name: "Everybody needs one",
             description: "Maybe humans need each other, eh nah",
@@ -403,7 +403,7 @@ const gameData = {
             completed: false,
             requires: ["unlockPickaxe"],
             tooltip: "Unlock Families as a resource"
-        },   
+        },
         unlockHouse: {
             name: "Better homes",
             description: "Waste, cause what if single moms",
@@ -425,7 +425,7 @@ const gameData = {
             completed: false,
             requires: ["unlockFamilies"],
             tooltip: "Unlock Church building"
-        },        
+        },
         unlockHammer: {
             name: "Now We're getting somewhere",
             description: "The hammer is flat just like you",
@@ -471,7 +471,7 @@ const gameData = {
             completed: false,
             requires: ["unlockPickaxe"],
             tooltip: "Unlock AutoPicker"
-        },        
+        },
         unlockAxeHacker: {
             name: "Anti-lorax",
             description: "It's a principle of nature, that almost every creature knows  <a target='_blank' href='https://seuss.fandom.com/wiki/Super_Axe_Hacker'>Wiki</a>",
@@ -586,7 +586,7 @@ const gameData = {
             requires: ["unlockQuarry"],
             tooltip: "Unlock Human"
         },
-        
+
         unlockNursery: {
             name: "Like Rabbits",
             description: "The humans, well they multiply.",
@@ -598,7 +598,7 @@ const gameData = {
             requires: ["unlockHuman"],
             tooltip: "Unlock Nursery"
         },
-        
+
         unlockHut: {
             name: "2009",
             description: "The homes are too expensive!!!!!!!!! <a target='_blank' href='https://en.wikipedia.org/wiki/Subprime_mortgage_crisis'>Wiki</a>",
@@ -610,7 +610,7 @@ const gameData = {
             requires: ["unlockHuman"],
             tooltip: "Unlock Hut"
         },
-        
+
         unlockBank: {
             name: "No Interest Banking",
             description: "Put your hard earned cash into legit buildings, but money still doesn't grow on trees.",
@@ -620,7 +620,7 @@ const gameData = {
             requires: ["unlockMarket"],
             tooltip: "Unlock Bank"
         },
-        
+
         unlockScrapyard: {
             name: "Heavy Metal",
             description: "You think you might be on to something. Put the metal you find in the mines into a big open field.",
@@ -630,7 +630,7 @@ const gameData = {
             requires: ["unlockMine"],
             tooltip: "Unlock Scrapyard"
         },
-        
+
         unlockPit: {
             name: "Get Pitting",
             description: "We gotta put the earth we dig up in another part of the earth we dug up",
@@ -640,7 +640,7 @@ const gameData = {
             requires: ["unlockQuarry"],
             tooltip: "Unlock Pit"
         },
-        
+
         unlockWheat: {
             name: "Unlock wheat",
             description: "You are literally an empty void. So Eat",
@@ -650,7 +650,7 @@ const gameData = {
             requires: [],
             tooltip: "Unlock wheat"
         },
-        
+
         unlockFarm: {
             name: "Agiliculture",
             description: "Somehow you figure out you don't have to rummage around in the trash.",
@@ -660,20 +660,20 @@ const gameData = {
             requires: ["unlockWheat"],
             tooltip: "Unlock Farm"
         },
-        
+
         unlockMoney: {
             name: "Economy",
             description: "Here comes the money. $$$",
             cost: { wheat: 5 },
-            effect: () => { 
-                gameData.resources.money.unlocked = true; 
-                gameData.resources.wheat.sellable = true; 
+            effect: () => {
+                gameData.resources.money.unlocked = true;
+                gameData.resources.wheat.sellable = true;
             },
             completed: false,
             requires: ["unlockWheat", "unlockFarm"],
             tooltip: "Unlock Money"
         },
-        
+
         unlockSilo: {
             name: "Unlock Silos",
             description: "You are swimming in wheat (I think)",
@@ -683,7 +683,7 @@ const gameData = {
             requires: ["unlockFarm"],
             tooltip: "Unlock Silo"
         },
-        
+
         unlockYard: {
             name: "Unlock a Yard",
             description: "You've chopped a crap ton of trees down",
@@ -693,7 +693,7 @@ const gameData = {
             requires: ["unlockLumbermill"],
             tooltip: "Unlock Yard"
         },
-        
+
         unlockScience: {
             name: "Unstupid",
             description: "Unlocks science collection.",
@@ -703,7 +703,7 @@ const gameData = {
             requires: ["unlockMoney"],
             tooltip: "Unlock Science"
         },
-        
+
         unlockSchool: {
             name: "Get Learning",
             description: "I thought this science stuff was useless originally.",
@@ -713,7 +713,7 @@ const gameData = {
             requires: ["unlockMoney", "unlockScience"],
             tooltip: "Unlock School"
         },
-        
+
         unlockWood: {
             name: "Unlock Wood",
             description: "How much wood would a wood trimp trimp if a wood trimp could trimp wood. (Play Trimps!)",
@@ -723,7 +723,7 @@ const gameData = {
             requires: ["unlockWheat", "unlockMoney"],
             tooltip: "Unlock Wood"
         },
-        
+
         unlockLumbermill: {
             name: "Deforstation",
             description: "Unlocks building lumbermills. Now you can turn taking down plants industrially",
@@ -733,7 +733,7 @@ const gameData = {
             requires: ["unlockWood"],
             tooltip: "Unlock Lumbermill"
         },
-        
+
         unlockStone: {
             name: "Strike The Earth (Stone Collection)",
             description: "Urist McMiner. (well not really but like yeah play dwarf fortress)",
@@ -743,7 +743,7 @@ const gameData = {
             requires: ["unlockLumbermill"],
             tooltip: "Unlock Stone"
         },
-        
+
         unlockQuarry: {
             name: "Now with Rocks.",
             description: "Quarry is the stupidest word in the dictionary.",
@@ -753,7 +753,7 @@ const gameData = {
             requires: ["unlockStone"],
             tooltip: "Unlock Quarry"
         },
-        
+
         unlockMetal: {
             name: "Softcore metal",
             description: "So this is what they meant when they said they are into softcore p-",
@@ -763,7 +763,7 @@ const gameData = {
             requires: ["unlockQuarry"],
             tooltip: "Unlock Metal"
         },
-        
+
         unlockMine: {
             name: "No Diamonds",
             description: "Even at y-11, this mine will not have diamonds",
@@ -773,7 +773,7 @@ const gameData = {
             requires: ["unlockMetal"],
             tooltip: "Unlock Mine"
         },
-        
+
         unlockMarket: {
             name: "Get Selling ( well just wheat :( )",
             description: "Capitalism at its finest, but people won't buy stuff besides wheat yet.",
@@ -783,7 +783,7 @@ const gameData = {
             requires: ["unlockMine"],
             tooltip: "Unlock Market"
         }
-        
+
     }
 };
 
@@ -799,12 +799,14 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.8</a>
+            <a target="_blank" href="changelog.html">v0.0.9</a>
         </div>
+        <div id="game">
         <div id="resources">
         </div>
         <div id="buildings"></div>
         <div id="research"></div>
+        </div>
     `;
     renderStaticUI();
     requestAnimationFrame(gameLoop);
@@ -825,7 +827,7 @@ function renderStaticUI() {
                     <div class="tooltip">
                         <span class="tooltiptext">${res.tooltip}</span>
                         <strong>
-                            <a href="javascript:void(0);" onclick="scrollToBuildingCategory('${name}')">${format(name)}</a>
+                            <a onclick="scrollToBuildingCategory('${name}')">${format(name)}</a>
                         </strong>:
                     </div>
                     <span id="${name}_amount">${res.amount}/${res.max}</span> 
@@ -863,7 +865,7 @@ function renderStaticUI() {
                     <div class="tooltip">
                         <span class="tooltiptext">${building.tooltip}</span>
                         <strong>${format(building.name)}</strong>
-                    </div> - <span id="${building.name}_count">${building.count}</span> (+<span id="${building.name}_gain">${building.gain}</span>/s)
+                    </div> - <span id="${building.name}_count">${building.count}</span>
                     <br>
                     <button id="${building.name}_cost" onclick="build('${building.name}')">Build (${formatCost(building.buildCost)}${getCostText(building)})</button>
                     <button onclick="destroy('${building.name}')">Destroy</button>
@@ -882,7 +884,7 @@ function renderStaticUI() {
                     <span class="tooltiptext">${item.tooltip}</span>
                     <strong>${item.name}</strong>
                 </div>: ${item.description}
-                <br>Cost: <span id="${item}_cost">${formatCost(item.cost)}</span>
+                <br>Cost: <span id="${key}_cost">${formatCost(item.cost)}</span>
                 <br><button onclick="performResearch('${key}')">Research</button>
             </div>
             <hr>
@@ -912,28 +914,34 @@ function updateDynamicUI() {
         if (building.unlocked) {
             const countElem = document.getElementById(`${bName}_count`);
             if (countElem) countElem.innerHTML = building.count.toFixed();
-            const gainElem = document.getElementById(`${bName}_gain`);
-            gainElem.innerHTML = building.gain;
             const costElem = document.getElementById(`${bName}_cost`);
-            costElem.innerHTML = `Build (${formatCost(building.buildCost)}${getCostText(building)})`;
+            if (costElem) costElem.innerHTML = `Build (${formatCost(building.buildCost)}${getCostText(building)})`;
         }
-        
+
 
     }
 
     for (const [name, res] of Object.entries(gameData.resources)) {
         if (res.unlocked) {
-        const tip = document.getElementById(`${name}_tip`);
-        if (tip) tip.innerHTML = getProductionBreakdown(name);
+            const tip = document.getElementById(`${name}_tip`);
+            if (tip) tip.innerHTML = getProductionBreakdown(name);
         }
     }
 
     for (const [key, item] of Object.entries(gameData.research)) {
         if (item.completed || !item.requires.every(reqKey => gameData.research[reqKey]?.completed)) continue;
-        const research = document.getElementById(`${item}_cost`);
-        const cText = formatCost(item.cost);
-        research.innerHTML = cText;
+
+        const researchCostElem = document.getElementById(`${key}_cost`);
+        if (!researchCostElem) continue;
+
+        const canAfford = Object.entries(item.cost).every(([res, amt]) =>
+            gameData.resources[res]?.amount >= amt
+        );
+
+        researchCostElem.innerHTML = formatCost(item.cost);
+        researchCostElem.style.color = canAfford ? "green" : "red";
     }
+
 }
 
 
@@ -983,19 +991,32 @@ function formatCost(costObj) {
 
 function getCostText(building) {
     if (!building.resourcePrice || Object.keys(building.resourcePrice).length === 0) return '';
-    const parts = Object.entries(building.resourcePrice).map(([resource, cost]) => {
-        const passiveGain = gameData.buildings
-            ? Object.values(gameData.buildings)
-                .filter(b => b.type === resource)
-                .reduce((sum, b) => sum + b.count * b.production, 0)
-            : 0;
 
-        const totalCost = (building.count + 1) * cost;
-        const color = passiveGain >= totalCost ? "green" : "red";
-        return `<span style="color:${color}">${cost} ${resource}/s</span>`;
+    const parts = Object.entries(building.resourcePrice).map(([resource, costPerSecond]) => {
+        let totalProduction = 0;
+        let totalLoss = 0;
+
+        for (const b of Object.values(gameData.buildings)) {
+            if (b.production && b.type === resource) {
+                totalProduction += b.count * b.production;
+            }
+
+            if (b.resourcePrice && b.resourcePrice[resource]) {
+                totalLoss += b.count * b.resourcePrice[resource];
+            }
+        }
+
+        const netAvailable = totalProduction - totalLoss;
+        const color = netAvailable >= costPerSecond ? "green" : "red";
+
+        return `<span style="color:${color}">${costPerSecond.toFixed()} ${resource}/s</span>`;
     });
+
     return parts.length > 0 ? ` | Cost: ${parts.join(', ')}` : '';
 }
+
+
+
 
 
 function getgainPrice(building) {
@@ -1089,36 +1110,36 @@ function build(buildingName) {
     // Check passive costs
     if (building.resourcePrice) {
         for (const [resource, costPerBuilding] of Object.entries(building.resourcePrice)) {
-            
+
             let totalLoss = (building.count + 1) * costPerBuilding;
             for (const otherBuilding of Object.values(gameData.buildings)) {
                 if (otherBuilding !== building && otherBuilding.resourcePrice && otherBuilding.resourcePrice[resource]) {
                     totalLoss += otherBuilding.count * otherBuilding.resourcePrice[resource];
                 }
             }
-    
+
             let passiveGain = 0;
             for (const b of Object.values(gameData.buildings)) {
                 if (b.type === resource) {
                     passiveGain += b.count * b.production;
                 }
             }
-    
+
             if (passiveGain < totalLoss) {
                 alert(`You need at least ${totalLoss} ${resource}/s passive income to build another ${buildingName}.`);
                 return;
             }
         }
     }
-    
+
 
     // Deduct build cost
     for (const [resource, cost] of Object.entries(building.buildCost)) {
         gameData.resources[resource].amount -= cost;
-        building.buildCost[resource]= Math.floor(building.buildCost[resource] * building.scale[resource]);
+        building.buildCost[resource] = Math.floor(building.buildCost[resource] * building.scale[resource]);
     }
 
-    
+
     building.count += 1;
     if (building.buildingBoost) {
         for (const target in building.buildingBoost) {
@@ -1128,7 +1149,7 @@ function build(buildingName) {
             }
         }
     }
-    
+
 
     gameData.resources[building.type].max += building.maxBoost;
     updateGains();
@@ -1257,7 +1278,7 @@ function importSave(event) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         try {
             const parsed = JSON.parse(e.target.result);
             deepMerge(gameData, parsed);
