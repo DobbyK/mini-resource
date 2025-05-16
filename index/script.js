@@ -882,7 +882,7 @@ function renderStaticUI() {
                     <span class="tooltiptext">${item.tooltip}</span>
                     <strong>${item.name}</strong>
                 </div>: ${item.description}
-                <br>Cost: ${formatCost(item.cost)}
+                <br>Cost: <span id="${item}_cost">${formatCost(item.cost)}</span>
                 <br><button onclick="performResearch('${key}')">Research</button>
             </div>
             <hr>
@@ -927,6 +927,13 @@ function updateDynamicUI() {
         if (tip) tip.innerHTML = getProductionBreakdown(name);
         }
     }
+
+    for (const [key, item] of Object.entries(gameData.research)) {
+        if (item.completed || !item.requires.every(reqKey => gameData.research[reqKey]?.completed)) continue;
+        const research = document.getElementById(`${item}_cost`);
+        const cText = formatCost(item.cost);
+        research.innerHTML = cText;
+    }
 }
 
 
@@ -966,15 +973,30 @@ function getProductionBreakdown(resourceName) {
 
 
 function formatCost(costObj) {
-    return Object.entries(costObj).map(([res, amt]) => `${amt} ${res}`).join(', ');
+    return Object.entries(costObj).map(([res, amt]) => {
+        const canBuy = gameData.resources[res]?.amount >= amt;
+        const color = canBuy ? "green" : "red";
+        return `<span style="color:${color}">${amt} ${res}</span>`;
+    }).join(', ');
 }
+
 
 function getCostText(building) {
     if (!building.resourcePrice || Object.keys(building.resourcePrice).length === 0) return '';
-    const parts = Object.entries(building.resourcePrice)
-        .map(([resource, cost]) => `${cost} ${resource}/s`);
+    const parts = Object.entries(building.resourcePrice).map(([resource, cost]) => {
+        const passiveGain = gameData.buildings
+            ? Object.values(gameData.buildings)
+                .filter(b => b.type === resource)
+                .reduce((sum, b) => sum + b.count * b.production, 0)
+            : 0;
+
+        const totalCost = (building.count + 1) * cost;
+        const color = passiveGain >= totalCost ? "green" : "red";
+        return `<span style="color:${color}">${cost} ${resource}/s</span>`;
+    });
     return parts.length > 0 ? ` | Cost: ${parts.join(', ')}` : '';
 }
+
 
 function getgainPrice(building) {
     return Math.floor(building.baseUpgrade * Math.pow(1.5, building.gain - 1));
@@ -1172,6 +1194,11 @@ function giveAllResourcesDebug() {
     }
     console.log("All resources set to 100,000 for debugging.");
 }
+
+function canAfford(costObj) {
+    return Object.entries(costObj).every(([res, amt]) => gameData.resources[res]?.amount >= amt);
+}
+
 
 function format(name) {
     return name
