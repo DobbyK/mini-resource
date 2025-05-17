@@ -800,7 +800,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.9.2</a>
+            <a target="_blank" href="changelog.html">v0.0.9.3</a>
         </div>
         <div id="game">
         <div id="resources">
@@ -1102,7 +1102,9 @@ function destroy(buildingName) {
     }
 
     for (const [resource, cost] of Object.entries(building.buildCost)) {
-        building.buildCost[resource] = Math.floor(building.buildCost[resource] / building.scale[resource]);
+        let scaletest = (Math.floor(building.buildCost[resource] / building.scale[resource]) == building.buildCost[resource]) ? true : false;
+        if (!scaletest ) {building.buildCost[resource] = Math.floor(building.buildCost[resource] / building.scale[resource]); }
+        else { building.buildCost[resource] -= 1; }
     }
 
     // All checks passed, safe to destroy
@@ -1152,7 +1154,9 @@ function build(buildingName) {
     // Deduct build cost
     for (const [resource, cost] of Object.entries(building.buildCost)) {
         gameData.resources[resource].amount -= cost;
-        building.buildCost[resource] = Math.floor(building.buildCost[resource] * building.scale[resource]);
+        let scaletest = (Math.floor(building.buildCost[resource] * building.scale[resource]) == building.buildCost[resource]) ? true : false;
+        if (!scaletest ) {building.buildCost[resource] = Math.floor(building.buildCost[resource] * building.scale[resource]); }
+        else { building.buildCost[resource] += 1; }        
     }
 
 
