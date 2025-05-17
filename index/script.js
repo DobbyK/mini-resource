@@ -92,9 +92,47 @@ const gameData = {
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Mining away on this minecraft day"
         },
-
+        armor: {
+            max: 50, amount: 0, gain: 0, loss: 0, worth: 300,
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Not Dyable"
+        },
+        soldiers: {
+            max: 200, amount: 0, gain: 0, loss: 0, worth: 500,
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "Honor veterans"
+        },
+        territory: {
+            max: 10, amount: 0, gain: 0, loss: 0, worth: 2000,
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "And thats land! - bill wurtz"
+        }
     },
     buildings: {
+        leatherSmith: {
+            type: "armor", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 800, stone: 600, leather: 20 },
+            resourcePrice: { leather: 2, human: 1 },
+            buildingBoost: {},
+            scale: { wood: 1.05, stone: 1.05 },
+            tooltip: "Turns hides into pride"
+        },
+        barracks: {
+            type: "soldiers", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.5,
+            buildCost: { wood: 3000, metal: 600, milk: 5 },
+            resourcePrice: { armor: 1, family: 1, meals: 2 },
+            buildingBoost: {},
+            scale: { wood: 1.05, metal: 1.05 },
+            tooltip: "The cradle of your army"
+        },
+        pentagon: {
+            type: "territory", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.2,
+            buildCost: { metal: 800, stone: 1000 },
+            resourcePrice: { soldiers: 2 },
+            buildingBoost: {},
+            scale: { metal: 1.05, stone: 1.05 },
+            tooltip: "Expand and control what you claim"
+        },
         pen: {
             type: "cow", count: 0, gain: 1, unlocked: false, maxBoost: 5, production: 1, gain: 0,
             buildCost: { wood: 2000, stone: 1500, wheat: 900 },
@@ -215,6 +253,14 @@ const gameData = {
             scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Use unpaid labor to make hoes! And some wood & stone"
         },
+        formulaFactory: {
+            type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0,
+            buildCost: { wood: 800, stone: 200, metal: 50, milk: 20, cow: 15 },
+            resourcePrice: { milk: 4, wheat: 2 },
+            buildingBoost: { "nursery": 2 },
+            scale: { wood: 1.05, stone: 1.05, metal: 1.05, milk: 1.05, cow: 1.05 },
+            tooltip: "If you don't like sucking naturally"
+        },
         nursery: {
             type: "human", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 100, stone: 50, metal: 20 },
@@ -327,6 +373,22 @@ const gameData = {
             scale: { stone: 1.05, wood: 1.05, metal: 1.05 },
             tooltip: "Sell Lumber Large Scale Baby"
         },
+        rockDealer: {
+            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 5,
+            buildCost: { wheat: 50, wood: 90, metal: 40 },
+            resourcePrice: { stone: 1 },
+            buildingBoost: {},
+            scale: { wheat: 1.05, wood: 1.05, metal: 1.05 },
+            tooltip: "Don't get stoned"
+        },
+        metalRidder: {
+            type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 10,
+            buildCost: { stone: 100, wood: 180, wheat: 400 },
+            resourcePrice: { metal: 1 },
+            buildingBoost: {},
+            scale: { stone: 1.05, wood: 1.05, metal: 1.05 },
+            tooltip: "No Alchemy?"
+        },
         bank: {
             type: "money", count: 0, gain: 0, unlocked: false, maxBoost: 5000, production: 0,
             buildCost: { money: 20, metal: 30, stone: 20 },
@@ -344,8 +406,78 @@ const gameData = {
             tooltip: "Some inspirational quote for why it costs humans - DobbyK"
         },
     },
-    
+
     research: {
+        unlockArmor: {
+            name: "Wear Cows",
+            description: "I ain't wearing my food, you are!",
+            cost: { science: 500, stone: 1000, wheat: 1000, leather: 100, money: 2000 },
+            effect: () => {
+                gameData.buildings.leatherSmith.unlocked = true;
+                gameData.resources.armor.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockMilk", "unlockLeather", "unlockMeat"],
+            tooltip: "Unlock Leather Smith"
+        },
+
+        unlockDraft: {
+            name: "College Students",
+            description: "Take young 18yos from families and force them to fight",
+            cost: { science: 550, money: 5000 },
+            effect: () => {
+                gameData.buildings.barracks.unlocked = true;
+                gameData.resources.soldiers.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockArmor"],
+            tooltip: "Unlock Barracks (produces Soldiers from Armor + Families)"
+        },
+        unlockWar: {
+            name: "War",
+            description: "Weapons for WW3 not known, the next with di-sticks and stones - Einstein (paraphrased from memory)",
+            cost: { science: 600, armor: 20, family: 50, money: 6000 },
+            effect: () => {
+                gameData.buildings.pentagon.unlocked = true;
+                gameData.resources.territory.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockDraft"],
+            tooltip: "Unlock Pentagon"
+        },
+        unlockStoneDealer: {
+            name: "Pure Dopamine",
+            description: "Maybe some idiot will buy some rocks. Get Stoned. (also still play dwarf fortress)",
+            cost: { science: 225, wheat: 1000, stone: 750, human: 30 },
+            effect: () => {
+                gameData.buildings.rockDealer.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockLumberCompany"],
+            tooltip: "Unlock rock Dealer"
+        },
+        unlockMetalRidder: {
+            name: "2% Fat",
+            description: "You look like you were raised on baby formula lil bro. :|",
+            cost: { science: 375, wheat: 1500, metal: 750 },
+            effect: () => {
+                gameData.buildings.metalRidder.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockMetalRidder"],
+            tooltip: "Unlock Formula Factory"
+        },
+        unlockFormula: {
+            name: "2% Fat",
+            description: "You look like you were raised on baby formula lil bro. :|",
+            cost: { science: 175, wheat: 1000, stone: 750, cow: 40 },
+            effect: () => {
+                gameData.buildings.formulaFactory.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockAutoHoe", "unlockMilk"],
+            tooltip: "Unlock Formula Factory"
+        },
         unlockCows: {
             name: "Knock Knock",
             description: "Who's there, interupting cow, interupting c- MOOOOO BIT-",
@@ -1091,7 +1223,7 @@ function destroy(buildingName) {
             return;
         }
     }
-    
+
     if (building.buildingBoost) {
         for (const target in building.buildingBoost) {
             const boost = building.buildingBoost[target];
@@ -1103,7 +1235,7 @@ function destroy(buildingName) {
 
     for (const [resource, cost] of Object.entries(building.buildCost)) {
         let scaletest = (Math.floor(building.buildCost[resource] / building.scale[resource]) == building.buildCost[resource]) ? true : false;
-        if (!scaletest ) {building.buildCost[resource] = Math.floor(building.buildCost[resource] / building.scale[resource]); }
+        if (!scaletest) { building.buildCost[resource] = Math.floor(building.buildCost[resource] / building.scale[resource]); }
         else { building.buildCost[resource] -= 1; }
     }
 
@@ -1155,8 +1287,8 @@ function build(buildingName) {
     for (const [resource, cost] of Object.entries(building.buildCost)) {
         gameData.resources[resource].amount -= cost;
         let scaletest = (Math.floor(building.buildCost[resource] * building.scale[resource]) == building.buildCost[resource]) ? true : false;
-        if (!scaletest ) {building.buildCost[resource] = Math.floor(building.buildCost[resource] * building.scale[resource]); }
-        else { building.buildCost[resource] += 1; }        
+        if (!scaletest) { building.buildCost[resource] = Math.floor(building.buildCost[resource] * building.scale[resource]); }
+        else { building.buildCost[resource] += 1; }
     }
 
 
