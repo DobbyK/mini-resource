@@ -8,7 +8,7 @@ const gameData = {
             tooltip: "Money... Capitalism... Sell Stuff To get Money"
         },
         territory: {
-            max: 10, amount: 0, gain: 0, loss: 0, worth: 2000,
+            max: 1000, amount: 0, gain: 0, loss: 0, worth: 700,
             unlocked: false, collectible: false, sellable: false,
             tooltip: "And thats land! - bill wurtz"
         },
@@ -22,8 +22,8 @@ const gameData = {
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Not Yet Nuclear"
         },
-        soldiers: {
-            max: 200, amount: 0, gain: 0, loss: 0, worth: 500,
+        soldier: {
+            max: 200, amount: 0, gain: 0, loss: 0, worth: 600,
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Honor veterans"
         },
@@ -118,9 +118,9 @@ const gameData = {
             tooltip: "Turns hides into pride"
         },
         barracks: {
-            type: "soldiers", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.5,
+            type: "soldier", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.5,
             buildCost: { wood: 3000, metal: 600, milk: 5 },
-            resourcePrice: { armor: 1, family: 1, meals: 2 },
+            resourcePrice: { armor: 1, family: 1, meal: 2 },
             buildingBoost: {},
             scale: { wood: 1.05, metal: 1.05 },
             tooltip: "The cradle of your army"
@@ -128,7 +128,7 @@ const gameData = {
         pentagon: {
             type: "territory", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.2,
             buildCost: { metal: 800, stone: 1000 },
-            resourcePrice: { soldiers: 2 },
+            resourcePrice: { soldier: 2 },
             buildingBoost: {},
             scale: { metal: 1.05, stone: 1.05 },
             tooltip: "Expand and control what you claim"
@@ -932,7 +932,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.10</a>
+            <a target="_blank" href="changelog.html">v0.0.10.1</a>
         </div>
         <div id="game">
         <div id="resources">
