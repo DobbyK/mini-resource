@@ -7,6 +7,11 @@ const gameData = {
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Money... Capitalism... Sell Stuff To get Money"
         },
+        territory: {
+            max: 10, amount: 0, gain: 0, loss: 0, worth: 2000,
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "And thats land! - bill wurtz"
+        },
         human: {
             max: 10, amount: 0, gain: 0, loss: 0, worth: 50,
             unlocked: false, collectible: false, sellable: false,
@@ -16,6 +21,11 @@ const gameData = {
             max: 10, amount: 0, gain: 0, loss: 0, worth: 500,
             unlocked: false, collectible: false, sellable: false,
             tooltip: "Not Yet Nuclear"
+        },
+        soldiers: {
+            max: 200, amount: 0, gain: 0, loss: 0, worth: 500,
+            unlocked: false, collectible: false, sellable: false,
+            tooltip: "Honor veterans"
         },
         rat: {
             max: 20, amount: 0, gain: 0, loss: 0, worth: 100,
@@ -42,6 +52,11 @@ const gameData = {
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Don't beat this, eat it"
         },
+        milk: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 50,
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Not safe for babies? Too bad"
+        },
         meal: {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 150,
             unlocked: false, collectible: false, sellable: true,
@@ -67,11 +82,6 @@ const gameData = {
             unlocked: false, collectible: true, sellable: true,
             tooltip: "I don't remember anyone ever making leather armor"
         },
-        milk: {
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 50,
-            unlocked: false, collectible: false, sellable: true,
-            tooltip: "Not safe for babies? Too bad"
-        },
         hoe: {
             max: 50, amount: 0, gain: 0, loss: 0, worth: 25,
             unlocked: false, collectible: false, sellable: true,
@@ -96,16 +106,6 @@ const gameData = {
             max: 50, amount: 0, gain: 0, loss: 0, worth: 300,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Not Dyable"
-        },
-        soldiers: {
-            max: 200, amount: 0, gain: 0, loss: 0, worth: 500,
-            unlocked: false, collectible: false, sellable: false,
-            tooltip: "Honor veterans"
-        },
-        territory: {
-            max: 10, amount: 0, gain: 0, loss: 0, worth: 2000,
-            unlocked: false, collectible: false, sellable: false,
-            tooltip: "And thats land! - bill wurtz"
         }
     },
     buildings: {
@@ -932,7 +932,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.9.3</a>
+            <a target="_blank" href="changelog.html">v0.0.10</a>
         </div>
         <div id="game">
         <div id="resources">
