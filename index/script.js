@@ -57,6 +57,11 @@ const gameData = {
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Not safe for babies? Too bad"
         },
+        tomato: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 40,
+            unlocked: false, collectible: false, sellable: true,
+            tooltip: "Fruit or Veggie"
+        },
         meal: {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 150,
             unlocked: false, collectible: false, sellable: true,
@@ -76,6 +81,11 @@ const gameData = {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 10,
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Non-descript resource of stuff mined underground. Also buildin."
+        },
+        iron: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 70,
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "Fe(iend), specific metal"
         },
         leather: {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 100,
@@ -109,32 +119,48 @@ const gameData = {
         }
     },
     buildings: {
+        ironMine: {
+            type: "iron", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
+            buildCost: { territory: 100, stone: 200, metal: 500 },
+            resourcePrice: { },
+            buildingBoost: {},
+            scale: { territory: 1.05, stone: 1.05, metal: 1.05 },
+            tooltip: "You need a new mine for god knows what reason "
+        },
+        garden: {
+            type: "tomato", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
+            buildCost: { territory: 50, wheat: 500, leather: 50 },
+            resourcePrice: { },
+            buildingBoost: {},
+            scale: { territory: 1.05, wheat: 1.05, leather: 1.05 },
+            tooltip: "Grown Organically"
+        },
         leatherSmith: {
-            type: "armor", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            type: "armor", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
             buildCost: { wood: 800, stone: 600, leather: 20 },
             resourcePrice: { leather: 2, human: 1 },
             buildingBoost: {},
-            scale: { wood: 1.05, stone: 1.05 },
-            tooltip: "Turns hides into pride"
+            scale: { wood: 1.05, stone: 1.05, leather: 1.05 },
+            tooltip: "Turns hide into pride"
         },
         barracks: {
-            type: "soldier", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.5,
+            type: "soldier", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0.5,
             buildCost: { wood: 3000, metal: 600, milk: 5 },
             resourcePrice: { armor: 1, family: 1, meal: 2 },
             buildingBoost: {},
-            scale: { wood: 1.05, metal: 1.05 },
-            tooltip: "The cradle of your army"
+            scale: { wood: 1.05, metal: 1.05, milk: 1.05 },
+            tooltip: "Make war not love"
         },
         pentagon: {
-            type: "territory", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 0.2,
+            type: "territory", count: 0, gain: 0, unlocked: false, maxBoost: 100, production: 0.2,
             buildCost: { metal: 800, stone: 1000 },
             resourcePrice: { soldier: 2 },
             buildingBoost: {},
             scale: { metal: 1.05, stone: 1.05 },
-            tooltip: "Expand and control what you claim"
+            tooltip: "jessie wake up"
         },
         pen: {
-            type: "cow", count: 0, gain: 1, unlocked: false, maxBoost: 5, production: 1, gain: 0,
+            type: "cow", count: 0, gain: 1, unlocked: false, maxBoost: 20, production: 1, gain: 0,
             buildCost: { wood: 2000, stone: 1500, wheat: 900 },
             resourcePrice: { human: 1, wheat: 5 },
             buildingBoost: {},
@@ -386,7 +412,7 @@ const gameData = {
             buildCost: { stone: 100, wood: 180, wheat: 400 },
             resourcePrice: { metal: 1 },
             buildingBoost: {},
-            scale: { stone: 1.05, wood: 1.05, metal: 1.05 },
+            scale: { stone: 1.05, wood: 1.05, wheat: 1.05 },
             tooltip: "No Alchemy?"
         },
         bank: {
@@ -408,6 +434,30 @@ const gameData = {
     },
 
     research: {
+        unlockIronMine: {
+            name: "Metal Squared",
+            description: "No clothing here to iron, or steel. (thanks dad)",
+            cost: { science: 1000, stone: 2000, wheat: 1750, rat: 100, money: 5000, territory: 10, family: 50 },
+            effect: () => {
+                gameData.buildings.ironMine.unlocked = true;
+                gameData.resources.iron.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockGarden"],
+            tooltip: "Unlock Iron & Iron Mines"
+        },
+        unlockGarden: {
+            name: "New Croping tool",
+            description: "Photoshop v1.1: Tomato Revoultion",
+            cost: { science: 800, stone: 1500, wheat: 1750, milk: 100, money: 5000, territory: 10, family: 50 },
+            effect: () => {
+                gameData.buildings.garden.unlocked = true;
+                gameData.resources.tomato.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockWar"],
+            tooltip: "Unlock Tomatoes & Gardens"
+        },
         unlockArmor: {
             name: "Wear Cows",
             description: "I ain't wearing my food, you are!",
@@ -427,7 +477,7 @@ const gameData = {
             cost: { science: 550, money: 5000 },
             effect: () => {
                 gameData.buildings.barracks.unlocked = true;
-                gameData.resources.soldiers.unlocked = true;
+                gameData.resources.soldier.unlocked = true;
             },
             completed: false,
             requires: ["unlockArmor"],
@@ -457,14 +507,14 @@ const gameData = {
             tooltip: "Unlock rock Dealer"
         },
         unlockMetalRidder: {
-            name: "2% Fat",
-            description: "You look like you were raised on baby formula lil bro. :|",
+            name: "Metal of Honor",
+            description: "To get rid of not ridder, we ain't riding metal. We ain't that fat",
             cost: { science: 375, wheat: 1500, metal: 750 },
             effect: () => {
                 gameData.buildings.metalRidder.unlocked = true;
             },
             completed: false,
-            requires: ["unlockMetalRidder"],
+            requires: ["unlockStoneDealer"],
             tooltip: "Unlock Formula Factory"
         },
         unlockFormula: {
@@ -932,7 +982,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.10.1</a>
+            <a target="_blank" href="changelog.html">v0.0.11</a>
         </div>
         <div id="game">
         <div id="resources">
@@ -1048,7 +1098,7 @@ function updateDynamicUI() {
             const countElem = document.getElementById(`${bName}_count`);
             if (countElem) countElem.innerHTML = building.count.toFixed();
             const costElem = document.getElementById(`${bName}_cost`);
-            if (costElem) costElem.innerHTML = `Build (${formatCost(building.buildCost)}${getCostText(building)})`;
+            if (costElem) costElem.innerHTML = `<span style="pointer-events: none;"> Build (${formatCost(building.buildCost)}${getCostText(building)})</span>`;
         }
 
 
@@ -1169,11 +1219,12 @@ function collect(resource) {
 
 function sell(resource) {
     const res = gameData.resources[resource];
+    if ((gameData.resources.money.amount + res.worth) >= gameData.resources.money.max) { return; }
     if (res.amount > 0) {
         res.amount -= 1;
         gameData.resources.money.amount += res.worth;
     } else {
-        alert(`No ${resource} to sell.`);
+        return;
     }
 }
 
@@ -1181,7 +1232,6 @@ function destroy(buildingName) {
     const building = gameData.buildings[buildingName];
 
     if (building.count < 1) {
-        alert('How the hell you gonna destroy you got none');
         return;
     }
 
@@ -1219,7 +1269,6 @@ function destroy(buildingName) {
         }
 
         if (newTotalProduction < newTotalConsumption) {
-            alert(`You cannot destroy a ${buildingName} because it would reduce ${resource} production below consumption. Required: ${newTotalConsumption}/s, Available: ${newTotalProduction}/s`);
             return;
         }
     }
@@ -1252,7 +1301,6 @@ function build(buildingName) {
     // Check one-time costs
     for (const [resource, cost] of Object.entries(building.buildCost)) {
         if (gameData.resources[resource].amount < cost) {
-            alert(`Not enough ${resource} to build ${buildingName}.`);
             return;
         }
     }
@@ -1276,7 +1324,6 @@ function build(buildingName) {
             }
 
             if (passiveGain < totalLoss) {
-                alert(`You need at least ${totalLoss} ${resource}/s passive income to build another ${buildingName}.`);
                 return;
             }
         }
@@ -1343,7 +1390,6 @@ function performResearch(key) {
     // Check resource availability
     for (const [res, cost] of Object.entries(item.cost)) {
         if (!gameData.resources[res] || gameData.resources[res].amount < cost) {
-            alert(`Not enough ${res} to research ${item.name}.`);
             return;
         }
     }
