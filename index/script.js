@@ -982,7 +982,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.10.1</a>
+            <a target="_blank" href="changelog.html">v0.0.11</a>
         </div>
         <div id="game">
         <div id="resources">
@@ -1219,11 +1219,12 @@ function collect(resource) {
 
 function sell(resource) {
     const res = gameData.resources[resource];
+    if ((gameData.resources.money.amount + res.worth) >= gameData.resources.money.max) { return; }
     if (res.amount > 0) {
         res.amount -= 1;
         gameData.resources.money.amount += res.worth;
     } else {
-        alert(`No ${resource} to sell.`);
+        return;
     }
 }
 
@@ -1231,7 +1232,6 @@ function destroy(buildingName) {
     const building = gameData.buildings[buildingName];
 
     if (building.count < 1) {
-        alert('How the hell you gonna destroy you got none');
         return;
     }
 
