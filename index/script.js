@@ -114,7 +114,7 @@ const gameData = {
             buildCost: { wood: 800, stone: 600, leather: 20 },
             resourcePrice: { leather: 2, human: 1 },
             buildingBoost: {},
-            scale: { wood: 1.05, stone: 1.05 },
+            scale: { wood: 1.05, stone: 1.05, leather: 1.05 },
             tooltip: "Turns hides into pride"
         },
         barracks: {
@@ -386,7 +386,7 @@ const gameData = {
             buildCost: { stone: 100, wood: 180, wheat: 400 },
             resourcePrice: { metal: 1 },
             buildingBoost: {},
-            scale: { stone: 1.05, wood: 1.05, metal: 1.05 },
+            scale: { stone: 1.05, wood: 1.05, wheat: 1.05 },
             tooltip: "No Alchemy?"
         },
         bank: {
@@ -427,7 +427,7 @@ const gameData = {
             cost: { science: 550, money: 5000 },
             effect: () => {
                 gameData.buildings.barracks.unlocked = true;
-                gameData.resources.soldiers.unlocked = true;
+                gameData.resources.soldier.unlocked = true;
             },
             completed: false,
             requires: ["unlockArmor"],
@@ -457,14 +457,14 @@ const gameData = {
             tooltip: "Unlock rock Dealer"
         },
         unlockMetalRidder: {
-            name: "2% Fat",
-            description: "You look like you were raised on baby formula lil bro. :|",
+            name: "Metal of Honor",
+            description: "To get rid of not ridder, we ain't riding metal. We ain't that fat",
             cost: { science: 375, wheat: 1500, metal: 750 },
             effect: () => {
                 gameData.buildings.metalRidder.unlocked = true;
             },
             completed: false,
-            requires: ["unlockMetalRidder"],
+            requires: ["unlockStoneDealer"],
             tooltip: "Unlock Formula Factory"
         },
         unlockFormula: {
@@ -1048,7 +1048,7 @@ function updateDynamicUI() {
             const countElem = document.getElementById(`${bName}_count`);
             if (countElem) countElem.innerHTML = building.count.toFixed();
             const costElem = document.getElementById(`${bName}_cost`);
-            if (costElem) costElem.innerHTML = `Build (${formatCost(building.buildCost)}${getCostText(building)})`;
+            if (costElem) costElem.innerHTML = `<span style="pointer-events: none;"> Build (${formatCost(building.buildCost)}${getCostText(building)})</span>`;
         }
 
 
@@ -1219,7 +1219,6 @@ function destroy(buildingName) {
         }
 
         if (newTotalProduction < newTotalConsumption) {
-            alert(`You cannot destroy a ${buildingName} because it would reduce ${resource} production below consumption. Required: ${newTotalConsumption}/s, Available: ${newTotalProduction}/s`);
             return;
         }
     }
@@ -1252,7 +1251,6 @@ function build(buildingName) {
     // Check one-time costs
     for (const [resource, cost] of Object.entries(building.buildCost)) {
         if (gameData.resources[resource].amount < cost) {
-            alert(`Not enough ${resource} to build ${buildingName}.`);
             return;
         }
     }
@@ -1276,7 +1274,6 @@ function build(buildingName) {
             }
 
             if (passiveGain < totalLoss) {
-                alert(`You need at least ${totalLoss} ${resource}/s passive income to build another ${buildingName}.`);
                 return;
             }
         }
@@ -1343,7 +1340,6 @@ function performResearch(key) {
     // Check resource availability
     for (const [res, cost] of Object.entries(item.cost)) {
         if (!gameData.resources[res] || gameData.resources[res].amount < cost) {
-            alert(`Not enough ${res} to research ${item.name}.`);
             return;
         }
     }
