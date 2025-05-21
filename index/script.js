@@ -134,7 +134,7 @@ const gameData = {
             buildCost: { territory: 350, stone: 800, metal: 750, pickaxe: 20 },
             resourcePrice: { },
             buildingBoost: {},
-            scale: { territory: 1.05, stne: 1.05, metal: 1.05, pickaxe: 1 },
+            scale: { territory: 1.05, stone: 1.05, metal: 1.05, pickaxe: 1 },
             tooltip: "You need a new mine for god knows what reason "
         },
         clayFinder: {
@@ -519,7 +519,6 @@ const gameData = {
             requires: ["unlockMilk", "unlockLeather", "unlockMeat"],
             tooltip: "Unlock Leather Smith"
         },
-
         unlockDraft: {
             name: "College Students",
             description: "Take young 18yos from families and force them to fight",
@@ -1031,7 +1030,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.12</a>
+            <a target="_blank" href="changelog.html">v0.0.12.1</a>
         </div>
         <div id="game">
         <div id="resources">
