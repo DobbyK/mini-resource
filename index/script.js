@@ -58,7 +58,7 @@ const gameData = {
             tooltip: "Not safe for babies? Too bad"
         },
         tomato: {
-            max: 100, amount: 0, gain: 0, loss: 0, worth: 40,
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 10,
             unlocked: false, collectible: false, sellable: true,
             tooltip: "Fruit or Veggie"
         },
@@ -86,6 +86,16 @@ const gameData = {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 70,
             unlocked: false, collectible: true, sellable: true,
             tooltip: "Fe(iend), specific metal"
+        },
+        coal: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 50,
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "Oh brother lets go down lets go down"
+        },
+        clay: {
+            max: 100, amount: 0, gain: 0, loss: 0, worth: 30,
+            unlocked: false, collectible: true, sellable: true,
+            tooltip: "AP Cermaics class"
         },
         leather: {
             max: 100, amount: 0, gain: 0, loss: 0, worth: 100,
@@ -119,12 +129,28 @@ const gameData = {
         }
     },
     buildings: {
-        ironMine: {
-            type: "iron", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
-            buildCost: { territory: 100, stone: 200, metal: 500 },
+        coalMine: {
+            type: "coal", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
+            buildCost: { territory: 350, stone: 800, metal: 750, pickaxe: 20 },
             resourcePrice: { },
             buildingBoost: {},
-            scale: { territory: 1.05, stone: 1.05, metal: 1.05 },
+            scale: { territory: 1.05, stne: 1.05, metal: 1.05, pickaxe: 1 },
+            tooltip: "You need a new mine for god knows what reason "
+        },
+        clayFinder: {
+            type: "clay", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
+            buildCost: { territory: 200, wood: 1000, metal: 500 },
+            resourcePrice: { },
+            buildingBoost: {},
+            scale: { territory: 1.05, wood: 1.05, metal: 1.05 },
+            tooltip: "You need a new mine for god knows what reason "
+        },
+        ironMine: {
+            type: "iron", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
+            buildCost: { territory: 100, stone: 200, metal: 500, pickaxe: 10 },
+            resourcePrice: { },
+            buildingBoost: {},
+            scale: { territory: 1.05, stone: 1.05, metal: 1.05, pickaxe: 1 },
             tooltip: "You need a new mine for god knows what reason "
         },
         garden: {
@@ -144,7 +170,7 @@ const gameData = {
             tooltip: "Turns hide into pride"
         },
         barracks: {
-            type: "soldier", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0.5,
+            type: "soldier", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 1,
             buildCost: { wood: 3000, metal: 600, milk: 5 },
             resourcePrice: { armor: 1, family: 1, meal: 2 },
             buildingBoost: {},
@@ -152,7 +178,7 @@ const gameData = {
             tooltip: "Make war not love"
         },
         pentagon: {
-            type: "territory", count: 0, gain: 0, unlocked: false, maxBoost: 100, production: 0.2,
+            type: "territory", count: 0, gain: 0, unlocked: false, maxBoost: 100, production: 1,
             buildCost: { metal: 800, stone: 1000 },
             resourcePrice: { soldier: 2 },
             buildingBoost: {},
@@ -160,7 +186,7 @@ const gameData = {
             tooltip: "jessie wake up"
         },
         pen: {
-            type: "cow", count: 0, gain: 1, unlocked: false, maxBoost: 20, production: 1, gain: 0,
+            type: "cow", count: 0, gain: 0, unlocked: false, maxBoost: 20, production: 1,
             buildCost: { wood: 2000, stone: 1500, wheat: 900 },
             resourcePrice: { human: 1, wheat: 5 },
             buildingBoost: {},
@@ -168,15 +194,14 @@ const gameData = {
             tooltip: "Moo"
         },
         tannery: {
-            type: "leather", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
-            buildCost: { wood: 2500, metal: 750 },
+            type: "leather", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1,
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
             scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Moo-but dead (no meat)"
         },
         butcher: {
-            type: "meat", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            type: "meat", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
@@ -184,7 +209,7 @@ const gameData = {
             tooltip: "Moo-but dead (no leather)"
         },
         parlor: {
-            type: "milk", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1, gain: 0,
+            type: "milk", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
@@ -337,10 +362,10 @@ const gameData = {
         },
         woodyard: {
             type: "wood", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 50, wood: 10 },
+            buildCost: { money: 50, stone: 5 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.05, wood: 1.05 },
+            scale: { money: 1.05, stone: 1.05 },
             tooltip: "Put chopped trees in a field for later use"
         },
         superAxeHacker: {
@@ -361,7 +386,7 @@ const gameData = {
         },
         stonepit: {
             type: "stone", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 75, stone: 20 },
+            buildCost: { money: 75, metal: 20 },
             resourcePrice: {},
             buildingBoost: {},
             scale: { money: 1.05, stone: 1.05 },
@@ -377,10 +402,10 @@ const gameData = {
         },
         scrapyard: {
             type: "metal", count: 0, gain: 0, unlocked: false, maxBoost: 50, production: 0,
-            buildCost: { money: 80, metal: 30 },
+            buildCost: { money: 80, wheat: 30 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.05, metal: 1.05 },
+            scale: { money: 1.05, wheat: 1.05 },
             tooltip: "Find another places you can throw all that stuff you found."
         },
         market: {
@@ -434,6 +459,30 @@ const gameData = {
     },
 
     research: {
+        unlockClayFinder: {
+            name: "Time for Pottery", 
+            description: "Resist the urge to break it, or just call it pot(ion)",
+            cost: { science: 1400, tomato: 200, human: 200, money: 7500, territory: 150 },
+            effect: () => {
+                gameData.buildings.clayFinder.unlocked = true;
+                gameData.resources.clay.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockCoalMine"],
+            tooltip: "Unlock Clay & Clay Finder"
+        },
+        unlockCoalMine: {
+            name: "Yet Another Mine (Not yours)",
+            description: "You somehow had advanced machinery before",
+            cost: { science: 1200, stone: 1250, leather: 200, money: 7500, territory: 50, pickaxe: 50 },
+            effect: () => {
+                gameData.buildings.coalMine.unlocked = true;
+                gameData.resources.coal.unlocked = true;
+            },
+            completed: false,
+            requires: ["unlockIronMine"],
+            tooltip: "Unlock Coal & Coal Mines"
+        },
         unlockIronMine: {
             name: "Metal Squared",
             description: "No clothing here to iron, or steel. (thanks dad)",
@@ -982,7 +1031,7 @@ function initGame() {
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.11</a>
+            <a target="_blank" href="changelog.html">v0.0.12</a>
         </div>
         <div id="game">
         <div id="resources">
