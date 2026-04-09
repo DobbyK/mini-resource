@@ -390,7 +390,7 @@ const gameData = {
             buildCost: { money: 75, metal: 20 },
             resourcePrice: {},
             buildingBoost: {},
-            scale: { money: 1.05, stone: 1.05 },
+            scale: { money: 1.05, metal: 1.05 },
             tooltip: "Throw that stone in a new area, for later use"
         },
         mine: {
