@@ -194,14 +194,15 @@ const gameData = {
             tooltip: "Moo"
         },
         tannery: {
-            type: "leather", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "leather", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
+            buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
             scale: { wood: 1.05, metal: 1.05 },
             tooltip: "Moo-but dead (no meat)"
         },
         butcher: {
-            type: "meat", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "meat", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
@@ -209,7 +210,7 @@ const gameData = {
             tooltip: "Moo-but dead (no leather)"
         },
         parlor: {
-            type: "milk", count: 0, gain: 1, unlocked: false, maxBoost: 0, production: 1,
+            type: "milk", count: 0, gain: 0, unlocked: false, maxBoost: 0, production: 1,
             buildCost: { wood: 2500, metal: 750 },
             resourcePrice: { human: 1, cow: 1 },
             buildingBoost: {},
