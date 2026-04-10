@@ -1032,13 +1032,11 @@ function initGame() {
             <button onclick="document.getElementById('importFile').click()">Import Save</button>
             <button onclick="giveAllResourcesDebug()">Don't Press</button>
             <a target="_blank" href="changelog.html">v0.0.12.1</a>
-        </div>
-        <div id="game">
+        </div> 
         <div id="resources">
         </div>
         <div id="buildings"></div>
         <div id="research"></div>
-        </div>
     `;
     renderStaticUI();
     requestAnimationFrame(gameLoop);
@@ -1412,20 +1410,21 @@ function updateGains() {
     }
 
     for (const building of Object.values(gameData.buildings)) {
+        if (building.production && building.count > 0) {
+            gameData.resources[building.type].gain += building.count * building.production;
+        }
+    }
+
+    for (const building of Object.values(gameData.buildings)) {
         if (building.resourcePrice) {
-            for (const resource in building.resourcePrice) {
-                const cost = building.resourcePrice[resource];
+            for (const [resource, cost] of Object.entries(building.resourcePrice)) {
                 gameData.resources[resource].loss += building.count * cost;
             }
         }
     }
 
-    for (const building of Object.values(gameData.buildings)) {
-        if (building.production != 0) {
-            const gain = (building.count * building.production) - gameData.resources[building.type].loss;
-            gameData.resources[building.type].gain += gain;
-        }
-
+    for (const res of Object.values(gameData.resources)) {
+        res.gain -= res.loss;
     }
 
     if (gameData.collecting) {
