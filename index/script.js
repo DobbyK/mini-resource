@@ -1031,7 +1031,7 @@ function initGame() {
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
         <button onclick="document.getElementById('importFile').click()">Import Save</button>
         <button onclick="giveAllResourcesDebug()">Don't Press</button>
-        <a target="_blank" href="changelog.html">v0.0.12.1</a>
+        <a target="_blank" href="changelog.html">v0.0.13</a>
     </div>
 
     <div id="main-layout">
