@@ -1022,26 +1022,58 @@ const gameData = {
 
 function initGame() {
     const container = document.getElementById("game");
-    container.innerHTML = `
-        <div id="save-controls">
-            <button onclick="darkModeToggle()">Dark Mode</button>
-            <button onclick="saveGame()">Save In Browser</button>
-            <button onclick="loadGame()">Load From Browser</button>
-            <button onclick="exportSave()">Export Save</button>
-            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
-            <button onclick="document.getElementById('importFile').click()">Import Save</button>
-            <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.12.1</a>
-        </div> 
-        <div id="resources">
+   container.innerHTML = `
+    <div id="save-controls">
+        <button onclick="darkModeToggle()">Dark Mode</button>
+        <button onclick="saveGame()">Save In Browser</button>
+        <button onclick="loadGame()">Load From Browser</button>
+        <button onclick="exportSave()">Export Save</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
+        <button onclick="document.getElementById('importFile').click()">Import Save</button>
+        <button onclick="giveAllResourcesDebug()">Don't Press</button>
+        <a target="_blank" href="changelog.html">v0.0.12.1</a>
+    </div>
+
+    <div id="main-layout">
+        <!-- LEFT: Resources (always visible) -->
+        <div id="resources-panel">
+            <div id="resources"></div>
         </div>
-        <div id="buildings"></div>
-        <div id="research"></div>
-    `;
+
+        <!-- RIGHT: Tabs -->
+        <div id="right-panel">
+
+            <div id="tabs">
+                <button id="tab-buildings" onclick="switchRightTab('buildings')" class="active-tab">Buildings</button>
+                <button id="tab-research" onclick="switchRightTab('research')">Research</button>
+            </div>
+
+            <div id="buildings" class="tab-content"></div>
+            <div id="research" class="tab-content" style="display:none;"></div>
+
+        </div>
+    </div>
+`;
+
+renderStaticUI();
+requestAnimationFrame(gameLoop);
     renderStaticUI();
     requestAnimationFrame(gameLoop);
 }
 
+function switchRightTab(tabName) {
+    const tabs = ["buildings", "research"];
+
+    for (const tab of tabs) {
+        const div = document.getElementById(tab);
+        const btn = document.getElementById(`tab-${tab}`);
+
+        const active = tab === tabName;
+
+        if (div) div.style.display = active ? "block" : "none";
+        if (btn) btn.classList.toggle("active-tab", active);
+    }
+}
 
 // Update UI Dynamically
 function renderStaticUI() {
