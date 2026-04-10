@@ -1022,28 +1022,58 @@ const gameData = {
 
 function initGame() {
     const container = document.getElementById("game");
-    container.innerHTML = `
-        <div id="save-controls">
-            <button onclick="darkModeToggle()">Dark Mode</button>
-            <button onclick="saveGame()">Save In Browser</button>
-            <button onclick="loadGame()">Load From Browser</button>
-            <button onclick="exportSave()">Export Save</button>
-            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
-            <button onclick="document.getElementById('importFile').click()">Import Save</button>
-            <button onclick="giveAllResourcesDebug()">Don't Press</button>
-            <a target="_blank" href="changelog.html">v0.0.12.1</a>
+   container.innerHTML = `
+    <div id="save-controls">
+        <button onclick="darkModeToggle()">Dark Mode</button>
+        <button onclick="saveGame()">Save In Browser</button>
+        <button onclick="loadGame()">Load From Browser</button>
+        <button onclick="exportSave()">Export Save</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSave(event)">
+        <button onclick="document.getElementById('importFile').click()">Import Save</button>
+        <button onclick="giveAllResourcesDebug()">Don't Press</button>
+        <a target="_blank" href="changelog.html">v0.0.13</a>
+    </div>
+
+    <div id="main-layout">
+        <!-- LEFT: Resources (always visible) -->
+        <div id="resources-panel">
+            <div id="resources"></div>
         </div>
-        <div id="game">
-        <div id="resources">
+
+        <!-- RIGHT: Tabs -->
+        <div id="right-panel">
+
+            <div id="tabs">
+                <button id="tab-buildings" onclick="switchRightTab('buildings')" class="active-tab">Buildings</button>
+                <button id="tab-research" onclick="switchRightTab('research')">Research</button>
+            </div>
+
+            <div id="buildings" class="tab-content"></div>
+            <div id="research" class="tab-content" style="display:none;"></div>
+
         </div>
-        <div id="buildings"></div>
-        <div id="research"></div>
-        </div>
-    `;
+    </div>
+`;
+
+renderStaticUI();
+requestAnimationFrame(gameLoop);
     renderStaticUI();
     requestAnimationFrame(gameLoop);
 }
 
+function switchRightTab(tabName) {
+    const tabs = ["buildings", "research"];
+
+    for (const tab of tabs) {
+        const div = document.getElementById(tab);
+        const btn = document.getElementById(`tab-${tab}`);
+
+        const active = tab === tabName;
+
+        if (div) div.style.display = active ? "block" : "none";
+        if (btn) btn.classList.toggle("active-tab", active);
+    }
+}
 
 // Update UI Dynamically
 function renderStaticUI() {
@@ -1412,20 +1442,21 @@ function updateGains() {
     }
 
     for (const building of Object.values(gameData.buildings)) {
+        if (building.production && building.count > 0) {
+            gameData.resources[building.type].gain += building.count * building.production;
+        }
+    }
+
+    for (const building of Object.values(gameData.buildings)) {
         if (building.resourcePrice) {
-            for (const resource in building.resourcePrice) {
-                const cost = building.resourcePrice[resource];
+            for (const [resource, cost] of Object.entries(building.resourcePrice)) {
                 gameData.resources[resource].loss += building.count * cost;
             }
         }
     }
 
-    for (const building of Object.values(gameData.buildings)) {
-        if (building.production != 0) {
-            const gain = (building.count * building.production) - gameData.resources[building.type].loss;
-            gameData.resources[building.type].gain += gain;
-        }
-
+    for (const res of Object.values(gameData.resources)) {
+        res.gain -= res.loss;
     }
 
     if (gameData.collecting) {
