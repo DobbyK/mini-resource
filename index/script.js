@@ -458,7 +458,6 @@ const gameData = {
             tooltip: "Some inspirational quote for why it costs humans - DobbyK"
         },
     },
-
     research: {
         unlockClayFinder: {
             name: "Time for Pottery", 
@@ -1586,7 +1585,7 @@ function deepMerge(target, source) {
             }
             deepMerge(target[key], sourceVal);
         } else {
-            target[key] = sourceVal; // Overwrite primitives and arrays or add new fields
+            target[key] = sourceVal; 
         }
     }
 }
